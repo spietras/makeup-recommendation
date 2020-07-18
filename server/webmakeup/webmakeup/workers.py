@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-
-from automakeup import recommend
+from typing import BinaryIO
 
 
 class Worker(ABC):
@@ -40,5 +39,8 @@ class Worker(ABC):
 
 
 class MakeupWorker(Worker):
-    def work(self, foo: str, x: int):
-        return {"bar": recommend(foo)}
+    def __init__(self, recommender):
+        self.recommender = recommender
+
+    def work(self, img: BinaryIO):
+        return self.recommender.recommend(img)
