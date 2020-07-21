@@ -32,7 +32,10 @@ public class CameraImageGraphic extends Graphic {
 
     public enum BlendModes{
         Normal,
-        Multiply
+        Multiply,
+        Screen,
+        HardLight,
+        Overlay
     }
 
     public static class Layer {

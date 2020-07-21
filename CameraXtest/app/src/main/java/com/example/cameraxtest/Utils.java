@@ -25,6 +25,15 @@ public abstract class Utils {
             case Multiply:
                 blender = new MultiplyBlender();
                 break;
+            case Screen:
+                blender = new ScreenBlender();
+                break;
+            case HardLight:
+                blender = new HardLightBlender();
+                break;
+            case Overlay:
+                blender = new OverlayBlender();
+                break;
         }
         Layer result = new Layer(bottom.bitmap.copy(bottom.bitmap.getConfig(), true), bottom.Type);
         for (int x = 0; x < bottom.bitmap.getWidth(); x++) {

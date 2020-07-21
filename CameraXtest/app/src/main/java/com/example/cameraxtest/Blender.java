@@ -32,6 +32,25 @@ public abstract class Blender
     public int blend(int a, int b){
         return b;
     }
+
+    static public double Screen(double Cb, double Cs) {
+        return Cb + Cs - (Cb * Cs);
+    }
+
+    static public double Multiply(double Cb, double Cs) {
+        return Cb * Cs;
+    }
+
+    static public double HardLight(double Cb, double Cs){
+        if(Cs <= 0.5)
+            return Multiply(Cb, 2*Cs);
+        else
+            return Screen(Cb, 2*Cs-1);
+    }
+
+    static public double Overlay(double Cb, double Cs){
+        return HardLight(Cs, Cb);
+    }
 }
 
 //normal blend mode
@@ -57,9 +76,51 @@ class MultiplyBlender extends Blender
     public int blend(int a, int b){
         Pixel bottom = new Pixel(a);
         Pixel top = new Pixel(b);
-        bottom.r = (1 - bottom.a) * top.r + bottom.a * bottom.r * top.r;
-        bottom.g = (1 - bottom.a) * top.r + bottom.a * bottom.g * top.g;
-        bottom.b = (1 - bottom.a) * top.r + bottom.a * bottom.b * top.b;
+        bottom.r = (1 - bottom.a) * top.r + bottom.a * Multiply(bottom.r, top.r);
+        bottom.g = (1 - bottom.a) * top.r + bottom.a * Multiply(bottom.g, top.g);
+        bottom.b = (1 - bottom.a) * top.r + bottom.a * Multiply(bottom.b, top.b);
+        return bottom.color();
+    }
+}
+
+//screen blend mode
+class ScreenBlender extends Blender
+{
+    @Override
+    public int blend(int a, int b){
+        Pixel bottom = new Pixel(a);
+        Pixel top = new Pixel(b);
+        bottom.r = (1 - bottom.a) * top.r + bottom.a * Screen(bottom.r, top.r);
+        bottom.g = (1 - bottom.a) * top.r + bottom.a * Screen(bottom.g, top.g);
+        bottom.b = (1 - bottom.a) * top.r + bottom.a * Screen(bottom.b, top.b);
+        return bottom.color();
+    }
+}
+
+//hardlight blend mode
+class HardLightBlender extends Blender
+{
+    @Override
+    public int blend(int a, int b){
+        Pixel bottom = new Pixel(a);
+        Pixel top = new Pixel(b);
+        bottom.r = (1 - bottom.a) * top.r + bottom.a * HardLight(bottom.r, top.r);
+        bottom.g = (1 - bottom.a) * top.r + bottom.a * HardLight(bottom.g, top.g);
+        bottom.b = (1 - bottom.a) * top.r + bottom.a * HardLight(bottom.b, top.b);
+        return bottom.color();
+    }
+}
+
+//overlay blend mode
+class OverlayBlender extends Blender
+{
+    @Override
+    public int blend(int a, int b){
+        Pixel bottom = new Pixel(a);
+        Pixel top = new Pixel(b);
+        bottom.r = (1 - bottom.a) * top.r + bottom.a * Overlay(bottom.r, top.r);
+        bottom.g = (1 - bottom.a) * top.r + bottom.a * Overlay(bottom.g, top.g);
+        bottom.b = (1 - bottom.a) * top.r + bottom.a * Overlay(bottom.b, top.b);
         return bottom.color();
     }
 }

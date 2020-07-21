@@ -50,11 +50,11 @@ public class DrawActivity extends AppCompatActivity {
         overlay = findViewById(R.id.graphicOverlay);
         picture = new CameraImageGraphic(overlay);
 
-        picture.addLayer(BitmapFactory.decodeResource(getResources(), R.drawable.bottom), BlendModes.Normal);
+        /*picture.addLayer(BitmapFactory.decodeResource(getResources(), R.drawable.bottom), BlendModes.Normal);
         picture.addLayer(BitmapFactory.decodeResource(getResources(), R.drawable.top3), BlendModes.Multiply);
         overlay.add(picture);
-        overlay.postInvalidate();
-        /*Bitmap bmp = null;
+        overlay.postInvalidate();*/
+        Bitmap bmp = null;
         try {
             bmp = Utils.RotateBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(message)), 270);
         } catch (IOException e) {
@@ -62,7 +62,7 @@ public class DrawActivity extends AppCompatActivity {
             e.printStackTrace();
             return;
         }
-        bmp = Utils.equalize(bmp);
+        //bmp = Utils.equalize(bmp);
         InputImage image = InputImage.fromBitmap(bmp, 0);
         overlay.clear();
         overlay.setImageSourceInfo(bmp.getWidth(), bmp.getHeight(), true);
@@ -80,7 +80,7 @@ public class DrawActivity extends AppCompatActivity {
                 overlay.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 overlay.setLayoutParams(new ConstraintLayout.LayoutParams(overlay.getWidth(), overlay.getWidth()*overlay.getImageHeight()/overlay.getImageWidth()));
             }
-        }); */
+        });
     }
 
     public void onSuccess(List<Face> faces) {
