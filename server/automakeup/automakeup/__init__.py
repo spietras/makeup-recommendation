@@ -6,3 +6,6 @@
 # instead of:
 # from package.module import foo
 # this is just a convenience to not expose nesting
+
+from .encoded_recommendation import recommend
+package_name = __name__
