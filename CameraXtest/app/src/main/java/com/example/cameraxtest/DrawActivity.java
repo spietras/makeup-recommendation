@@ -51,7 +51,7 @@ public class DrawActivity extends AppCompatActivity {
         picture = new CameraImageGraphic(overlay);
 
         picture.addLayer(BitmapFactory.decodeResource(getResources(), R.drawable.bottom), BlendModes.Normal);
-        picture.addLayer(BitmapFactory.decodeResource(getResources(), R.drawable.top2), BlendModes.Normal);
+        picture.addLayer(BitmapFactory.decodeResource(getResources(), R.drawable.top3), BlendModes.Multiply);
         overlay.add(picture);
         overlay.postInvalidate();
         /*Bitmap bmp = null;

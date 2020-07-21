@@ -8,15 +8,25 @@ public abstract class Blender
     {
         public Pixel(int color)
         {
-            r = Color.red(color);
-            g = Color.green(color);
-            b = Color.blue(color);
-            a = Color.alpha(color);
+            r = Color.red(color)/255.0;
+            g = Color.green(color)/255.0;
+            b = Color.blue(color)/255.0;
+            a = Color.alpha(color)/255.0;
         }
-        public int r,g,b,a;
+        public double r,g,b,a;
         public int color()
         {
-            return Color.argb(a, r, g, b);
+            int[] px = new int[4];
+            px[0] = (int) (255*a);
+            px[1] = (int) (255*r);
+            px[2] = (int) (255*g);
+            px[3] = (int) (255*b);
+            for(int i=0; i<3; ++i)
+            {
+                if( px[i]<0   ) px[i] = 0;
+                if( px[i]>255 ) px[i] = 255;
+            }
+            return Color.argb(px[0], px[1], px[2], px[3]);
         }
     }
     public int blend(int a, int b){
@@ -31,17 +41,11 @@ class NormalBlender extends Blender
     public int blend(int a, int b){
         Pixel bottom = new Pixel(a);
         Pixel top = new Pixel(b);
-        double ab = bottom.a / 255.0;
-        double as = top.a / 255.0;
-        double a2 = ab * (1 - as);
-        bottom.r = (int) ((top.r * as + bottom.r * a2)/(as + a2));
-        bottom.g = (int) ((top.g * as + bottom.g * a2)/(as + a2));
-        bottom.b = (int) ((top.b * as + bottom.b * a2)/(as + a2));
-        bottom.a = (int) ((as + a2) * 255);
-        if(bottom.r > 255) bottom.r = 255;
-        if(bottom.g > 255) bottom.g = 255;
-        if(bottom.b > 255) bottom.b = 255;
-        if(bottom.a > 255) bottom.a = 255;
+        double a2 = bottom.a * (1 - top.a);
+        bottom.r = (top.r * top.a + bottom.r * a2)/(top.a + a2);
+        bottom.g = (top.g * top.a + bottom.g * a2)/(top.a + a2);
+        bottom.b = (top.b * top.a + bottom.b * a2)/(top.a + a2);
+        bottom.a = top.a + a2;
         return bottom.color();
     }
 }
@@ -53,13 +57,9 @@ class MultiplyBlender extends Blender
     public int blend(int a, int b){
         Pixel bottom = new Pixel(a);
         Pixel top = new Pixel(b);
-        double ab = bottom.a / 255.0;
-        bottom.r = (int) ((1 - ab) * top.r + ab * bottom.r * top.r / 255);
-        bottom.g = (int) ((1 - ab) * top.r + ab * bottom.g * top.g / 255);
-        bottom.b = (int) ((1 - ab) * top.r + ab * bottom.b * top.b / 255);
-        if(bottom.r > 255) bottom.r = 255;
-        if(bottom.g > 255) bottom.g = 255;
-        if(bottom.b > 255) bottom.b = 255;
+        bottom.r = (1 - bottom.a) * top.r + bottom.a * bottom.r * top.r;
+        bottom.g = (1 - bottom.a) * top.r + bottom.a * bottom.g * top.g;
+        bottom.b = (1 - bottom.a) * top.r + bottom.a * bottom.b * top.b;
         return bottom.color();
     }
 }
