@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.view.View
 import android.net.Uri
 import android.util.Log
+import android.util.Size
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -69,10 +70,12 @@ class MainActivity : AppCompatActivity() {
 
             // Preview
             preview = Preview.Builder()
+                .setTargetResolution(Size(720,1280))
                 .build()
 
             // ImageCapture
             imageCapture = ImageCapture.Builder()
+                .setTargetResolution(Size(720,1280))
                 .build()
 
             // ImageAnalysis
