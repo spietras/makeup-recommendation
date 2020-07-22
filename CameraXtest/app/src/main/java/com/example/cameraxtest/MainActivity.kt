@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 // Bind use cases to camera
                 preview?.setSurfaceProvider(viewFinder.createSurfaceProvider())
                 camera = cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture, imageAnalyzer)
+                    this, cameraSelector, preview, imageCapture)//, imageAnalyzer)
 
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
 
-                    val intent = Intent( this@MainActivity, DrawActivity::class.java).apply {
+                    val intent = Intent( this@MainActivity, DrawActivity/*PlotActivity*/::class.java).apply {
                         putExtra(EXTRA_MESSAGE, savedUri.toString())
                     }
                     startActivity(intent)

@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.view.InputQueue;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.cameraxtest.CameraImageGraphic.BlendModes;
 
@@ -35,8 +36,8 @@ public class DrawActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //OpenCVLoader.initDebug();
         setContentView(R.layout.activity_draw);
+
         FaceDetectorOptions options = new FaceDetectorOptions.Builder()
                 .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
                 .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
@@ -62,7 +63,19 @@ public class DrawActivity extends AppCompatActivity {
             e.printStackTrace();
             return;
         }
-        //bmp = Utils.equalize(bmp);
+
+        int[] hist = Utils.prefixSum(Utils.calcHist(bmp));
+        if(hist[50]>hist[255]*4/5.0)
+        {
+            Toast.makeText(this, "Zdjęcie zbyt ciemne", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        if(hist[255]-hist[204]>hist[255]*4/5.0)
+        {
+            Toast.makeText(this, "Zdjęcie zbyt jasne", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
         InputImage image = InputImage.fromBitmap(bmp, 0);
         overlay.clear();
         overlay.setImageSourceInfo(bmp.getWidth(), bmp.getHeight(), true);

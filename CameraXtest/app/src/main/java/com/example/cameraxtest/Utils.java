@@ -1,8 +1,11 @@
 package com.example.cameraxtest;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import com.example.cameraxtest.CameraImageGraphic.Layer;
+
+import java.util.Arrays;
 
 public abstract class Utils {
     //rotate bitmap by a specified angle using a matrix
@@ -45,9 +48,27 @@ public abstract class Utils {
         return result;
     }
 
-    public static Bitmap equalize(Bitmap input)
+    public static int[] calcHist(Bitmap input)
     {
         int[] hist = new int[256];
-        return input;
+        int px;
+        for (int x = 0; x < input.getWidth(); x++) {
+            for (int y = 0; y < input.getHeight(); y++) {
+                px = input.getPixel(x, y);
+                px = (Color.red(px) + Color.green(px) + Color.blue(px))/3;
+                hist[px]++;
+            }
+        }
+        return hist;
+    }
+
+    public static int[] prefixSum(int[] input)
+    {
+        int[] copy = new int[input.length];
+        copy[0] = input[0];
+        for (int i = 1; i < input.length; i++) {
+            copy[i] += input[i-1];
+        }
+        return copy;
     }
 }
