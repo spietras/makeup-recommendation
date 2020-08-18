@@ -10,7 +10,7 @@ class Recommender(ABC):
 class DummyRecommender(Recommender):
     def recommend(self, input, *args):
         return {
-            "lips_color" : "red"
+            "lips_color": "red"
         }
 
 
@@ -21,6 +21,10 @@ class EncodingRecommender(Recommender):
         self.encoded_recommender = encoded_recommender
 
     def recommend(self, input, *args):
-        pass
-
-
+        face = self.face_extractor.extract(input)
+        features = self.feature_extractor(face)
+        y = self.encoded_recommender.recommend(features)
+        return {
+            "k1": y[0],
+            "k2": y[1]
+        }
