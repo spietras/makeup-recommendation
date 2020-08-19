@@ -98,8 +98,10 @@ public class DrawActivity extends AppCompatActivity {
             case 0:
                 break;
         }
-
-        InputImage image = InputImage.fromBitmap(bmp, 0);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = 2;
+        String path = message.substring(5);
+        InputImage image = InputImage.fromBitmap(BitmapFactory.decodeFile(path, opts), 270);//bmp, 0);
         overlay.clear();
         overlay.setImageSourceInfo(bmp.getWidth(), bmp.getHeight(), true);
         overlay.add(picture);
@@ -111,13 +113,13 @@ public class DrawActivity extends AppCompatActivity {
                         .addOnSuccessListener(this::onSuccess)
                         .addOnFailureListener(this::onFailure);
 
-        overlay.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        /*overlay.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 overlay.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 overlay.setLayoutParams(new ConstraintLayout.LayoutParams(overlay.getWidth(), overlay.getWidth()*overlay.getImageHeight()/overlay.getImageWidth()));
             }
-        });
+        });*/
     }
 
     public void onSuccess(List<Face> faces) {
@@ -126,6 +128,7 @@ public class DrawActivity extends AppCompatActivity {
             Toast.makeText(DrawActivity.this, "Nie wykryto twarzy na zdjęciu", Toast.LENGTH_SHORT).show();
             return;
         }
+        FaceGraphic graphic = null;
         //Toast.makeText(DrawActivity.this, "Detection took " + (stopTime - startTime) + " milliseconds", Toast.LENGTH_SHORT).show();
         //Face face = faces.get(0);
         //Rect crop;
@@ -148,8 +151,9 @@ public class DrawActivity extends AppCompatActivity {
                 case 0:
                     break;
             }*/
-
-            overlay.add(new FaceGraphic(overlay, face));
+            graphic = new FaceGraphic(overlay, face);
+            graphic.face_scale = 2;
+            overlay.add(graphic);
         }
         overlay.postInvalidate();
         /*File file = new File(Uri.parse(message));

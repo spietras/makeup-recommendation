@@ -56,6 +56,9 @@ public class FaceGraphic extends Graphic {
             {Color.BLACK, Color.GREEN}
     };
 
+    private float overlay_scale;
+    public float face_scale = 1.0f;
+
     private final Paint facePositionPaint;
     private final Paint[] idPaints;
     private final Paint[] boxPaints;
@@ -90,6 +93,7 @@ public class FaceGraphic extends Graphic {
             labelPaints[i].setColor(COLORS[i][1]  /* background color */);
             labelPaints[i].setStyle(Paint.Style.FILL);
         }
+        overlay_scale = overlay.scaleFactor;
     }
 
     /**
@@ -228,5 +232,10 @@ public class FaceGraphic extends Graphic {
                     FACE_POSITION_RADIUS,
                     facePositionPaint);
         }
+    }
+
+    @Override
+    public float scale(float imagePixel) {
+        return imagePixel * overlay_scale * face_scale;
     }
 }

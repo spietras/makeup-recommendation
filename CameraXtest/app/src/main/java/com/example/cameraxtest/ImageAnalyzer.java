@@ -69,6 +69,7 @@ public class ImageAnalyzer implements ImageAnalysis.Analyzer {
                                         overlay.clear();
                                         //overlay.add(new CameraImageGraphic(overlay, bmp));
                                         for (Face face: faces) {
+                                            Log.d(TAG, "analyze: face drawn");
                                             FaceGraphic drawFace = new FaceGraphic(overlay, face);
                                             overlay.add(drawFace);
                                         }

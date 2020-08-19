@@ -54,7 +54,7 @@ public class GraphicOverlay extends View {
     private int imageHeight;
     // The factor of overlay View size to image size. Anything in the image coordinates need to be
     // scaled by this amount to fit with the area of overlay View.
-    private float scaleFactor = 1.0f;
+    public float scaleFactor = 1.0f;
     // The number of horizontal pixels needed to be cropped on each side to fit the image with the
     // area of overlay View after scaling.
     private float postScaleWidthOffset;

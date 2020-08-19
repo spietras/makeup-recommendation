@@ -70,18 +70,18 @@ class MainActivity : AppCompatActivity() {
 
             // Preview
             preview = Preview.Builder()
-                .setTargetResolution(Size(720,720))
+                .setTargetResolution(Size(720,1280))
                 .build()
 
             // ImageCapture
             imageCapture = ImageCapture.Builder()
-                .setTargetResolution(Size(256,256))
+                .setTargetResolution(Size(720,1280))
                 .build()
 
             // ImageAnalysis
             imageAnalyzer = ImageAnalysis.Builder()
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setTargetResolution(Size(720, 1280))
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
+                .setTargetResolution(Size(720, 720))
                 .build()
                 .also {
                     it.setAnalyzer(cameraExecutor, analyzer)
