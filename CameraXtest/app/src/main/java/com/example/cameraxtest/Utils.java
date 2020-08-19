@@ -75,11 +75,11 @@ public abstract class Utils {
     public static int checkBrightness(Bitmap input)
     {
         int[] hist = Utils.prefixSum(Utils.calcHist(input));
-        if(hist[50]>hist[255]*4/5.0)
+        if(hist[50]>hist[255]*9/10.0)
         {
             return -1;
         }
-        if(hist[255]-hist[204]>hist[255]*4/5.0)
+        if(hist[255]-hist[204]>hist[255]*9/10.0)
         {
             return 1;
         }

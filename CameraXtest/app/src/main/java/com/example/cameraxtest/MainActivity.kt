@@ -70,17 +70,18 @@ class MainActivity : AppCompatActivity() {
 
             // Preview
             preview = Preview.Builder()
-                .setTargetResolution(Size(720,1280))
+                .setTargetResolution(Size(720,720))
                 .build()
 
             // ImageCapture
             imageCapture = ImageCapture.Builder()
-                .setTargetResolution(Size(720,1280))
+                .setTargetResolution(Size(256,256))
                 .build()
 
             // ImageAnalysis
             imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .setTargetResolution(Size(720, 1280))
                 .build()
                 .also {
                     it.setAnalyzer(cameraExecutor, analyzer)
@@ -129,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val savedUri = photoFile.toURI();
+                    val savedUri = photoFile.toURI()
                     val msg = "Photo capture succeeded: ${savedUri.toString()}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
@@ -138,7 +139,6 @@ class MainActivity : AppCompatActivity() {
                         putExtra(EXTRA_MESSAGE, savedUri.toString())
                     }
                     startActivity(intent)
-
                 }
             })
         /*imageCapture.takePicture(ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageCapturedCallback() {
