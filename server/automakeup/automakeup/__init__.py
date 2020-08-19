@@ -7,5 +7,9 @@
 # from package.module import foo
 # this is just a convenience to not expose nesting
 
-from .encoded_recommendation import recommend
-package_name = __name__
+__package_name__ = "automakeup"
+__version__ = "0.0.1"
+__author__ = "Sebastian Pietras"
+__description__ = "Automatic makeup recommendation"
+
+__resources__ = "resources"
