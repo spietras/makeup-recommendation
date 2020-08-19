@@ -29,6 +29,7 @@ public class ImageAnalyzer implements ImageAnalysis.Analyzer {
     private GraphicOverlay overlay;
     private FaceDetectorOptions options;
     public FaceDetector detector;
+    private String TAG = "DETECTOR";
 
     public ImageAnalyzer(@NonNull GraphicOverlay o)
     {
@@ -48,6 +49,7 @@ public class ImageAnalyzer implements ImageAnalysis.Analyzer {
         @SuppressLint("UnsafeExperimentalUsageError") Image mediaImage = imageProxy.getImage();
         if(mediaImage == null)
         {
+            Log.d(TAG, "analyze: mediaimage is null");
             return;
         }
         InputImage image =
@@ -60,6 +62,10 @@ public class ImageAnalyzer implements ImageAnalysis.Analyzer {
                                 new OnSuccessListener<List<Face>>() {
                                     @Override
                                     public void onSuccess(List<Face> faces) {
+                                        if(faces.isEmpty())
+                                        {
+                                            Log.d(TAG, "onSuccess: no faces found");
+                                        }
                                         overlay.clear();
                                         //overlay.add(new CameraImageGraphic(overlay, bmp));
                                         for (Face face: faces) {
