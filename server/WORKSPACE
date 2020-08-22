@@ -1,16 +1,5 @@
-# WORKSPACE file marks root of your project
-# as there is only one WORKSPACE file per project it's a good place for listing dependecies
-# that is a natural way of following the single version policy
-
-# WORKSPACE file consists of two logical "parts"
-# 1: load all necessary rules
-# 2: use loaded rules to create repos with dependencies
-
 ##########################################  LOADING RULES  ###########################################
 
-### HTTP ARCHIVE ###
-
-# from bazel_tools repo load http_archive rule
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 ### RULES_PYTHON ###
@@ -23,7 +12,6 @@ RULES_PYTHON_REPO = "bazelbuild"
 RULES_PYTHON_ARCHIVE = "zip"
 RULES_PYTHON_URL = "https://github.com/%s/%s/archive/%s.%s" % (RULES_PYTHON_REPO, RULES_PYTHON_NAME, RULES_PYTHON_TAG, RULES_PYTHON_ARCHIVE)
 
-# use http_archive rule to load rules_python repo
 http_archive(
     name = RULES_PYTHON_NAME,
     strip_prefix = RULES_PYTHON_PREFIX,
@@ -31,31 +19,21 @@ http_archive(
     url = RULES_PYTHON_URL
 )
 
-# now you can use python rules in your build files, just load them at the top, for example: load("@rules_python//python:defs.bzl", "py_library")
-
 ### RULES_PYTHON_EXTERNAL ###
 
-# WE ARE HOPEFULLY WAITING FOR NEW OFFICIAL VERSION AND IN THE MEAN TIME WE SHOULD USE THE LOCAL, FIXED VERSION  
+RULES_PYTHON_EXTERNAL_NAME = "rules_python_external"
+RULES_PYTHON_EXTERNAL_TAG = "8029ddb56227d97cd052ff034929b7790a63a133"
+RULES_PYTHON_EXTERNAL_PREFIX = "%s-%s" % (RULES_PYTHON_EXTERNAL_NAME, RULES_PYTHON_EXTERNAL_TAG)
+RULES_PYTHON_EXTERNAL_SHA = "c7d43551d44c7ca8bb1360c1076be228a0561c8abbdea7eb73e279b83773f51c"
+RULES_PYTHON_EXTERNAL_REPO = "dillon-giacoppo"
+RULES_PYTHON_EXTERNAL_ARCHIVE = "zip"
+RULES_PYTHON_EXTERNAL_URL = "https://github.com/%s/%s/archive/%s.%s" % (RULES_PYTHON_EXTERNAL_REPO, RULES_PYTHON_EXTERNAL_NAME, RULES_PYTHON_EXTERNAL_TAG, RULES_PYTHON_EXTERNAL_ARCHIVE)
 
-#RULES_PYTHON_EXTERNAL_NAME = "rules_python_external"
-#RULES_PYTHON_EXTERNAL_TAG = "2c78da5b5beb78c4a96b8b4d84e9c34de8178efb"
-#RULES_PYTHON_EXTERNAL_PREFIX = "%s-%s" % (RULES_PYTHON_EXTERNAL_NAME, RULES_PYTHON_EXTERNAL_TAG)
-#RULES_PYTHON_EXTERNAL_SHA = "30987e33c0b00ef75d11dec756db6a5d57ccd4085525f8888d5237ef798f8d16"
-#RULES_PYTHON_EXTERNAL_REPO = "dillon-giacoppo"
-#RULES_PYTHON_EXTERNAL_ARCHIVE = "zip"
-#RULES_PYTHON_EXTERNAL_URL = "https://github.com/%s/%s/archive/%s.%s" % (RULES_PYTHON_EXTERNAL_REPO, RULES_PYTHON_EXTERNAL_NAME, RULES_PYTHON_EXTERNAL_TAG, RULES_PYTHON_EXTERNAL_ARCHIVE)
-
-# use http_archive rule to load rules_python_external repo
-#http_archive(
-#    name = RULES_PYTHON_EXTERNAL_NAME,
-#    strip_prefix = RULES_PYTHON_EXTERNAL_PREFIX,
-#    sha256 = RULES_PYTHON_EXTERNAL_SHA,
-#    url = RULES_PYTHON_EXTERNAL_URL
-#)
-
-local_repository(
-    name = "rules_python_external",
-    path = "third_party/rules_python_external",
+http_archive(
+    name = RULES_PYTHON_EXTERNAL_NAME,
+    strip_prefix = RULES_PYTHON_EXTERNAL_PREFIX,
+    sha256 = RULES_PYTHON_EXTERNAL_SHA,
+    url = RULES_PYTHON_EXTERNAL_URL
 )
 
 load("@rules_python_external//:repositories.bzl", "rules_python_external_dependencies")
@@ -63,27 +41,8 @@ rules_python_external_dependencies()
 
 ### RULES_PYENV ###
 
-# WE ARE HOPEFULLY WAITING FOR NEW OFFICIAL VERSION AND IN THE MEAN TIME WE SHOULD USE THE LOCAL, FIXED VERSION  
-
-#RULES_PYENV_NAME = "rules_pyenv"
-#RULES_PYENV_TAG = "0.1.2"
-#RULES_PYENV_PREFIX = "%s-%s" % (RULES_PYENV_NAME, RULES_PYENV_TAG)
-#RULES_PYENV_SHA = "241317102c3dafc958371194ba987706d6a87de8529e8da8935dd84753bba5b1"
-#RULES_PYENV_REPO = "digital-plumbers-union"
-#RULES_PYENV_ARCHIVE = "tar.gz"
-#RULES_PYENV_URL = "https://github.com/%s/%s/archive/v%s.%s" % (RULES_PYENV_REPO, RULES_PYENV_NAME, RULES_PYENV_TAG, RULES_PYENV_ARCHIVE)
-
-# use http_archive rule to load rules_pyenv repo
-#http_archive(
-#    name = RULES_PYENV_NAME,
-#    strip_prefix = RULES_PYENV_PREFIX,
-#    sha256 = RULES_PYENV_SHA,
-#    url = RULES_PYENV_URL
-#)
-
 load("@//third_party/python:pyenv.bzl", "pyenv_install")
 
-# install specified python version
 pyenv_install(
     py2 = "2.7.17",
     py3 = "3.7.5",
@@ -95,16 +54,8 @@ pyenv_install(
 
 load("@rules_python_external//:defs.bzl", "pip_install")
 
-# install pip dependencies
-# after that you can reference your dependencies as: requirement("target")
 pip_install(
-
-    # name of the repo to create
     name = "pip",
-
-    # path to requirements file, state all your dependencies there
     requirements = "//third_party/python:requirements.txt",
-
-    # use pyenv's python interpreter
     python_interpreter_target = "@pyenv//:py3/python",
 )

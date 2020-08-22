@@ -13,9 +13,8 @@ set "EXTENSION=.exe"
 set FOUND=0
 if "%PROCESSOR_ARCHITECTURE%" == "AMD64" ( set "FOUND=1" & set "ARCH=amd64" )
 if "%PROCESSOR_ARCHITEW6432%" == "AMD64" ( set "FOUND=1" & set "ARCH=amd64" )
-@rem TODO: uncomment later, when upgrading to newer Bazelisk
-@rem if "%PROCESSOR_ARCHITECTURE%" == "ARM64" ( set "FOUND=1" & set "ARCH=arm64" )
-@rem if "%PROCESSOR_ARCHITEW6432%" == "ARM64" ( set "FOUND=1" & set "ARCH=arm64" )
+if "%PROCESSOR_ARCHITECTURE%" == "ARM64" ( set "FOUND=1" & set "ARCH=arm64" )
+if "%PROCESSOR_ARCHITEW6432%" == "ARM64" ( set "FOUND=1" & set "ARCH=arm64" )
 if "%FOUND%" == 0 ( echo "Unsupported architecture %PROCESSOR_ARCHITECTURE%" & set "EXITCODE=1" & goto end )
 
 set "BAZELISK_EXECUTABLE=%BAZELISK_DIR%/bazelisk-%SYSTEM%-%ARCH%%EXTENSION%"
