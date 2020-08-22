@@ -3,27 +3,45 @@ Makeup recommendation system 💄💅
 
 ## Requirements for everything except Android
 
-Linux:
+- Bazel requirements (to run Bazel itself):
 
-- ```glibc``` (it should be available in most Linux distributions, but for smaller ones like ```alpine``` this can be a problem)
+	Linux:
 
-- development libraries for: ```readline```, ```zlib```, ```bzip2``` , ```sqlite3```, ```openssl```, ```libffi```
+	- ```glibc``` (it should be available in most Linux distributions, but for smaller ones like ```alpine``` this can be a problem)
 
-- ```curl```
+	Windows:
 
-- ```make```
+	- Nothing
 
-- ```cmake```
+- Tooling requirements (to configure all build tools):
 
-- any C and C++ compiler (like ```gcc``` and ```g++```)
+	Linux:
 
-- any ```python``` (note: ```python``` command must be on ```PATH```, if you don't have ```python``` but have ```python2``` or ```python3``` you should create a symlink)
+	- development libraries for: ```readline```, ```zlib```, ```bzip2``` , ```sqlite3```, ```openssl```, ```libffi```
 
-Windows:
+	- ```curl```
 
-- Windows 10
+	- ```make```
 
-- Developer Mode enabled
+	- any C and C++ compiler (like ```gcc``` and ```g++```)
+
+	- any ```python``` (note: ```python``` command must be on ```PATH```, if you don't have ```python``` but have ```python2``` or ```python3``` you should create a symlink)
+
+	Windows:
+
+	- Windows 10
+
+	- Developer Mode enabled
+
+- Dependencies requirements (to setup all third party dependencies):
+
+	Linux:
+
+	- ```cmake```
+
+	Windows:
+
+	- ```cmake```
 
 ## Usage
 
