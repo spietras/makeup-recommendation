@@ -11,49 +11,35 @@ Makeup recommendation system 💄💅
 
 	Windows:
 
-	- Nothing
+	- TOCHECK
 
 - Tooling requirements (to configure all build tools):
 
 	Linux:
 
-	- development libraries for: ```readline```, ```zlib```, ```bzip2``` , ```sqlite3```, ```openssl```, ```libffi```
-
-	- ```curl```
-
-	- ```make```
-
-	- any C and C++ compiler (like ```gcc``` and ```g++```)
+	- any C compiler (like ```gcc```)
 
 	- any ```python``` (note: ```python``` command must be on ```PATH```, if you don't have ```python``` but have ```python2``` or ```python3``` you should create a symlink)
 
 	Windows:
 
-	- Windows 10
-
-	- Developer Mode enabled
+	- TOCHECK
 
 - Dependencies requirements (to setup all third party dependencies):
 
-	Linux:
-
-	- ```cmake```
-
-	Windows:
-
-	- ```cmake```
+	- If you want to use ```dlib``` in GPU mode, you need ```CUDA``` compatible GPU and ```CUDA Toolkit``` installed. Otherwise ```dlib``` will run in CPU mode.
 
 ## Usage
 
 Building only:
 
-```
+```sh
 ./bazelw build TARGET
 ```
 
 Running:
 
-```
+```sh
 ./bazelw run TARGET [-- args...]
 ```
 
@@ -61,7 +47,7 @@ Runnable targets: ```webmakeup```, ```climakeup```
 
 Testing:
 
-```
+```sh
 ./bazelw test TARGET/...
 ```
 
