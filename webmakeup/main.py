@@ -1,8 +1,3 @@
-# now you can import that way:
-# from package import module.foo
-# or it it's exposed in __init__.py:
-# from package import foo
-
 import argparse
 
 from automakeup import recommenders

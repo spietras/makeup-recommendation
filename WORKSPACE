@@ -19,43 +19,40 @@ http_archive(
     url = RULES_PYTHON_URL
 )
 
-### RULES_PYTHON_EXTERNAL ###
+### RULES_CONDA ###
 
-RULES_PYTHON_EXTERNAL_NAME = "rules_python_external"
-RULES_PYTHON_EXTERNAL_TAG = "8029ddb56227d97cd052ff034929b7790a63a133"
-RULES_PYTHON_EXTERNAL_PREFIX = "%s-%s" % (RULES_PYTHON_EXTERNAL_NAME, RULES_PYTHON_EXTERNAL_TAG)
-RULES_PYTHON_EXTERNAL_SHA = "c7d43551d44c7ca8bb1360c1076be228a0561c8abbdea7eb73e279b83773f51c"
-RULES_PYTHON_EXTERNAL_REPO = "dillon-giacoppo"
-RULES_PYTHON_EXTERNAL_ARCHIVE = "zip"
-RULES_PYTHON_EXTERNAL_URL = "https://github.com/%s/%s/archive/%s.%s" % (RULES_PYTHON_EXTERNAL_REPO, RULES_PYTHON_EXTERNAL_NAME, RULES_PYTHON_EXTERNAL_TAG, RULES_PYTHON_EXTERNAL_ARCHIVE)
+RULES_CONDA_NAME = "rules_conda"
+RULES_CONDA_TAG = "0.0.1"
+RULES_CONDA_SHA = "945d040a3bcc91f9fea3069b4ab16a03ed0b699dcf00a7a97fcb8674ca780677"
+RULES_CONDA_REPO = "spietras"
+RULES_CONDA_ARCHIVE = "zip"
+RULES_CONDA_URL = "https://github.com/{repo}/{name}/releases/download/{tag}/{name}-{tag}.{archive}".format(repo=RULES_CONDA_REPO, name=RULES_CONDA_NAME, tag=RULES_CONDA_TAG, archive=RULES_CONDA_ARCHIVE)
 
+# use http_archive rule to load rules_conda repo
 http_archive(
-    name = RULES_PYTHON_EXTERNAL_NAME,
-    strip_prefix = RULES_PYTHON_EXTERNAL_PREFIX,
-    sha256 = RULES_PYTHON_EXTERNAL_SHA,
-    url = RULES_PYTHON_EXTERNAL_URL
-)
-
-load("@rules_python_external//:repositories.bzl", "rules_python_external_dependencies")
-rules_python_external_dependencies()
-
-### RULES_PYENV ###
-
-load("@//third_party/python:pyenv.bzl", "pyenv_install")
-
-pyenv_install(
-    py2 = "2.7.17",
-    py3 = "3.7.5",
+    name = RULES_CONDA_NAME,
+    sha256 = RULES_CONDA_SHA,
+    url = RULES_CONDA_URL
 )
 
 ########################################## USING REPO RULES ##########################################
 
-### PIP ###
+### CONDA ###
 
-load("@rules_python_external//:defs.bzl", "pip_install")
+load("@rules_conda//:defs.bzl", "load_conda", "conda_create", "register_toolchain")
 
-pip_install(
-    name = "pip",
-    requirements = "//third_party/python:requirements.txt",
-    python_interpreter_target = "@pyenv//:py3/python",
+# download and install conda
+load_conda(
+    version="4.8.4" # optional, defaults to 4.8.4
+)
+
+# create environment
+conda_create(
+    name = "my_env",
+    environment = "@//third_party/python:environment.yml" # label pointing to environment.yml file
+)
+
+# register pythons from environment as toolchain
+register_toolchain(
+    py3_env = "my_env"
 )
