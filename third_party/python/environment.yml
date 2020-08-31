@@ -3,8 +3,9 @@ channels:
 dependencies:
   - python=3.8.5
   - pip==20.2.2
-  - dlib==19.21.0
+  - cmake==3.18.2
   - opencv==4.4.0
   - flask==1.1.2
   - pip:
+    - dlib==19.21.0
     - git+https://github.com/cmusatyalab/openface@0.2.1#egg=openface
