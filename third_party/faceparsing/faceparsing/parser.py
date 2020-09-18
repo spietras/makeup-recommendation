@@ -1,7 +1,6 @@
 import importlib.resources as pkg_resources
 
 import torch
-import torchvision.transforms as transforms
 
 from faceparsing.model import BiSeNet
 
