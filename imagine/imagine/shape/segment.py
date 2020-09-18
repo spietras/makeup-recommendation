@@ -17,16 +17,16 @@ RECOGNIZED_PARTS = DEFAULT_PARTS_MAP.keys()
 
 class Segmenter(ABC):
     @abstractmethod
-    def segment(self, img, parts_map=None, bg_code=0):
+    def segment(self, imgs, parts_map=None, bg_code=0):
         """
         Segment images into parts
 
         Args:
-            img - numpy array of shape (height, width, 3) in RGB with values either in [0-255] or [0.0-1.0]
+            img - numpy array of shape (N, height, width, 3) in RGB with values either in [0-255] or [0.0-1.0]
             parts_map - dict with mapping of part name to code to use
 
         Returns:
-            numpy array of shape (height, width) with values of codes in pixels recognized as parts
+            numpy array of shape (N, height, width) with values of codes in pixels recognized as parts
         """
         return NotImplemented
 

@@ -4,10 +4,10 @@ import numpy as np
 
 def normalize_photo(photo):
     np_array = np.asarray(photo)
-    if np_array.ndim != 3:
-        raise ValueError("Invalid number of dimensions: {}. Should be 3".format(np_array.ndim))
-    if np_array.shape[2] != 3:
-        raise ValueError("Invalid number of channels: {}. Should be 3".format(np_array.shape[2]))
+    if np_array.ndim not in [3, 4]:
+        raise ValueError("Invalid number of dimensions: {}. Should be 3 or 4".format(np_array.ndim))
+    if np_array.shape[-1] != 3:
+        raise ValueError("Invalid number of channels: {}. Should be 3".format(np_array.shape[-1]))
     if np.issubdtype(np_array.dtype, np.floating):
         return denormalize_range(np_array)
     if np.issubdtype(np_array.dtype, np.integer):

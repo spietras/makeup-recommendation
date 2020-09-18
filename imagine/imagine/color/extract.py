@@ -14,10 +14,10 @@ class ColorExtractor(ABC):
 
         Args:
             img - numpy array of shape (height, width, 3) in RGB with values either in [0-255] or [0.0-1.0]
-            mask - numpy array of shape(height, width) with ones or Trues in pixels to process
+            mask - numpy array of shape (height, width) with ones or Trues in pixels to process
 
         Returns:
-            numpy array of shape (N, 3) with extracted colors in RGB in [0-255] or None if mask is empty
+            numpy array of shape (N, 3) with N extracted colors in RGB in [0-255] or None if mask is empty
         """
         return NotImplemented
 
@@ -38,10 +38,10 @@ class PositionAgnosticExtractor(ColorExtractor, ABC):
         Extract colors from flat pixel array
 
         Args:
-            pixels - numpy array of shape (N, 3) in RGB with values either in [0-255]
+            pixels - numpy array of shape (P, 3) in RGB with values either in [0-255]
 
         Returns:
-            numpy array of shape (N, 3) with extracted colors or None if mask is empty
+            numpy array of shape (N, 3) with N extracted colors or None if mask is empty
         """
         return NotImplemented
 
