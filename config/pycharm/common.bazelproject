@@ -5,7 +5,8 @@ directories:
   imagine
   webmakeup
   jupyter
-  third_party
+  third_party/conda
+  third_party/faceparsing
 
 # Automatically includes all relevant targets under the 'directories' above
 derive_targets_from_directories: true
