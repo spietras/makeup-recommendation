@@ -1,13 +1,14 @@
 from abc import ABC, abstractmethod
 
 import numpy as np
-from sklearn.cluster import KMeans
+from sklearn.base import clone
 
 from imagine import helpers
+from imagine.color import conversion
 
 
 class ColorExtractor(ABC):
-    @abstractmethod
+
     def extract(self, img, mask):
         """
         Extract colors from pixels
@@ -19,18 +20,22 @@ class ColorExtractor(ABC):
         Returns:
             numpy array of shape (N, 3) with N extracted colors in RGB in [0-255] or None if mask is empty
         """
+        img = helpers.normalize_images(img)
+        img = conversion.RgbToLab.convert(img)
+        return self.extract_normalized(img, mask)
+
+    @abstractmethod
+    def extract_normalized(self, img, mask):
         return NotImplemented
 
 
 class PositionAgnosticExtractor(ColorExtractor, ABC):
 
-    def extract(self, img, mask):
-        img = helpers.normalize_photo(img)
-        img = helpers.to_lab(img)
+    def extract_normalized(self, img, mask):
         pixels = img[mask == 1]
         if pixels.size == 0:
             return None
-        return helpers.to_rgb(self.extract_from_pixels(pixels))
+        return conversion.LabToRgb.convert(self.extract_from_pixels(pixels))
 
     @abstractmethod
     def extract_from_pixels(self, pixels):
@@ -58,23 +63,24 @@ class MedianColorExtractor(PositionAgnosticExtractor):
         return np.atleast_2d(np.median(pixels, axis=0).astype(np.uint8))
 
 
-class KMeansColorExtractor(PositionAgnosticExtractor):
+class ClusteringColorExtractor(PositionAgnosticExtractor):
 
-    def __init__(self, k=1, seed=None):
+    def __init__(self, clustering):
         super().__init__()
-        self.k = k
-        self.seed = seed
+        self.clustering = clustering
 
     def extract_from_pixels(self, pixels):
         pixels = helpers.normalize_range(pixels)
-        kmeans = KMeans(n_clusters=self.k, random_state=self.seed).fit(pixels)
-        return helpers.denormalize_range(kmeans.cluster_centers_)
+        clustering = clone(self.clustering).fit(pixels)
+        colors = np.array([pixels[clustering.labels_ == label].mean(axis=0)
+                           for label in range(clustering.labels_.max() + 1)])
+        return helpers.denormalize_range(colors)
 
 
-class MeanKMeansColorExtractor(KMeansColorExtractor):
+class MeanClusteringColorExtractor(ClusteringColorExtractor):
 
-    def __init__(self, k=3, seed=None):
-        super().__init__(k, seed)
+    def __init__(self, clustering):
+        super().__init__(clustering)
 
     def extract_from_pixels(self, pixels):
         cluster_colors = super().extract_from_pixels(pixels)

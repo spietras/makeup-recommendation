@@ -10,3 +10,13 @@ py_test(
         "//third_party/faceparsing",
     ],
 )
+
+py_test(
+    name = "test_operations",
+    size = "small",
+    srcs = ["test_operations.py"],
+    data = glob(["resources/**/*"]),
+    deps = [
+        "//imagine",
+    ],
+)

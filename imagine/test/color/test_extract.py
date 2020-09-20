@@ -2,6 +2,7 @@ import unittest
 
 import cv2
 import numpy as np
+from sklearn.cluster import KMeans
 
 from imagine.color import extract
 
@@ -72,28 +73,28 @@ class MedianColorExtractorTestCase(unittest.TestCase):
         self.assertEqual(self.extractor.extract(img, mask), None)
 
 
-class KMeansColorExtractorTestCase(unittest.TestCase):
+class ClusteringColorExtractorTestCase(unittest.TestCase):
 
     def test_extract_returns_correct_shape_with_single_cluster(self):
-        extractor = extract.KMeansColorExtractor(k=1)
+        extractor = extract.ClusteringColorExtractor(clustering=KMeans(n_clusters=1))
         img = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255]]])
         mask = np.array([[1, 1, 1]])
         self.assertEqual(extractor.extract(img, mask).shape, (1, 3))
 
     def test_extract_returns_correct_shape_with_multiple_clusters(self):
-        extractor = extract.KMeansColorExtractor(k=3)
+        extractor = extract.ClusteringColorExtractor(clustering=KMeans(n_clusters=3))
         img = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255]]])
         mask = np.array([[1, 1, 1]])
         self.assertEqual(extractor.extract(img, mask).shape, (3, 3))
 
     def test_extract_returns_correct_type(self):
-        extractor = extract.KMeansColorExtractor()
+        extractor = extract.ClusteringColorExtractor(clustering=KMeans(n_clusters=1))
         img = np.array([[[200, 200, 200]]])
         mask = np.array([[1]])
         self.assertTrue(np.issubdtype(extractor.extract(img, mask).dtype, np.integer))
 
     def test_extract_returns_none_with_empty_mask(self):
-        extractor = extract.KMeansColorExtractor()
+        extractor = extract.ClusteringColorExtractor(clustering=KMeans(n_clusters=1))
         img = np.array([
             [[0, 0, 0], [0, 0, 0]],
             [[0, 0, 0], [0, 0, 0]]
@@ -103,19 +104,13 @@ class KMeansColorExtractorTestCase(unittest.TestCase):
         self.assertEqual(extractor.extract(img, mask), None)
 
 
-class MeanKMeansColorExtractorTestCase(unittest.TestCase):
-    extractor = extract.MeanKMeansColorExtractor()
+class MeanClusteringColorExtractorTestCase(unittest.TestCase):
+    extractor = extract.MeanClusteringColorExtractor(clustering=KMeans(n_clusters=3))
 
     def test_extract_returns_correct_shape(self):
         img = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255]]])
         mask = np.array([[1, 1, 1]])
         self.assertEqual(self.extractor.extract(img, mask).shape, (1, 3))
-
-    def test_extract_returns_correct_shape_with_multiple_clusters(self):
-        extractor = extract.MeanKMeansColorExtractor(k=3)
-        img = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255]]])
-        mask = np.array([[1, 1, 1]])
-        self.assertEqual(extractor.extract(img, mask).shape, (1, 3))
 
     def test_extract_returns_correct_type(self):
         img = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255]]])
