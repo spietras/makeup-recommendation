@@ -4,15 +4,27 @@ from imagine.functional.functional import ImageOperation
 
 
 class ColorConverter(ImageOperation):
+    """
+    Convert images from one color space to another
+
+    Attributes:
+        mode - cv2 color conversion mode
+    """
+
     def __init__(self, mode):
-        """
-        Args:
-            mode: cv2 color conversion mode
-        """
         super().__init__()
         self.mode = mode
 
     def perform(self, img, **kwargs):
+        """
+        Perform conversion
+
+        Args:
+            img: numpy array of shape (height, width, channels) in uint8 with image data
+
+        Returns:
+            numpy array of the same shape as img with converted colors
+        """
         return cv2.cvtColor(img, self.mode)
 
 

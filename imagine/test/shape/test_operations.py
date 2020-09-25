@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 
 from imagine.shape import operations
+from imagine.shape.figures import Rect
 
 
 def generate_binary_square(square_value=1, size=1, padding_value=0, padding=1):
@@ -93,7 +94,7 @@ class BoundingRectTestCase(unittest.TestCase):
     def test_bounding_rect_returns_correct_values(self):
         img = generate_binary_square(size=2, padding=1)
         contour = operations.biggest_contour(img)
-        x, y, w, h = operations.bounding_rect(contour)
+        x, y, w, h = operations.bounding_rect(contour).to_cv()
         self.assertEqual(x, 1)
         self.assertEqual(y, 1)
         self.assertEqual(w, 3)
@@ -109,33 +110,33 @@ class CropTestCase(unittest.TestCase):
 
     def test_crop_returns_correct_values(self):
         img = generate_binary_square(square_value=1, size=2, padding=1)
-        cropped = operations.crop(img, (1, 1, 3, 3))
+        cropped = operations.crop(img, Rect.from_cv((1, 1, 3, 3)))
         self.assertTrue((cropped == np.ones((3, 3))).all())
 
     def test_crop_succeeds_on_whole_image_rect(self):
         img = np.ones((30, 30, 3))
-        cropped = operations.crop(img, (0, 0, 30, 30))
+        cropped = operations.crop(img, Rect.from_cv((0, 0, 30, 30)))
         self.assertTrue((cropped == img).all())
 
     def test_crop_returns_correct_shape(self):
         img = np.ones((30, 30, 3))
-        cropped = operations.crop(img, (0, 0, 30, 30))
+        cropped = operations.crop(img, Rect.from_cv((0, 0, 30, 30)))
         self.assertEqual(cropped.shape, img.shape)
 
     def test_crop_works_on_flat_image(self):
         img = np.ones((30, 30))
-        cropped = operations.crop(img, (0, 0, 30, 30))
+        cropped = operations.crop(img, Rect.from_cv((0, 0, 30, 30)))
         self.assertEqual(cropped.shape, img.shape)
 
     def test_crop_returns_correct_data_type(self):
         img = np.ones((30, 30, 3))
-        cropped = operations.crop(img, (0, 0, 30, 30))
+        cropped = operations.crop(img, Rect.from_cv((0, 0, 30, 30)))
         self.assertEqual(cropped.dtype, img.dtype)
 
     def test_crop_works_on_rect_besides_edges(self):
         img = np.ones((30, 30, 3))
-        cropped = operations.crop(img, (0, 0, 40, 20))
-        expected = operations.crop(img, (0, 0, 30, 20))
+        cropped = operations.crop(img, Rect.from_cv((0, 0, 40, 20)))
+        expected = operations.crop(img, Rect.from_cv((0, 0, 30, 20)))
         self.assertEqual(cropped.shape, expected.shape)
 
 
@@ -165,11 +166,11 @@ class ErodeTestCase(unittest.TestCase):
 class SquarisizeTestCase(unittest.TestCase):
 
     def test_squarisize_returns_square(self):
-        _, _, w, h = operations.squarisize((0, 0, 5, 10))
+        _, _, w, h = operations.squarisize(Rect.from_cv((0, 0, 5, 10))).to_cv()
         self.assertEqual(w, h)
 
     def test_squarisize_returns_bigger_dimension(self):
-        _, _, w, h = operations.squarisize((0, 0, 5, 10))
+        _, _, w, h = operations.squarisize(Rect.from_cv((0, 0, 5, 10))).to_cv()
         self.assertEqual(w, 10)
         self.assertEqual(h, 10)
 
@@ -177,19 +178,27 @@ class SquarisizeTestCase(unittest.TestCase):
 class SafeRectTestCase(unittest.TestCase):
 
     def test_safe_rect_returns_the_same_rect_when_inside_bounds(self):
-        rect = (1, 1, 5, 5)
-        safe = operations.safe_rect(rect, 10, 10)
+        rect = Rect.from_cv((1, 1, 5, 5))
+        safe = operations.safe_rect(rect, (10, 10))
         self.assertEqual(rect, safe)
 
     def test_safe_rect_moves_rect_correctly_when_outside_bounds(self):
-        rect = (9, 9, 2, 2)
-        x, y, _, _ = operations.safe_rect(rect, 10, 10)
+        rect = Rect.from_cv((9, 9, 2, 2))
+        x, y, _, _ = operations.safe_rect(rect, (10, 10)).to_cv()
         self.assertEqual(x, 8)
         self.assertEqual(y, 8)
 
     def test_safe_rect_fails_when_rect_is_too_big(self):
-        rect = (0, 0, 11, 1)
-        self.assertRaises(ValueError, operations.safe_rect, rect, 10, 10)
+        rect = Rect.from_cv((0, 0, 11, 1))
+        self.assertRaises(ValueError, operations.safe_rect, rect, (10, 10))
+
+    def test_safe_rect_scales_rect_when_rect_is_too_big_and_allow_scale_is_true(self):
+        rect = Rect.from_cv((0, 0, 4, 16))
+        x, y, w, h = operations.safe_rect(rect, (8, 8), allow_scaling=True).to_cv()
+        self.assertEqual(x, 1)
+        self.assertEqual(y, 0)
+        self.assertEqual(w, 2)
+        self.assertEqual(h, 8)
 
 
 class CircleMaskTestCase(unittest.TestCase):
@@ -218,6 +227,15 @@ class CircleMaskTestCase(unittest.TestCase):
         shape = (10, 10, 1)
         mask = operations.circle_mask(shape, (100, 100), 3)
         self.assertEqual(mask.shape, shape[:2])
+
+
+class ResizeTestCase(unittest.TestCase):
+
+    def test_resize_returns_correct_shape(self):
+        img = np.random.randint(0, 256, size=(30, 30, 3), dtype=np.uint8)
+        shape = (10, 10)
+        resized = operations.resize(img, shape)
+        self.assertEqual(resized.shape[:2], shape)
 
 
 if __name__ == '__main__':

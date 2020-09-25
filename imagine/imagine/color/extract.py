@@ -52,20 +52,27 @@ class PositionAgnosticExtractor(ColorExtractor, ABC):
 
 
 class MeanColorExtractor(PositionAgnosticExtractor):
+    """Color extractor based on mean pixel color"""
 
     def extract_from_pixels(self, pixels):
         return np.atleast_2d(pixels.mean(axis=0).astype(np.uint8))
 
 
 class MedianColorExtractor(PositionAgnosticExtractor):
+    """Color extractor based on median pixel color"""
 
     def extract_from_pixels(self, pixels):
         return np.atleast_2d(np.median(pixels, axis=0).astype(np.uint8))
 
 
 class ClusteringColorExtractor(PositionAgnosticExtractor):
+    """Color extractor based on clustering algorithm"""
 
     def __init__(self, clustering):
+        """
+        Args:
+            clustering: sklearn clustering model with fit() method and labels_ attribute
+        """
         super().__init__()
         self.clustering = clustering
 
@@ -78,8 +85,13 @@ class ClusteringColorExtractor(PositionAgnosticExtractor):
 
 
 class MeanClusteringColorExtractor(ClusteringColorExtractor):
+    """Color extractor based on clustering algorithm with mean of cluster colors"""
 
     def __init__(self, clustering):
+        """
+        Args:
+            clustering: sklearn clustering model with fit() method and labels_ attribute
+        """
         super().__init__(clustering)
 
     def extract_from_pixels(self, pixels):
