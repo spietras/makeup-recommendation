@@ -11,9 +11,9 @@ py_test(
 )
 
 py_test(
-    name = "test_helpers",
+    name = "test_utils",
     size = "small",
-    srcs = ["test_helpers.py"],
+    srcs = ["test_utils.py"],
     data = glob(["resources/**/*"]),
     deps = [
         "//imagine",

@@ -1,39 +1,23 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 import numpy as np
 from sklearn.base import clone
 
+from imagine.functional.functional import ImageOperation, Batchable
 
-class Segmenter(ABC):
 
-    def __init__(self, org_parts_map):
+class Segmenter(ImageOperation, ABC):
+    def __init__(self, org_parts_map, parts_map=None, bg_code=0):
         super().__init__()
         self.org_parts_map = org_parts_map
+        self.parts_map = parts_map
+        self.bg_code = bg_code
 
-    def segment(self, imgs, parts_map=None, masks=None, bg_code=0):
-        """
-        Segment images into parts
-
-        Args:
-            imgs - numpy array of shape (N, height, width, C) with values appropriate for the segmenter
-            parts_map - dict with mapping of part name to code to use
-            masks - numpy array of shape (N, height, width) with ones or Trues in pixels to process (used before processing where possible, otherwise after)
-            bg_code - code to fill background with
-
-        Returns:
-            numpy array of shape (N, height, width) with values of codes in pixels recognized as parts
-        """
-        if masks is None:
-            masks = np.ones(imgs.shape[:-1])
-
-        parsed = self._parse(imgs, masks, bg_code)
-        if parts_map:
-            return self._remap(parsed, parts_map, bg_code)
+    def __call__(self, imgs, **kwargs):
+        parsed = super().__call__(imgs, **kwargs)
+        if self.parts_map:
+            return self._remap(parsed, self.parts_map, self.bg_code)
         return parsed
-
-    @abstractmethod
-    def _parse(self, imgs, masks, bg_code):
-        return NotImplemented
 
     def _remap(self, parsed, new_parts_map, bg_code):
         remapped = np.full(parsed.shape, bg_code)
@@ -42,48 +26,39 @@ class Segmenter(ABC):
         return remapped
 
 
-class BatchSegmenter(Segmenter, ABC):
-
-    def _parse(self, imgs, masks, bg_code):
-        parsed = self._parse_batch(imgs)
-        if masks is not None:
-            parsed[masks == 0] = bg_code
-        return parsed
-
-    @abstractmethod
-    def _parse_batch(self, imgs):
-        return NotImplemented
-
-
-class SingleSegmenter(Segmenter, ABC):
-
-    def _parse(self, imgs, masks, bg_code):
-        return np.stack([self._parse_single(i, m, bg_code) for i, m in zip(imgs, masks)])
-
-    @abstractmethod
-    def _parse_single(self, img, mask, bg_code):
-        return NotImplemented
-
-
-class ParsingSegmenter(BatchSegmenter):
-
-    def __init__(self, parser):
-        super().__init__({p: c for c, p in parser.codes.items()})
+class ParsingSegmenter(Batchable, Segmenter):
+    def __init__(self, parser, parts_map=None, bg_code=0):
+        super().__init__({p: c for c, p in parser.codes.items()}, parts_map, bg_code)
         self.parser = parser
 
-    def _parse_batch(self, imgs):
-        return self.parser.parse(imgs)
+    def perform(self, imgs, masks=None, **kwargs):
+        parsed = self.parser.parse(imgs)
+        if masks is not None:
+            parsed[masks == 0] = self.bg_code
+        return parsed
 
 
-class ClusteringSegmenter(SingleSegmenter):
+class ClusteringSegmenter(Segmenter):
     class IdentityDict(dict):
         def __getitem__(self, k):
             return k
 
-    def __init__(self, clustering, ordering=lambda labels, pixels: np.unique(labels)):
-        super().__init__(self.IdentityDict())
+    def __init__(self, clustering, ordering=lambda labels, pixels: np.unique(labels), parts_map=None, bg_code=0):
+        super().__init__(self.IdentityDict(), parts_map, bg_code)
         self.clustering = clustering
         self.ordering = ordering
+
+    def perform(self, img, masks=None, **kwargs):
+        index = masks == 1 if masks is not None else np.ones(img.shape[:-1]) == 1
+        pixels = img[index]
+        if pixels.size:
+            clustered = clone(self.clustering).fit_predict(pixels)
+            clustered = np.argsort(self.ordering(clustered, pixels))[clustered]
+            parsed = np.full(img.shape[:-1], self.bg_code, dtype=clustered.dtype)
+            parsed[index] = clustered
+        else:
+            parsed = np.full(img.shape[:-1], self.bg_code)
+        return parsed
 
     def _parse_single(self, img, mask, bg_code):
         pixels = img[mask == 1]

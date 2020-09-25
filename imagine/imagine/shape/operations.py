@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+from imagine.functional.functional import ImageOperation
+
 
 def biggest_contour(binary_mask):
     binary_mask = binary_mask.astype(np.uint8)
@@ -66,3 +68,25 @@ def circle_mask(shape, center, radius):
     mask = np.zeros(shape[:2], dtype=np.uint8)
     cv2.circle(mask, center, radius, 1, thickness=-1)
     return mask != 0
+
+
+# Functional Interface
+
+class Crop(ImageOperation):
+    def __init__(self, rect):
+        super().__init__()
+        self.rect = rect
+
+    def perform(self, img, **kwargs):
+        return crop(img, self.rect)
+
+
+class Erode(ImageOperation):
+    def __init__(self, size, bg=0):
+        super().__init__()
+        self.size = size
+        self.bg = bg
+
+    def perform(self, img, **kwargs):
+        return erode(img, self.size, self.bg)
+

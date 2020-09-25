@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 from sklearn.base import clone
 
-from imagine import helpers
+from imagine.helpers import normalization
 from imagine.color import conversion
 
 
@@ -20,8 +20,8 @@ class ColorExtractor(ABC):
         Returns:
             numpy array of shape (N, 3) with N extracted colors in RGB in [0-255] or None if mask is empty
         """
-        img = helpers.normalize_images(img)
-        img = conversion.RgbToLab.convert(img)
+        img = normalization.ToUInt8()(img)
+        img = conversion.RgbToLab(img)
         return self.extract_normalized(img, mask)
 
     @abstractmethod
@@ -35,7 +35,7 @@ class PositionAgnosticExtractor(ColorExtractor, ABC):
         pixels = img[mask == 1]
         if pixels.size == 0:
             return None
-        return conversion.LabToRgb.convert(self.extract_from_pixels(pixels))
+        return conversion.LabToRgb(np.expand_dims(self.extract_from_pixels(pixels), 0))[0]
 
     @abstractmethod
     def extract_from_pixels(self, pixels):
@@ -70,11 +70,11 @@ class ClusteringColorExtractor(PositionAgnosticExtractor):
         self.clustering = clustering
 
     def extract_from_pixels(self, pixels):
-        pixels = helpers.normalize_range(pixels)
+        pixels = normalization.normalize_range(pixels)
         clustering = clone(self.clustering).fit(pixels)
         colors = np.array([pixels[clustering.labels_ == label].mean(axis=0)
                            for label in range(clustering.labels_.max() + 1)])
-        return helpers.denormalize_range(colors)
+        return normalization.denormalize_range(colors)
 
 
 class MeanClusteringColorExtractor(ClusteringColorExtractor):

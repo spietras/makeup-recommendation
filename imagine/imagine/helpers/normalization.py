@@ -1,9 +1,11 @@
 import numpy as np
 
+from imagine.functional.functional import ImageOperation, Batchable
+
 
 def normalize_images(imgs):
     """
-    Normalize float images to range [0-255] and converts all images to uint8\
+    Normalize float images to range [0-255] and converts all images to uint8
 
     Args:
         imgs: numpy array of shape (N, width, height, C) or (width, height, C) where C is 1 or 3
@@ -30,3 +32,20 @@ def normalize_range(img):
 
 def denormalize_range(img):
     return np.round(img * 255).astype(np.uint8)
+
+
+# Functional Interface
+
+class ToUInt8(Batchable, ImageOperation):
+    def perform(self, imgs, **kwargs):
+        return normalize_images(imgs)
+
+
+class Normalize(Batchable, ImageOperation):
+    def perform(self, imgs, **kwargs):
+        return normalize_range(imgs)
+
+
+class Denormalize(Batchable, ImageOperation):
+    def perform(self, imgs, **kwargs):
+        return denormalize_range(imgs)
