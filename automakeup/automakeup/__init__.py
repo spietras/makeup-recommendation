@@ -1,0 +1,1 @@
+dlib_predictor_path = "dlib_face_predictor_68.dat"
