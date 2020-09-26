@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 import cv2
+import dlib
 
 from imagine.shape import operations
 
@@ -29,12 +30,12 @@ class SimpleFaceExtractor(FaceExtractor):
         return operations.resize(cropped, (self.output_size, self.output_size), interpolation=self.interpolation)
 
 
-class OpenFaceExtractor(FaceExtractor):
-    def __init__(self, output_size, estimator):
+class AligningDlibFaceExtractor(FaceExtractor):
+    def __init__(self, output_size, predictor):
         super().__init__(output_size)
-        self.estimator = estimator
+        self.predictor = predictor
 
     def extract(self, img, bb):
         dlib_bb = bb.to_dlib()
-        landmarks = self.estimator.findLandmarks(img, dlib_bb)
-        return self.estimator.align(self.output_size, img, bb=dlib_bb, landmarks=landmarks)
+        landmarks = self.predictor(img, dlib_bb)
+        return dlib.get_face_chip(img, landmarks, size=self.output_size)

@@ -14,5 +14,6 @@ py_binary(
         "//automakeup",
         "//imagine",
         "//third_party/faceparsing",
+        "//third_party/mtcnn",
     ],
 )
