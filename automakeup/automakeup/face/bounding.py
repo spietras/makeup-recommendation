@@ -19,6 +19,8 @@ class DlibBoundingBoxFinder(BoundingBoxFinder):
 
     def find(self, img):
         bbs = self.detector(img, 1)
+        if len(bbs) == 0:
+            return None
         biggest_bb = max(bbs, key=lambda rect: rect.width() * rect.height())
         return Rect.from_dlib(biggest_bb)
 
@@ -30,5 +32,7 @@ class MTCNNBoundingBoxFinder(BoundingBoxFinder):
 
     def find(self, img):
         bbs, _ = self.mtcnn.find(np.expand_dims(img, 0))
-        biggest_bb = bbs[0][0]
-        return Rect(biggest_bb[1], biggest_bb[3], biggest_bb[0], biggest_bb[2])
+        if bbs[0] is None or bbs[0].size == 0:
+            return None
+        best_face_bb = bbs[0][0]
+        return Rect(best_face_bb[1], best_face_bb[3], best_face_bb[0], best_face_bb[2])
