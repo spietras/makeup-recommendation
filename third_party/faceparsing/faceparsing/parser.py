@@ -35,11 +35,11 @@ class FaceParser:
         self.device = device
 
         self.net = BiSeNet(n_classes=self.n_classes)
-        self.net.to(self.device)
 
         with pkg_resources.path("{}.resources".format(__package__), model_file) as p:
             self.net.load_state_dict(torch.load(p))
 
+        self.net.to(self.device)
         self.net.eval()
 
     @staticmethod
@@ -59,8 +59,7 @@ class FaceParser:
             numpy array of shape (N, height, width) with values of codes in pixels recognized as parts
         """
         with torch.no_grad():
-            imgs = self._normalize(imgs)
-            imgs = imgs.to(self.device)
+            imgs = self._normalize(imgs).to(self.device)
             out = self.net(imgs)[0]
             parsing = out.cpu().numpy().argmax(1)
 

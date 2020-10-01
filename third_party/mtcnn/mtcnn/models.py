@@ -1,5 +1,4 @@
 import numpy as np
-import torch
 from torch import nn
 
 from mtcnn.utils import detect_face
@@ -21,8 +20,6 @@ class PNet(nn.Module):
         self.conv4_1 = nn.Conv2d(32, 2, kernel_size=1)
         self.softmax4_1 = nn.Softmax(dim=1)
         self.conv4_2 = nn.Conv2d(32, 4, kernel_size=1)
-
-        self.training = False
 
     def forward(self, x):
         x = self.conv1(x)
@@ -57,8 +54,6 @@ class RNet(nn.Module):
         self.dense5_1 = nn.Linear(128, 2)
         self.softmax5_1 = nn.Softmax(dim=1)
         self.dense5_2 = nn.Linear(128, 4)
-
-        self.training = False
 
     def forward(self, x):
         x = self.conv1(x)
@@ -102,8 +97,6 @@ class ONet(nn.Module):
         self.dense6_2 = nn.Linear(256, 4)
         self.dense6_3 = nn.Linear(256, 10)
 
-        self.training = False
-
     def forward(self, x):
         x = self.conv1(x)
         x = self.prelu1(x)
@@ -130,17 +123,17 @@ class MTCNN(nn.Module):
     """
     MTCNN face detection module.
 
-    Arguments:
+    Args:
         pnet - pnet model
         rnet - rnet model
         onet - onet model
-        min_face_size - Minimum face size to search for
+        device - the device on which to create new tensors
+        min_face_size - minimum face size to search for
         thresholds - MTCNN face detection thresholds
-        factor - Factor used to create a scaling pyramid of face sizes
-        device - The device on which to run neural net passes
+        factor - factor used to create a scaling pyramid of face sizes
     """
 
-    def __init__(self, pnet, rnet, onet, min_face_size=20, thresholds=(0.6, 0.7, 0.7), factor=0.709, device=None):
+    def __init__(self, pnet, rnet, onet, device, min_face_size=20, thresholds=(0.6, 0.7, 0.7), factor=0.709):
         super().__init__()
 
         self.min_face_size = min_face_size
@@ -151,26 +144,22 @@ class MTCNN(nn.Module):
         self.rnet = rnet
         self.onet = onet
 
-        self.device = torch.device('cpu')
-        if device is not None:
-            self.device = device
-            self.to(device)
+        self.device = device
 
-    def forward(self, img):
+    def forward(self, imgs):
         """
         Detect all faces in an image and return bounding boxes
         
-        Arguments:
-            img - numpy array of shape (N, height, width, channels) with image data in RGB in uint8
+        Args:
+            imgs - tensor of shape (N, channels, height, width) with image data in RGB in uint8
         
         Returns:
-            tuple with list of length N of numpy arrays of shape (faces, 4) with bounding boxes and list with length N
+            tuple with list of length N of numpy array of shape (faces, 4) with bounding boxes and list with length N
             of detection probabilities. Returned boxes will be sorted in descending order by detection probability
         """
 
-        with torch.no_grad():
-            batch_boxes, batch_points = detect_face(img, self.min_face_size, self.pnet, self.rnet, self.onet,
-                                                    self.thresholds, self.factor, self.device)
+        batch_boxes, batch_points = detect_face(imgs, self.min_face_size, self.pnet, self.rnet, self.onet,
+                                                self.thresholds, self.factor, self.device)
 
         boxes, probs = [], []
         for box in batch_boxes:

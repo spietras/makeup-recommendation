@@ -15,10 +15,7 @@ def fixed_batch_process(im_data, model):
 
 
 def detect_face(imgs, minsize, pnet, rnet, onet, threshold, factor, device):
-    imgs = torch.as_tensor(imgs.copy(), device=device)
-
-    model_dtype = next(pnet.parameters()).dtype
-    imgs = imgs.permute(0, 3, 1, 2).type(model_dtype)
+    imgs = imgs.type(next(pnet.parameters()).dtype)
 
     batch_size = len(imgs)
     h, w = imgs.shape[2:4]
