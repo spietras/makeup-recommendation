@@ -22,6 +22,15 @@ class Rect:
         self.left = left
         self.right = right
 
+    def width(self):
+        return self.right - self.left
+
+    def height(self):
+        return self.bottom - self.top
+
+    def area(self):
+        return self.width() * self.height()
+
     @staticmethod
     def from_dlib(rect):
         """Construct Rect from dlib.rectangle"""
