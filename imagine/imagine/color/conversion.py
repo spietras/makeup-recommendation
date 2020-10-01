@@ -34,4 +34,7 @@ BgrToRgb = ColorConverter(cv2.COLOR_BGR2RGB)
 RgbToLab = ColorConverter(cv2.COLOR_RGB2LAB)
 LabToRgb = ColorConverter(cv2.COLOR_Lab2RGB)
 
+RgbToGray = ColorConverter(cv2.COLOR_RGB2GRAY)
+GrayToRgb = ColorConverter(cv2.COLOR_GRAY2RGB)
+
 
