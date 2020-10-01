@@ -65,12 +65,12 @@ class ClusteringSegmenter(Segmenter):
         def __getitem__(self, k):
             return k
 
-    def __init__(self, clustering, ordering=lambda labels, pixels: np.unique(labels), parts_map=None, bg_code=0):
+    def __init__(self, clustering, ordering=lambda labels, pixels: list(range(max(labels) + 1)), parts_map=None, bg_code=0):
         """
         Args:
             clustering: sklearn clustering algorithm with fit_predict() method
-            ordering: Function of labels given to pixels and pixel values that should return 1d numpy array with labels order.
-                      Defaults to numerical ordering.
+            ordering: Function of number of clusters, labels given to pixels and pixel values that should return iterable
+                      with labels order. Defaults to numerical ordering.
         """
 
         super().__init__(self.IdentityDict(), parts_map, bg_code)
