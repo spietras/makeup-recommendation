@@ -68,19 +68,20 @@ class MedianColorExtractor(PositionAgnosticExtractor):
 class ClusteringColorExtractor(PositionAgnosticExtractor):
     """Color extractor based on clustering algorithm"""
 
-    def __init__(self, clustering):
+    def __init__(self, clustering, ordering=lambda labels, pixels: list(range(max(labels) + 1))):
         """
         Args:
             clustering: sklearn clustering model with fit() method and labels_ attribute
         """
         super().__init__()
         self.clustering = clustering
+        self.ordering = ordering
 
     def extract_from_pixels(self, pixels):
         pixels = normalization.normalize_range(pixels)
         clustering = clone(self.clustering).fit(pixels)
-        colors = np.array([pixels[clustering.labels_ == label].mean(axis=0)
-                           for label in range(clustering.labels_.max() + 1)])
+        colors = np.array([np.median(pixels[clustering.labels_ == label], axis=0)
+                           for label in self.ordering(clustering.labels_, pixels)])
         return normalization.denormalize_range(colors)
 
 
