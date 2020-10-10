@@ -20,19 +20,19 @@ class MTCNN:
 
         pnet = models.PNet()
         with pkg_resources.path("{}.resources".format(__package__), pnet_model_path) as p:
-            pnet.load_state_dict(torch.load(p))
+            pnet.load_state_dict(torch.load(p, map_location=self.device))
         pnet.to(device)
         pnet.eval()
 
         rnet = models.RNet()
         with pkg_resources.path("{}.resources".format(__package__), rnet_model_path) as p:
-            rnet.load_state_dict(torch.load(p))
+            rnet.load_state_dict(torch.load(p, map_location=self.device))
         rnet.to(device)
         rnet.eval()
 
         onet = models.ONet()
         with pkg_resources.path("{}.resources".format(__package__), onet_model_path) as p:
-            onet.load_state_dict(torch.load(p))
+            onet.load_state_dict(torch.load(p, map_location=self.device))
         onet.to(device)
         onet.eval()
 

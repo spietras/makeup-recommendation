@@ -37,7 +37,7 @@ class FaceParser:
         self.net = BiSeNet(n_classes=self.n_classes)
 
         with pkg_resources.path("{}.resources".format(__package__), model_file) as p:
-            self.net.load_state_dict(torch.load(p))
+            self.net.load_state_dict(torch.load(p, map_location=self.device))
 
         self.net.to(self.device)
         self.net.eval()

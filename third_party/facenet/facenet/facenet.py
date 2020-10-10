@@ -18,7 +18,7 @@ class Facenet:
         self.net = InceptionResnetV1()
 
         with pkg_resources.path("{}.resources".format(__package__), facenet_model_path) as p:
-            self.net.load_state_dict(torch.load(p))
+            self.net.load_state_dict(torch.load(p, map_location=self.device))
 
         self.net.to(self.device)
         self.net.eval()
