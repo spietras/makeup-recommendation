@@ -25,6 +25,22 @@ def biggest_contour(binary_mask):
     return np.atleast_2d(max(contours, key=cv2.contourArea).squeeze())
 
 
+def fill_contour(contour, shape):
+    """
+    Creates mask of given shape with Trues inside contour
+
+    Args:
+        contour: numpy array of shape (N, 2) with points representing the contour
+        shape: (height, width)
+
+    Returns:
+        numpy array of shape (height, width) with True in contour area
+    """
+    mask = np.zeros(shape[:2], np.uint8)
+    filled = cv2.fillPoly(mask, [contour], 1) if contour is not None and contour.size > 0 else mask
+    return filled > 0
+
+
 def mass_center(contour):
     """
     Calculate mass center of contour
@@ -67,7 +83,7 @@ def crop(img, rect):
     return img[rect.top:rect.bottom, rect.left:rect.right]
 
 
-def erode(img, size, bg=0):
+def erode(img, kernel, shape=cv2.MORPH_ELLIPSE, bg=0):
     """
     Perform erosion - "shrinking" of object area in an image
 
@@ -75,7 +91,8 @@ def erode(img, size, bg=0):
 
     Args:
         img: numpy array of shape (height, width, channels) or (height, width)
-        size: erosion size
+        kernel: erosion kernel (width, height) or single value
+        shape: opencv morph mode
         bg: value beside the edges of image
 
     Returns:
@@ -84,8 +101,34 @@ def erode(img, size, bg=0):
     org_shape = img.shape
     if img.ndim == 2:
         img = np.expand_dims(img, 2)
-    element = cv2.getStructuringElement(cv2.MORPH_RECT, (2 * size + 1, 2 * size + 1), (size, size))
+    if not isinstance(kernel, tuple):
+        kernel = (kernel, kernel)
+    element = cv2.getStructuringElement(shape, kernel)
     return cv2.erode(img, element, borderValue=bg).reshape(org_shape)
+
+
+def dilate(img, kernel, shape=cv2.MORPH_ELLIPSE, bg=0):
+    """
+    Perform dilation - "growing" of object area in an image
+
+    For three-channel image, dilation is performed separately for each channel
+
+    Args:
+        img: numpy array of shape (height, width, channels) or (height, width)
+        kernel: dilation kernel (width, height) or single value
+        shape: opencv morph mode
+        bg: value beside the edges of image
+
+    Returns:
+        numpy array of the same shape as img with dilated image
+    """
+    org_shape = img.shape
+    if img.ndim == 2:
+        img = np.expand_dims(img, 2)
+    if not isinstance(kernel, tuple):
+        kernel = (kernel, kernel)
+    element = cv2.getStructuringElement(shape, kernel)
+    return cv2.dilate(img, element, borderValue=bg).reshape(org_shape)
 
 
 def squarisize(rect):
@@ -187,19 +230,41 @@ class Crop(ImageOperation):
 class Erode(ImageOperation):
     """Perform erosion - "shrinking" of object area in an image"""
 
-    def __init__(self, size, bg=0):
+    def __init__(self, kernel, shape=cv2.MORPH_ELLIPSE, bg=0):
         """
         Args:
-            size: erosion size
+            kernel: erosion kernel (width, height) or single value
+            shape: opencv morph mode
             bg: value beside the edges of image
         """
 
         super().__init__()
-        self.size = size
+        self.kernel = kernel
+        self.shape = shape
         self.bg = bg
 
     def perform(self, img, **kwargs):
-        return erode(img, self.size, self.bg)
+        return erode(img, self.kernel, self.shape, self.bg)
+
+
+class Dilate(ImageOperation):
+    """Perform dilation - "growing" of object area in an image"""
+
+    def __init__(self, kernel, shape=cv2.MORPH_ELLIPSE, bg=0):
+        """
+        Args:
+            kernel: erosion kernel (width, height) or single value
+            shape: opencv morph mode
+            bg: value beside the edges of image
+        """
+
+        super().__init__()
+        self.kernel = kernel
+        self.shape = shape
+        self.bg = bg
+
+    def perform(self, img, **kwargs):
+        return dilate(img, self.kernel, self.shape, self.bg)
 
 
 class Resize(ImageOperation):

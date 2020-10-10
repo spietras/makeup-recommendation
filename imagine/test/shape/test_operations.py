@@ -63,6 +63,39 @@ class BiggestContourTestCase(unittest.TestCase):
         self.assertEqual(contour.size, 0)
 
 
+class FillContourTestCase(unittest.TestCase):
+
+    def test_fill_contour_returns_correct_shape(self):
+        shape = (10, 10, 1)
+        contour = np.array([[1, 1], [1, 9], [9, 9], [9, 1]])
+        mask = operations.fill_contour(contour, shape)
+        self.assertEqual(mask.shape, shape[:2])
+
+    def test_fill_contour_returns_correct_shape_with_three_channels(self):
+        shape = (10, 10, 3)
+        contour = np.array([[1, 1], [1, 9], [9, 9], [9, 1]])
+        mask = operations.fill_contour(contour, shape)
+        self.assertEqual(mask.shape, shape[:2])
+
+    def test_fill_contour_returns_correct_shape_with_flat_image(self):
+        shape = (10, 10)
+        contour = np.array([[1, 1], [1, 9], [9, 9], [9, 1]])
+        mask = operations.fill_contour(contour, shape)
+        self.assertEqual(mask.shape, shape[:2])
+
+    def test_fill_contour_returns_correct_data_type(self):
+        shape = (10, 10, 1)
+        contour = np.array([[1, 1], [1, 9], [9, 9], [9, 1]])
+        mask = operations.fill_contour(contour, shape)
+        self.assertEqual(mask.dtype, np.bool)
+
+    def test_fill_contour_works_with_empty_contour(self):
+        shape = (10, 10, 1)
+        contour = np.array([], dtype=np.int)
+        mask = operations.fill_contour(contour, shape)
+        self.assertEqual(mask.shape, shape[:2])
+
+
 class MassCenterTestCase(unittest.TestCase):
 
     def test_mass_center_finds_correct_center(self):
@@ -144,23 +177,56 @@ class ErodeTestCase(unittest.TestCase):
 
     def test_erode_returns_correct_shape(self):
         img = np.ones((30, 30, 1))
-        eroded = operations.erode(img, 1)
+        eroded = operations.erode(img, (1, 1))
         self.assertEqual(eroded.shape, img.shape)
 
     def test_erode_returns_correct_shape_with_three_channels(self):
         img = np.ones((30, 30, 3))
-        eroded = operations.erode(img, 1)
+        eroded = operations.erode(img, (1, 1))
         self.assertEqual(eroded.shape, img.shape)
 
     def test_erode_works_on_flat_image(self):
         img = np.ones((30, 30))
-        eroded = operations.erode(img, 1)
+        eroded = operations.erode(img, (1, 1))
         self.assertEqual(eroded.shape, img.shape)
 
     def test_erode_returns_correct_data_type(self):
         img = np.ones((30, 30, 3))
-        eroded = operations.erode(img, 1)
+        eroded = operations.erode(img, (1, 1))
         self.assertEqual(eroded.dtype, img.dtype)
+
+    def test_erode_works_with_single_value_kernel(self):
+        img = np.ones((30, 30, 1))
+        eroded = operations.erode(img, 1)
+        self.assertEqual(eroded.shape, img.shape)
+
+
+class DilateTestCase(unittest.TestCase):
+
+    def test_dilate_returns_correct_shape(self):
+        img = np.ones((30, 30, 1))
+        dilated = operations.dilate(img, (1, 1))
+        self.assertEqual(dilated.shape, img.shape)
+
+    def test_dilate_returns_correct_shape_with_three_channels(self):
+        img = np.ones((30, 30, 3))
+        dilated = operations.dilate(img, (1, 1))
+        self.assertEqual(dilated.shape, img.shape)
+
+    def test_dilate_works_on_flat_image(self):
+        img = np.ones((30, 30))
+        dilated = operations.dilate(img, (1, 1))
+        self.assertEqual(dilated.shape, img.shape)
+
+    def test_dilate_returns_correct_data_type(self):
+        img = np.ones((30, 30, 3))
+        dilated = operations.dilate(img, (1, 1))
+        self.assertEqual(dilated.dtype, img.dtype)
+
+    def test_dilate_works_with_single_value_kernel(self):
+        img = np.ones((30, 30, 1))
+        dilated = operations.dilate(img, 1)
+        self.assertEqual(dilated.shape, img.shape)
 
 
 class SquarisizeTestCase(unittest.TestCase):
