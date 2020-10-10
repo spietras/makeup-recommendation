@@ -18,7 +18,7 @@ class EyeshadowShapeExtractor:
                  skin_color_extractor=MedianColorExtractor(),
                  eyeshadow_clustering=AgglomerativeClustering(6, linkage='average'),
                  skin_color_cluster_classifier=KNeighborsClassifier(n_neighbors=3),
-                 outer_eye_factor=2,
+                 outer_eye_factor=2.25,
                  inner_eye_factor=0.25):
         super().__init__()
         self.skin_color_extractor = skin_color_extractor
