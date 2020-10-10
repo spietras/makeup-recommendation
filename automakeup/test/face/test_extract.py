@@ -7,7 +7,7 @@ import numpy as np
 
 from automakeup import dlib_predictor_path
 from automakeup.face.bounding import DlibBoundingBoxFinder
-from automakeup.face.face_extraction import SimpleFaceExtractor, AligningDlibFaceExtractor
+from automakeup.face.extract import SimpleFaceExtractor, AligningDlibFaceExtractor
 from imagine.color import conversion
 from imagine.shape.figures import Rect
 

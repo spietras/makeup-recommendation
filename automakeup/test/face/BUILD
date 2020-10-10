@@ -12,9 +12,9 @@ py_test(
 )
 
 py_test(
-    name = "test_face_extraction",
+    name = "test_extract",
     size = "medium",
-    srcs = ["test_face_extraction.py"],
+    srcs = ["test_extract.py"],
     data = glob(["resources/**/*"]),
     deps = [
         "//automakeup",

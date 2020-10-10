@@ -1,7 +1,8 @@
 import numpy as np
 
-from automakeup.feature.iris import ClusteringIrisShapeExtractor
-from imagine.color.extract import MeanColorExtractor
+from automakeup.feature.face import ClusteringIrisShapeExtractor
+from automakeup.feature.makeup import LipstickColorExtractor, EyeshadowColorExtractor
+from imagine.color.extract import MedianColorExtractor
 from imagine.functional.functional import ImageOperation, Batchable
 from imagine.shape import operations
 from imagine.shape.segment import ParsingSegmenter
@@ -10,7 +11,7 @@ from imagine.shape.segment import ParsingSegmenter
 class ColorsFeatureExtractor(Batchable, ImageOperation):
     def __init__(self,
                  parser,
-                 color_extractor=MeanColorExtractor(),
+                 color_extractor=MedianColorExtractor(),
                  iris_extractor=ClusteringIrisShapeExtractor()):
         super().__init__()
         self.out_codes = {"skin": 1,
@@ -86,3 +87,34 @@ class FacenetFeatureExtractor(Batchable, ImageOperation):
 
     def perform(self, faces, **kwargs):
         return self.facenet.embed(faces)
+
+
+class MakeupExtractor(Batchable, ImageOperation):
+    def __init__(self,
+                 parser,
+                 lipstick_extractor=LipstickColorExtractor(),
+                 eyeshadow_extractor=EyeshadowColorExtractor()):
+        super().__init__()
+        self.out_codes = {"skin": 1,
+                          "eyes": 2,
+                          "lips": 4}
+        self.segmenter = ParsingSegmenter(parser, parts_map={"skin": self.out_codes["skin"],
+                                                             "l_eye": self.out_codes["eyes"],
+                                                             "r_eye": self.out_codes["eyes"],
+                                                             "u_lip": self.out_codes["lips"],
+                                                             "l_lip": self.out_codes["lips"]})
+        self.lipstick_extractor = lipstick_extractor
+        self.eyeshadow_extractor = eyeshadow_extractor
+
+    def perform(self, faces, **kwargs):
+        segmented = self.segmenter(faces)
+
+        return self.stack([self._extract_single(f, s) for f, s in zip(faces, segmented)])
+
+    def _extract_single(self, img, segmented):
+        return np.concatenate([
+            self.lipstick_extractor.extract(img, segmented == self.out_codes["lips"]).flatten(),
+            self.eyeshadow_extractor.extract(img,
+                                             segmented == self.out_codes["skin"],
+                                             segmented == self.out_codes["eyes"]).flatten()
+        ])

@@ -4,7 +4,7 @@ import unittest
 import cv2
 import numpy as np
 
-from automakeup.feature.iris import ClusteringIrisShapeExtractor, HoughCircleIrisShapeExtractor
+from automakeup.feature.face import ClusteringIrisShapeExtractor, HoughCircleIrisShapeExtractor
 from faceparsing import FaceParser
 from imagine.color import conversion
 from imagine.shape import operations
