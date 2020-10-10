@@ -5,6 +5,7 @@ py_test(
     size = "medium",
     srcs = ["test_parser.py"],
     data = glob(["resources/**/*"]),
+    tags = ["exclusive"],
     deps = [
         "//third_party/faceparsing",
     ],
