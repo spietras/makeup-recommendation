@@ -17,13 +17,13 @@ class EyeshadowShapeExtractor:
     def __init__(self,
                  skin_color_extractor=MedianColorExtractor(),
                  eyeshadow_clustering=AgglomerativeClustering(6, linkage='average'),
-                 skin_color_cluster_classifier=KNeighborsClassifier(n_neighbors=3),
+                 cluster_classifier=KNeighborsClassifier(n_neighbors=3),
                  outer_eye_factor=2.25,
                  inner_eye_factor=0.25):
         super().__init__()
         self.skin_color_extractor = skin_color_extractor
         self.eyeshadow_segmenter = ClusteringSegmenter(eyeshadow_clustering, bg_code=-1)
-        self.skin_color_cluster_classifier = skin_color_cluster_classifier
+        self.cluster_classifier = cluster_classifier
         self.outer_eye_factor = outer_eye_factor
         self.inner_eye_factor = inner_eye_factor
 
@@ -65,7 +65,7 @@ class EyeshadowShapeExtractor:
         pixels = conversion.RgbToLab(img)[non_background]
         labels = clustered[non_background]
 
-        neigh = clone(self.skin_color_cluster_classifier).fit(pixels, labels)
+        neigh = clone(self.cluster_classifier).fit(pixels, labels)
         skin_cluster, eyelashes_cluster = neigh.predict(np.concatenate([skin_color_lab, black_color_lab]))
         return (clustered != skin_cluster) & (clustered != eyelashes_cluster) & (clustered != -1)
 
