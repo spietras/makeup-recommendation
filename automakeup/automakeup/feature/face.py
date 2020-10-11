@@ -16,6 +16,22 @@ class IrisShapeExtractor(ABC):
         return NotImplemented
 
 
+class ThresholdingIrisShapeExtractor(IrisShapeExtractor):
+    def __init__(self,
+                 lower_quantile=0.1,
+                 upper_quantile=0.5):
+        super().__init__()
+        self.lower_quantile = lower_quantile
+        self.upper_quantile = upper_quantile
+
+    def extract(self, img, eye_mask):
+        img = conversion.RgbToLab(img)
+        l_channel = img[..., 0]
+        lower_quantile_threshold = np.quantile(l_channel, self.lower_quantile)
+        upper_quantile_threshold = np.quantile(l_channel, self.upper_quantile)
+        return (img[..., 0] >= lower_quantile_threshold) & (img[..., 0] <= upper_quantile_threshold) & eye_mask
+
+
 class ClusteringIrisShapeExtractor(IrisShapeExtractor):
     def __init__(self, clustering_config=(KMeans(n_clusters=6),
                                           first_channel_ordering,
@@ -30,7 +46,7 @@ class ClusteringIrisShapeExtractor(IrisShapeExtractor):
 
 
 class HoughCircleIrisShapeExtractor(IrisShapeExtractor):
-    def __init__(self, method=cv2.HOUGH_GRADIENT_ALT, dp=1.25, min_dist=100, param1=1, param2=0.0, pupil_ratio=0.5):
+    def __init__(self, method=cv2.HOUGH_GRADIENT_ALT, dp=1.25, min_dist=100, param1=1, param2=0.0, pupil_ratio=0.2):
         super().__init__()
         self.method = method
         self.dp = dp
