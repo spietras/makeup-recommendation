@@ -57,23 +57,41 @@ public class DrawActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
 
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+        /*File file = new File(URI.create(message));
+
+        Request request = new Request.Builder()
+                .url("https://192.168.8.114:8080")
+                .post(RequestBody.create(MEDIA_TYPE_IMAGE, file))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                Log.d(TAG, "http post failure");
+                finish();
+            }
+            else {
+                Log.d(TAG, "http post success");
+                finish();
+            }
+        }
+        catch (IOException e){
+            Log.e(TAG, "DrawActivity: " + e.getMessage(), e);
+            finish();
+        }*/
+
         FaceDetectorOptions options = new FaceDetectorOptions.Builder()
-                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
                 .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
                 .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
                 .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_NONE)
                 .build();
 
-        /*FaceDetectorOptions options = new FaceDetectorOptions.Builder()
-                .setContourMode(FaceDetectorOptions.CONTOUR_MODE_NONE)
-                .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_NONE)
-                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
-                .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_NONE)
-                .build();*/
-
         detector = FaceDetection.getClient(options);
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        //Intent intent = getIntent();
+        //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         overlay = findViewById(R.id.graphicOverlay);
         picture = new CameraImageGraphic(overlay);
 
@@ -86,7 +104,7 @@ public class DrawActivity extends AppCompatActivity {
             return;
         }
 
-        switch (Utils.checkBrightness(bmp)) {
+        /*switch (Utils.checkBrightness(bmp)) {
             case -1:
                 Toast.makeText(DrawActivity.this, "Zdjęcie zbyt ciemne", Toast.LENGTH_SHORT).show();
                 finish();
@@ -97,7 +115,7 @@ public class DrawActivity extends AppCompatActivity {
                 break;
             case 0:
                 break;
-        }
+        }*/
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inSampleSize = 2;
         String path = message.substring(5);
@@ -156,24 +174,7 @@ public class DrawActivity extends AppCompatActivity {
             overlay.add(graphic);
         }
         overlay.postInvalidate();
-        /*File file = new File(Uri.parse(message));
-
-        Request request = new Request.Builder()
-                    .url("localhost:port")
-                    .post(RequestBody.create(MEDIA_TYPE_IMAGE, file))
-                    .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful())
-                Log.d(TAG, "onSuccess: http post failure");
-            else {
-                Log.d(TAG, "onSuccess: http post success");
-            }
-        }
-        catch (IOException e){
-            Log.e(TAG, "onSuccess: " + e.getMessage(), e);
-        }
-        finish();*/
+        //finish();
     }
 
     public void onFailure(@NonNull Exception e) {

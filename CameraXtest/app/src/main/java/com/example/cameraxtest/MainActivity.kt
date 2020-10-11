@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             // ImageAnalysis
             imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
-                .setTargetResolution(Size(720, 720))
+                .setTargetResolution(Size(360, 640))
                 .build()
                 .also {
                     it.setAnalyzer(cameraExecutor, analyzer)
