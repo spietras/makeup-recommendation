@@ -1,0 +1,3 @@
+import config/pycharm/common.bazelproject
+
+bazel_binary: bazelw.bat

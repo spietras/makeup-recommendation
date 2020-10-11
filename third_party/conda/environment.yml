@@ -1,0 +1,18 @@
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.8.5
+  - pip==20.2.2
+  - cmake==3.18.2
+  - opencv==4.4.0
+  - ffmpeg==4.3.1
+  - pytorch==1.6.0
+  - torchvision==0.7.0
+  - cudatoolkit=10.2
+  - scikit-learn==0.23.2
+  - flask==1.1.2
+  - jupyterlab==2.2.8
+  - matplotlib==3.3.2
+  - pip:
+    - dlib==19.21.0

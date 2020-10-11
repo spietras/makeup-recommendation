@@ -1,9 +1,3 @@
-directories:
-  # Add the directories you want added as source here
-  # By default, we've added your entire workspace ('.')
-  .
+import config/pycharm/common.bazelproject
 
-# Automatically includes all relevant targets under the 'directories' above
-derive_targets_from_directories: true
-  
-workspace_type: python
+bazel_binary: bazelw

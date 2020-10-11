@@ -49,7 +49,7 @@ load_conda(
 # create environment
 conda_create(
     name = "my_env",
-    environment = "@//third_party/python:environment.yml" # label pointing to environment.yml file
+    environment = "@//third_party/conda:environment.yml" # label pointing to environment.yml file
 )
 
 # register pythons from environment as toolchain
