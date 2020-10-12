@@ -46,6 +46,7 @@ import java.util.Locale;
  * graphic overlay view.
  */
 public class FaceGraphic extends Graphic {
+    private static final String TAG = "FaceGraphic";
     private static final float FACE_POSITION_RADIUS = 4.0f;
     private static final float ID_TEXT_SIZE = 30.0f;
     private static final float ID_Y_OFFSET = 40.0f;
@@ -108,7 +109,7 @@ public class FaceGraphic extends Graphic {
         lipsPaint.setColor(Color.RED);
         //lipsPaint.setAlpha(245);
         lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
-        lipsPaintOver.setColor(Color.RED);
+        lipsPaintOver.setColor(Color.GREEN);
         lipsPaintOver.setAlpha(25);
         overlay_scale = overlay.scaleFactor;
     }
@@ -240,6 +241,8 @@ public class FaceGraphic extends Graphic {
         drawFaceLandmark(canvas, FaceLandmark.LEFT_CHEEK);
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_CHEEK);
         drawLipsSpline(canvas);
+        drawEyeshadow(canvas, FaceContour.LEFT_EYE);
+        drawEyeshadow(canvas, FaceContour.RIGHT_EYE);
     }
 
     private void drawFaceLandmark(Canvas canvas, @LandmarkType int landmarkType) {
@@ -251,6 +254,58 @@ public class FaceGraphic extends Graphic {
                     FACE_POSITION_RADIUS,
                     facePositionPaint);
         }
+    }
+
+    private void drawEyeshadow(Canvas canvas, int eyeContour)
+    {
+        if(eyeContour != FaceContour.LEFT_EYE && eyeContour != FaceContour.RIGHT_EYE)
+            return;
+        FaceContour contour = face.getContour(eyeContour);
+        if(contour == null) return;
+        Path shadow = new Path();
+        Path shadow_big = new Path();
+        shadow_big.setFillType(Path.FillType.EVEN_ODD);
+
+        List<PointF> points;
+        points = contour.getPoints();
+        Log.d(TAG, "drawEyeshadow: " + points);
+        PointF first, top_start, iter;
+        first = points.get(0);
+        top_start = points.get(4);
+        shadow.moveTo(translateX(first.x), translateY(first.y));
+        shadow_big.moveTo(translateX(first.x), translateY(first.y));
+
+        for(int i=1; i<9; ++i)
+        {
+            iter = points.get(i);
+            shadow_big.lineTo(translateX(iter.x), translateY(iter.y));
+        }
+        for(PointF it : points)
+        {
+            shadow.lineTo(translateX(it.x), translateY(it.y));
+        }
+        shadow.close();
+
+        Matrix scaleMatrix = new Matrix();
+        RectF rectF = new RectF();
+        shadow.computeBounds(rectF, true);
+        scaleMatrix.setScale(1f, 2f,rectF.centerX(),rectF.centerY());
+        shadow_big.transform(scaleMatrix);
+
+        for(int i=8; i<16; ++i)
+        {
+            iter = points.get(i);
+            shadow_big.lineTo(translateX(iter.x), translateY(iter.y));
+        }
+        shadow_big.lineTo(translateX(first.x),translateY(first.y));
+        shadow_big.close();
+
+        scaleMatrix = new Matrix();
+        shadow.computeBounds(rectF, true);
+        scaleMatrix.setScale(1.5f, 1.5f,rectF.centerX(),rectF.centerY());
+        shadow_big.transform(scaleMatrix);
+        shadow_big.addPath(shadow);
+        canvas.drawPath(shadow_big, lipsPaintOver);
     }
 
     private void drawLipsSpline(Canvas canvas)
@@ -266,26 +321,21 @@ public class FaceGraphic extends Graphic {
         firstBottom = points.get(0);
         lips.moveTo(translateX(firstBottom.x), translateY(firstBottom.y));
         int i=0;
-        String debug = "";
         for(PointF it: points)
         {
-            debug += " " + i + ": " + it.x + " " + it.y;
             lipsBottom.set(i++, translateX(it.x), translateY(it.y));
         }
-        Log.d("FACEGRAPHIC", "drawLipsSpline: bottom - " + debug);
         lipsBottom.applyToPath(lips);
         contour = face.getContour(FaceContour.UPPER_LIP_TOP);
         if (contour == null) return;
         points = contour.getPoints();
         firstTop = points.get(0);
         lips.lineTo(translateX(firstTop.x), translateY(firstTop.y));
-        i=0; debug = "";
+        i=0;
         for(PointF it: points)
         {
-            debug += " " + i + ": " + it.x + " " + it.y;
             lipsTop.set(i++, translateX(it.x), translateY(it.y));
         }
-        Log.d("FACEGRAPHIC", "drawLipsSpline: top - " + debug);
         lipsTop.applyToPath(lips);
         lips.close();
         BlurMaskFilter blur = new BlurMaskFilter(Math.abs(firstBottom.x-firstTop.x)/10, BlurMaskFilter.Blur.NORMAL);
@@ -346,11 +396,6 @@ public class FaceGraphic extends Graphic {
             prev = it;
         }
         lip_lower.close(); //lip_upper.close();
-        /*Matrix scaleMatrix = new Matrix();
-        RectF rectF = new RectF();
-        lip_lower.computeBounds(rectF, true);
-        scaleMatrix.setScale(1.25f, 1.25f,rectF.centerX(),rectF.centerY());
-        lip_lower.transform(scaleMatrix);*/
         canvas.drawPath(lip_lower, lipsPaint);
         //canvas.drawPath(lip_upper, lipsPaint);
 
