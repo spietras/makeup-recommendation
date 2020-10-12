@@ -2,6 +2,7 @@ from abc import ABC
 
 import numpy as np
 from sklearn.base import clone
+from sklearn import preprocessing
 
 from imagine.functional.functional import ImageOperation, Batchable
 
@@ -81,7 +82,7 @@ class ClusteringSegmenter(Segmenter):
         index = masks == 1 if masks is not None else np.ones(img.shape[:-1]) == 1
         pixels = img[index]
         if pixels.size:
-            clustered = clone(self.clustering).fit_predict(pixels)
+            clustered = clone(self.clustering).fit_predict(preprocessing.scale(pixels))
             clustered = np.argsort(self.ordering(clustered, pixels))[clustered]
             parsed = np.full(img.shape[:-1], self.bg_code, dtype=clustered.dtype)
             parsed[index] = clustered

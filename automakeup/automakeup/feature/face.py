@@ -33,16 +33,28 @@ class ThresholdingIrisShapeExtractor(IrisShapeExtractor):
 
 
 class ClusteringIrisShapeExtractor(IrisShapeExtractor):
-    def __init__(self, clustering_config=(KMeans(n_clusters=6),
-                                          first_channel_ordering,
-                                          [1, 2, 3])):
+    def __init__(self,
+                 lower_cluster_cut=0.1,
+                 upper_cluster_cut=0.6,
+                 eye_clustering=KMeans(n_clusters=11),
+                 cluster_ordering=first_channel_ordering):
         super().__init__()
-        clustering, ordering, chosen_clusters = clustering_config
-        self.segmenter = ClusteringSegmenter(clustering, ordering, parts_map={p: p for p in chosen_clusters})
+        self.segmenter = ClusteringSegmenter(eye_clustering, ordering=cluster_ordering, bg_code=-1)
+        self.lower_cluster_cut = lower_cluster_cut
+        self.upper_cluster_cut = upper_cluster_cut
 
     def extract(self, img, eye_mask):
         img = conversion.RgbToLab(img)
-        return self.segmenter(img, masks=eye_mask) != 0
+        clustered = self.segmenter(img, masks=eye_mask)
+        return self._remove_non_iris(clustered)
+
+    def _remove_non_iris(self, clustered):
+        k = clustered.max() + 1
+        if k <= 1:
+            return np.zeros(clustered.shape, dtype=np.bool)
+        lower_cluster_threshold = np.quantile(range(k), self.lower_cluster_cut)
+        upper_cluster_threshold = np.quantile(range(k), self.upper_cluster_cut)
+        return (clustered >= lower_cluster_threshold) & (clustered <= upper_cluster_threshold) & (clustered != -1)
 
 
 class HoughCircleIrisShapeExtractor(IrisShapeExtractor):
