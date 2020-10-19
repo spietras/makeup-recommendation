@@ -5,6 +5,7 @@ directories:
   imagine
   webmakeup
   jupyter
+  preprocessing
   third_party/conda
   third_party/faceparsing
   third_party/mtcnn
