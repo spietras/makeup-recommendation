@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 import numpy as np
 
 from automakeup.feature.face import ClusteringIrisShapeExtractor
@@ -8,7 +10,25 @@ from imagine.shape import operations
 from imagine.shape.segment import ParsingSegmenter
 
 
-class ColorsFeatureExtractor(Batchable, ImageOperation):
+class FeatureExtractor(ABC):
+    @staticmethod
+    @abstractmethod
+    def labels():
+        return NotImplemented
+
+    @staticmethod
+    def missing_value():
+        return -1
+
+
+class ColorsFeatureExtractor(Batchable, ImageOperation, FeatureExtractor):
+    @staticmethod
+    def labels():
+        return ["skin_r", "skin_g", "skin_b",
+                "hair_r", "hair_g", "hair_b",
+                "lips_r", "lips_g", "lips_b",
+                "eyes_r", "eyes_g", "eyes_b"]
+
     def __init__(self,
                  parser,
                  color_extractor=MedianColorExtractor(),
@@ -42,9 +62,7 @@ class ColorsFeatureExtractor(Batchable, ImageOperation):
 
     def _simple_extract(self, img, segmented, part):
         colors = self.extractor.extract(img, segmented == self.out_codes[part])
-        if colors is None:
-            return np.zeros(3, dtype=np.uint8)
-        return colors[0]
+        return colors[0] if len(colors) > 0 else np.full((3,), fill_value=self.missing_value())
 
     def _skin(self, img, segmented):
         return self._simple_extract(img, segmented, "skin")
@@ -60,9 +78,7 @@ class ColorsFeatureExtractor(Batchable, ImageOperation):
         img_cropped, eye_mask_cropped = self._crop_to_biggest_eye(img, eyes_mask)
         iris_mask = self.iris_extractor.extract(img_cropped, eye_mask_cropped)
         colors = self.extractor.extract(img_cropped, iris_mask)
-        if colors is None:
-            return np.zeros(3, dtype=np.uint8)
-        return colors[0]
+        return colors[0] if len(colors) > 0 else np.full((3,), fill_value=self.missing_value())
 
     @staticmethod
     def _crop_to_biggest_eye(img, eyes_mask):
@@ -76,11 +92,15 @@ class ColorsFeatureExtractor(Batchable, ImageOperation):
         img_cropped = crop(img)
         eye_mask_cropped = crop(np.array(eyes_mask, dtype=np.uint8))
         # add erosion to get rid of uncertain edge
-        eye_mask_cropped = operations.Erode(round(0.1 * eye_rect.height()))(eye_mask_cropped)
+        eye_mask_cropped = operations.Erode(max(1, round(0.1 * eye_rect.height())))(eye_mask_cropped)
         return img_cropped, eye_mask_cropped != 0
 
 
-class FacenetFeatureExtractor(Batchable, ImageOperation):
+class FacenetFeatureExtractor(Batchable, ImageOperation, FeatureExtractor):
+    @staticmethod
+    def labels():
+        return ["f{}".format(i) for i in range(512)]
+
     def __init__(self, facenet):
         super().__init__()
         self.facenet = facenet
@@ -89,7 +109,14 @@ class FacenetFeatureExtractor(Batchable, ImageOperation):
         return self.facenet.embed(faces)
 
 
-class MakeupExtractor(Batchable, ImageOperation):
+class MakeupExtractor(Batchable, ImageOperation, FeatureExtractor):
+    @staticmethod
+    def labels():
+        return ["lipstick_r", "lipstick_g", "lipstick_b",
+                "eyeshadow0_r", "eyeshadow0_g", "eyeshadow0_b",
+                "eyeshadow1_r", "eyeshadow1_g", "eyeshadow1_b",
+                "eyeshadow2_r", "eyeshadow2_g", "eyeshadow2_b"]
+
     def __init__(self,
                  parser,
                  lipstick_extractor=LipstickColorExtractor(),
@@ -112,9 +139,10 @@ class MakeupExtractor(Batchable, ImageOperation):
         return self.stack([self._extract_single(f, s) for f, s in zip(faces, segmented)])
 
     def _extract_single(self, img, segmented):
-        return np.concatenate([
-            self.lipstick_extractor.extract(img, segmented == self.out_codes["lips"]).flatten(),
-            self.eyeshadow_extractor.extract(img,
-                                             segmented == self.out_codes["skin"],
-                                             segmented == self.out_codes["eyes"]).flatten()
-        ])
+        lipstick = self.lipstick_extractor.extract(img, segmented == self.out_codes["lips"]).flatten()
+        lipstick = np.pad(lipstick, (0, 3 - len(lipstick)), constant_values=self.missing_value())
+        eyeshadow = self.eyeshadow_extractor.extract(img,
+                                                     segmented == self.out_codes["skin"],
+                                                     segmented == self.out_codes["eyes"]).flatten()
+        eyeshadow = np.pad(eyeshadow, (0, 9 - len(eyeshadow)), constant_values=self.missing_value())
+        return np.concatenate([lipstick, eyeshadow])

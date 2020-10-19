@@ -24,7 +24,7 @@ def get_eye(img_path, parser):
     crop = operations.Crop(eye_rect_square)
     img_cropped = crop(img)
     eye_mask_cropped = crop(np.array(eyes_mask, dtype=np.uint8))
-    eye_mask_cropped = operations.Erode(round(0.1 * eye_rect.height()))(eye_mask_cropped)
+    eye_mask_cropped = operations.Erode(max(1, round(0.1 * eye_rect.height())))(eye_mask_cropped)
     return img_cropped, eye_mask_cropped != 0
 
 

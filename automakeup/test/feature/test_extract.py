@@ -53,6 +53,13 @@ class ColorsFeatureExtractorTestCase(unittest.TestCase):
         features = self.feature_extractor(face)
         self.assertEqual(features.shape, (12,))
 
+    def test_colors_feature_extractor_returns_missing_value_indicator_on_missing_data(self):
+        img = np.zeros((100, 100, 3), dtype=np.uint8)
+        bb = Rect(10, 90, 10, 90)
+        face = self.face_extractor.extract(img, bb)
+        features = self.feature_extractor(face)
+        self.assertTrue(self.feature_extractor.missing_value() in features)
+
 
 class FacenetFeatureExtractorTestCase(unittest.TestCase):
     with dlib_predictor_path() as p:
@@ -91,6 +98,7 @@ class FacenetFeatureExtractorTestCase(unittest.TestCase):
         face = self.face_extractor.extract(img, bb)
         features = self.feature_extractor(face)
         self.assertEqual(features.shape, (512,))
+        self.assertTrue(self.feature_extractor.missing_value() not in features)
 
 
 class MakeupExtractorTestCase(unittest.TestCase):
@@ -127,6 +135,13 @@ class MakeupExtractorTestCase(unittest.TestCase):
         face = self.face_extractor.extract(img, bb)
         features = self.feature_extractor(face)
         self.assertEqual(features.shape, (12,))
+
+    def test_colors_feature_extractor_returns_missing_value_indicator_on_missing_data(self):
+        img = np.zeros((100, 100, 3), dtype=np.uint8)
+        bb = Rect(10, 90, 10, 90)
+        face = self.face_extractor.extract(img, bb)
+        features = self.feature_extractor(face)
+        self.assertTrue(self.feature_extractor.missing_value() in features)
 
 
 if __name__ == '__main__':

@@ -39,3 +39,17 @@ class AligningDlibFaceExtractor(FaceExtractor):
         dlib_bb = bb.to_dlib()
         landmarks = self.predictor(img, dlib_bb)
         return dlib.get_face_chip(img, landmarks, size=self.output_size)
+
+
+# Functional interface
+
+
+class ExtractFace(operations.ImageOperation):
+    def __init__(self, bb_finder, face_extractor):
+        super().__init__()
+        self.bb_finder = bb_finder
+        self.face_extractor = face_extractor
+
+    def perform(self, img, **kwargs):
+        bb = self.bb_finder.find(img)
+        return self.face_extractor.extract(img, bb)

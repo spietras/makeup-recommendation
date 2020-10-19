@@ -61,12 +61,12 @@ class EyeshadowColorExtractorTestCase(unittest.TestCase):
         colors = self.extractor.extract(img, segmented == 1, segmented == 2)
         self.assertTrue(np.issubdtype(colors.dtype, np.integer))
 
-    def test_extract_returns_none_with_no_eyes(self):
+    def test_extract_returns_zero_shape_with_no_eyes(self):
         with pkg_resources.path("resources", "face.jpg") as p:
             img = conversion.BgrToRgb(cv2.imread(str(p)))
         segmented = ParsingSegmenter(parser, parts_map={"skin": 1})(img)
         colors = self.extractor.extract(img, segmented == 1, np.zeros(img.shape[:2], dtype=np.bool))
-        self.assertEqual(colors, None)
+        self.assertEqual(colors.shape, (0, 3))
 
 
 class LipstickColorExtractorTestCase(unittest.TestCase):
@@ -86,11 +86,11 @@ class LipstickColorExtractorTestCase(unittest.TestCase):
         colors = self.extractor.extract(img, lips_mask)
         self.assertTrue(np.issubdtype(colors.dtype, np.integer))
 
-    def test_extract_returns_none_with_no_lips(self):
+    def test_extract_returns_zero_shape_with_no_lips(self):
         with pkg_resources.path("resources", "face.jpg") as p:
             img = conversion.BgrToRgb(cv2.imread(str(p)))
         colors = self.extractor.extract(img, np.zeros(img.shape[:2], dtype=np.bool))
-        self.assertEqual(colors, None)
+        self.assertEqual(colors.shape, (0, 3))
 
 
 if __name__ == '__main__':
