@@ -12,12 +12,21 @@ class BatchClassifier(ABC):
         return NotImplemented
 
 
+class ConstantBatchClassifier(BatchClassifier):
+    def __init__(self, value):
+        super().__init__()
+        self.value = value
+
+    def is_batch(self, x):
+        return self.value
+
+
 class SimpleBatchClassifier(BatchClassifier):
     """All iterables except string are batches"""
 
     @staticmethod
     def is_batch(x):
-        return isinstance(x, Iterable) and not isinstance(x, str)
+        return isinstance(x, Iterable) and not isinstance(x, str) and not isinstance(x, dict)
 
 
 class ImageBatchClassifier(BatchClassifier):

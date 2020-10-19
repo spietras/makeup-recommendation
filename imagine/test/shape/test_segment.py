@@ -114,6 +114,12 @@ class ClusteringSegmenterTestCase(unittest.TestCase):
         segmented = segmenter(img)
         self.assertTrue((np.unique(segmented) == np.array(range(self.k))).all())
 
+    def test_segment_returns_only_background_when_there_are_less_pixels_than_clusters(self):
+        img = np.random.rand(1, 2, 2, 3)
+        segmenter = ClusteringSegmenter(KMeans(n_clusters=100), bg_code=-1)
+        segmented = segmenter(img)
+        self.assertTrue((np.unique(segmented) == np.array([-1])).all())
+
 
 if __name__ == '__main__':
     unittest.main()

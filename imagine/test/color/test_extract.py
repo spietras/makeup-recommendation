@@ -30,14 +30,14 @@ class MeanColorExtractorTestCase(unittest.TestCase):
         expected = cv2.cvtColor(np.array([[[191, 128, 128]]], dtype=np.uint8), cv2.COLOR_Lab2RGB).reshape(1, 3)
         self.assertTrue((self.extractor.extract(img, mask) == expected).all())
 
-    def test_extract_returns_none_with_empty_mask(self):
+    def test_extract_returns_zero_shape_with_empty_mask(self):
         img = np.array([
             [[0, 0, 0], [0, 0, 0]],
             [[0, 0, 0], [0, 0, 0]]
         ])
         mask = np.array([[0, 0],
                          [0, 0]])
-        self.assertEqual(self.extractor.extract(img, mask), None)
+        self.assertEqual(self.extractor.extract(img, mask).shape, (0, 3))
 
 
 class MedianColorExtractorTestCase(unittest.TestCase):
@@ -63,14 +63,14 @@ class MedianColorExtractorTestCase(unittest.TestCase):
         expected = cv2.cvtColor(np.array([[[255, 128, 128]]], dtype=np.uint8), cv2.COLOR_Lab2RGB).reshape(1, 3)
         self.assertTrue((self.extractor.extract(img, mask) == expected).all())
 
-    def test_extract_returns_none_with_empty_mask(self):
+    def test_extract_returns_zero_shape_with_empty_mask(self):
         img = np.array([
             [[0, 0, 0], [0, 0, 0]],
             [[0, 0, 0], [0, 0, 0]]
         ])
         mask = np.array([[0, 0],
                          [0, 0]])
-        self.assertEqual(self.extractor.extract(img, mask), None)
+        self.assertEqual(self.extractor.extract(img, mask).shape, (0, 3))
 
 
 class ClusteringColorExtractorTestCase(unittest.TestCase):
@@ -93,7 +93,7 @@ class ClusteringColorExtractorTestCase(unittest.TestCase):
         mask = np.array([[1]])
         self.assertTrue(np.issubdtype(extractor.extract(img, mask).dtype, np.integer))
 
-    def test_extract_returns_none_with_empty_mask(self):
+    def test_extract_returns_zero_shape_with_empty_mask(self):
         extractor = extract.ClusteringColorExtractor(clustering=KMeans(n_clusters=1))
         img = np.array([
             [[0, 0, 0], [0, 0, 0]],
@@ -101,7 +101,17 @@ class ClusteringColorExtractorTestCase(unittest.TestCase):
         ])
         mask = np.array([[0, 0],
                          [0, 0]])
-        self.assertEqual(extractor.extract(img, mask), None)
+        self.assertEqual(extractor.extract(img, mask).shape, (0, 3))
+
+    def test_extract_returns_zero_shape_when_there_are_less_pixels_than_clusters(self):
+        extractor = extract.ClusteringColorExtractor(clustering=KMeans(n_clusters=100))
+        img = np.array([
+            [[0, 0, 0], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0]]
+        ])
+        mask = np.array([[1, 1],
+                         [1, 1]])
+        self.assertEqual(extractor.extract(img, mask).shape, (0, 3))
 
 
 class MeanClusteringColorExtractorTestCase(unittest.TestCase):
@@ -117,14 +127,14 @@ class MeanClusteringColorExtractorTestCase(unittest.TestCase):
         mask = np.array([[1, 1, 1]])
         self.assertTrue(np.issubdtype(self.extractor.extract(img, mask).dtype, np.integer))
 
-    def test_extract_returns_none_with_empty_mask(self):
+    def test_extract_returns_zero_shape_with_empty_mask(self):
         img = np.array([
             [[0, 0, 0], [0, 0, 0]],
             [[0, 0, 0], [0, 0, 0]]
         ])
         mask = np.array([[0, 0],
                          [0, 0]])
-        self.assertEqual(self.extractor.extract(img, mask), None)
+        self.assertEqual(self.extractor.extract(img, mask).shape, (0, 3))
 
 
 if __name__ == '__main__':

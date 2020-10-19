@@ -34,8 +34,11 @@ class PositionAgnosticExtractor(ColorExtractor, ABC):
     def extract_normalized(self, img, mask):
         pixels = img[mask == 1]
         if pixels.size == 0:
-            return None
-        return conversion.LabToRgb(np.expand_dims(self.extract_from_pixels(pixels), 0))[0]
+            return np.empty((0, 3), dtype=np.uint8)
+        extracted = self.extract_from_pixels(pixels)
+        if len(extracted) == 0:
+            return extracted
+        return conversion.LabToRgb(np.expand_dims(extracted, 0))[0]
 
     @abstractmethod
     def extract_from_pixels(self, pixels):
@@ -79,10 +82,13 @@ class ClusteringColorExtractor(PositionAgnosticExtractor):
 
     def extract_from_pixels(self, pixels):
         pixels = normalization.normalize_range(pixels)
-        clustering = clone(self.clustering).fit(pixels)
-        colors = np.array([np.median(pixels[clustering.labels_ == label], axis=0)
-                           for label in self.ordering(clustering.labels_, pixels)])
-        return normalization.denormalize_range(colors)
+        try:
+            clustering = clone(self.clustering).fit(pixels)
+            colors = np.array([np.median(pixels[clustering.labels_ == label], axis=0)
+                               for label in self.ordering(clustering.labels_, pixels)])
+            return normalization.denormalize_range(colors)
+        except ValueError:
+            return np.empty((0, 3), dtype=np.uint8)
 
 
 class MeanClusteringColorExtractor(ClusteringColorExtractor):

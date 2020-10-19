@@ -81,11 +81,11 @@ class ClusteringSegmenter(Segmenter):
     def perform(self, img, masks=None, **kwargs):
         index = masks == 1 if masks is not None else np.ones(img.shape[:-1]) == 1
         pixels = img[index]
-        if pixels.size:
+        try:
             clustered = clone(self.clustering).fit_predict(preprocessing.scale(pixels))
             clustered = np.argsort(self.ordering(clustered, pixels))[clustered]
             parsed = np.full(img.shape[:-1], self.bg_code, dtype=clustered.dtype)
             parsed[index] = clustered
-        else:
+        except ValueError:
             parsed = np.full(img.shape[:-1], self.bg_code)
         return parsed
