@@ -29,7 +29,7 @@ class EyeshadowShapeExtractor:
 
     def extract(self, img, skin_mask, eyes_mask):
         if skin_mask.max() == 0 or eyes_mask.max() == 0:
-            return skin_mask
+            return np.zeros(skin_mask.shape, dtype=np.bool)
         around_eye_mask = self._area_around_eye(eyes_mask, skin_mask)
         skin_color = self._get_skin_color(img, skin_mask)
         clustered = self.eyeshadow_segmenter(conversion.RgbToLab(img), masks=around_eye_mask)
