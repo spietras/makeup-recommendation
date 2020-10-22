@@ -5,16 +5,15 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 ### RULES_PYTHON ###
 
 RULES_PYTHON_NAME = "rules_python"
-RULES_PYTHON_TAG = "0.0.2"
-RULES_PYTHON_PREFIX = "%s-%s" % (RULES_PYTHON_NAME, RULES_PYTHON_TAG)
-RULES_PYTHON_SHA = "a0480851566fc9c20a532d0dd6e21f03c95db5d1a167304d728aa52ebc820d26"
+RULES_PYTHON_TAG = "0.1.0"
+RULES_PYTHON_SHA = "b6d46438523a3ec0f3cead544190ee13223a52f6a6765a29eae7b7cc24cc83a0"
 RULES_PYTHON_REPO = "bazelbuild"
-RULES_PYTHON_ARCHIVE = "zip"
-RULES_PYTHON_URL = "https://github.com/%s/%s/archive/%s.%s" % (RULES_PYTHON_REPO, RULES_PYTHON_NAME, RULES_PYTHON_TAG, RULES_PYTHON_ARCHIVE)
+RULES_PYTHON_ARCHIVE = "tar.gz"
+RULES_PYTHON_URL = "https://github.com/{repo}/{name}/releases/download/{tag}/{name}-{tag}.{archive}".format(repo=RULES_PYTHON_REPO, name=RULES_PYTHON_NAME, tag=RULES_PYTHON_TAG, archive=RULES_PYTHON_ARCHIVE)
 
+# use http_archive rule to load rules_python repo
 http_archive(
     name = RULES_PYTHON_NAME,
-    strip_prefix = RULES_PYTHON_PREFIX,
     sha256 = RULES_PYTHON_SHA,
     url = RULES_PYTHON_URL
 )
@@ -22,8 +21,8 @@ http_archive(
 ### RULES_CONDA ###
 
 RULES_CONDA_NAME = "rules_conda"
-RULES_CONDA_TAG = "0.0.2"
-RULES_CONDA_SHA = "3258a44335f10a8ecffd983a5caf5f5c37b92ea191bfe743bb85280ef864cfd9"
+RULES_CONDA_TAG = "0.0.3"
+RULES_CONDA_SHA = "17cd7377a8af8e726e188f99c4a0c2fa9e8e29eabe50b0d447a3533a56ca3a6f"
 RULES_CONDA_REPO = "spietras"
 RULES_CONDA_ARCHIVE = "zip"
 RULES_CONDA_URL = "https://github.com/{repo}/{name}/releases/download/{tag}/{name}-{tag}.{archive}".format(repo=RULES_CONDA_REPO, name=RULES_CONDA_NAME, tag=RULES_CONDA_TAG, archive=RULES_CONDA_ARCHIVE)
