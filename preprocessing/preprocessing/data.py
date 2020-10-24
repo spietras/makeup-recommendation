@@ -95,25 +95,11 @@ class DataSaver(ABC):
     def save(self, *args):
         return NotImplemented
 
-    @abstractmethod
-    def open(self):
-        return NotImplemented
-
-    @abstractmethod
-    def close(self):
-        return NotImplemented
-
-    def __enter__(self):
-        self.open()
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close()
-
 
 class PartialDataSaver(DataSaver, ABC):
-    def limit(self):
-        return 100
+    def __init__(self, limit):
+        super().__init__()
+        self.limit = limit
 
     @abstractmethod
     def mem_size(self):
@@ -121,7 +107,7 @@ class PartialDataSaver(DataSaver, ABC):
 
     def save(self, *args):
         self.save_in_memory(*args)
-        if self.mem_size() >= self.limit():
+        if self.mem_size() >= self.limit:
             self.dump()
             logger.info("Dumped data")
 
@@ -134,51 +120,13 @@ class PartialDataSaver(DataSaver, ABC):
         return NotImplemented
 
 
-class FileSaver(DataSaver, ABC):
-    def __init__(self):
-        super().__init__()
-        self.file = None
-
-    @abstractmethod
-    def path(self):
-        return NotImplemented
-
-    @staticmethod
-    def mode():
-        return "wb"
-
-    def open(self):
-        self.file = open(self.path(), self.mode())
-        logger.info("Opened {} with mode {}".format(self.path(), self.mode()))
-
-    def close(self):
-        self.file.close()
-        logger.info("Closed {}".format(self.path()))
-
-
-class DataFrameFileSaver(PartialDataSaver, FileSaver, ABC):
-    def __init__(self, dir, filename, limit=100):
-        super().__init__()
-        self._path = "{}/{}.{}".format(dir, filename, self.extension())
-        self._limit = limit
+class DataFrameFileSaver(PartialDataSaver, ABC):
+    def __init__(self, file, limit=100):
+        super().__init__(limit)
+        self.file = file
         self.buffer = []
         self.size = 0
         self.first_dump = True
-
-    @staticmethod
-    @abstractmethod
-    def extension():
-        return NotImplemented
-
-    @staticmethod
-    def mode():
-        return "w"
-
-    def path(self):
-        return self._path
-
-    def limit(self):
-        return self._limit
 
     def mem_size(self):
         return self.size
@@ -199,9 +147,5 @@ class DataFrameFileSaver(PartialDataSaver, FileSaver, ABC):
 
 
 class DataFrameCsvSaver(DataFrameFileSaver):
-    @staticmethod
-    def extension():
-        return "csv"
-
     def export(self, df):
         df.to_csv(self.file, mode="a", header=self.first_dump, index=False)

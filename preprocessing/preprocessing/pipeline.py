@@ -18,12 +18,11 @@ class PreprocessingPipeline(Pipeline):
 
     def run(self):
         logger.info("Pipeline start")
-        with self.data_saver as s:
-            total_batches = len(self.data_loader)
-            for i, batch in enumerate(self.data_loader):
-                logger.info("Loaded batch {}/{}".format(i, total_batches))
-                preprocessed = self.preprocessing(batch)
-                logger.info("Preprocessed batch {}/{}, shape = {}".format(i, total_batches, preprocessed.shape))
-                s.save(preprocessed)
-                logger.info("Saved batch {}/{}".format(i, total_batches))
+        total_batches = len(self.data_loader)
+        for i, batch in enumerate(self.data_loader):
+            logger.info("Loaded batch {}/{}".format(i, total_batches))
+            preprocessed = self.preprocessing(batch)
+            logger.info("Preprocessed batch {}/{}, shape = {}".format(i, total_batches, preprocessed.shape))
+            self.data_saver.save(preprocessed)
+            logger.info("Saved batch {}/{}".format(i, total_batches))
         logger.info("Pipeline end")
