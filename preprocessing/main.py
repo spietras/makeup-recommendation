@@ -9,12 +9,12 @@ from automakeup import dlib_predictor_path
 from automakeup.face import extract as face_extraction
 from automakeup.face.bounding import MTCNNBoundingBoxFinder
 from automakeup.feature import extract as feature_extraction
-from data import IndexedImageDictDataLoader, MakeupDataset, DataFrameCsvSaver
+from preprocessing.data import IndexedImageDictDataLoader, MakeupDataset, DataFrameCsvSaver
 from facenet import Facenet
 from faceparsing import FaceParser
 from mtcnn import MTCNN
-from pipeline import PreprocessingPipeline
-from preprocessors import MakeupDataPreprocessor
+from preprocessing.pipeline import PreprocessingPipeline
+from preprocessing.preprocessors import MakeupDataPreprocessor
 
 
 def parse_args():

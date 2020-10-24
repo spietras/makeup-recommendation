@@ -13,6 +13,7 @@ py_binary(
     deps = [
         "//automakeup",
         "//imagine",
+        "//preprocessing",
         "//third_party/facenet",
         "//third_party/faceparsing",
         "//third_party/mtcnn",
