@@ -3,6 +3,7 @@ import unittest
 import cv2
 import numpy as np
 
+from imagine.functional import functional as f
 from imagine.shape import operations
 from imagine.shape.figures import Rect
 
@@ -24,13 +25,13 @@ class BiggestContourTestCase(unittest.TestCase):
         self.assertNotEqual(contour.shape[0], 0)
 
     def test_biggest_contour_finds_contour_in_binary_mask_with_channel(self):
-        img = np.expand_dims(generate_binary_square(), 2)
+        img = f.Rearrange("h w -> h w 1")(generate_binary_square())
         contour = operations.biggest_contour(img)
         self.assertEqual(contour.ndim, 2)
         self.assertNotEqual(contour.shape[0], 0)
 
     def test_biggest_contour_fails_for_three_channel_image(self):
-        img = np.expand_dims(generate_binary_square(), 2)
+        img = f.Rearrange("h w -> h w 1")(generate_binary_square())
         img = np.dstack([img, img, img])
         self.assertRaises(cv2.error, operations.biggest_contour, img)
 

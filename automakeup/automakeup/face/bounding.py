@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 import dlib
 import numpy as np
 
+from imagine.functional import functional as f
 from imagine.shape.figures import Rect
 
 
@@ -31,7 +32,8 @@ class MTCNNBoundingBoxFinder(BoundingBoxFinder):
         self.mtcnn = mtcnn
 
     def find(self, img):
-        bbs, _ = self.mtcnn.find(np.expand_dims(img, 0))
+        img = f.Rearrange("h w c -> 1 h w c")(img)
+        bbs, _ = self.mtcnn.find(img)
         if bbs[0] is None or bbs[0].size == 0:
             return None
         best_face_bb = bbs[0][0]

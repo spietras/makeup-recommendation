@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 from sklearn.base import clone
 
+from imagine.functional import functional as f
 from imagine.helpers import normalization
 from imagine.color import conversion
 
@@ -38,7 +39,8 @@ class PositionAgnosticExtractor(ColorExtractor, ABC):
         extracted = self.extract_from_pixels(pixels)
         if len(extracted) == 0:
             return extracted
-        return conversion.LabToRgb(np.expand_dims(extracted, 0))[0]
+        extracted = f.Rearrange("n c -> 1 n c")(extracted)
+        return f.Rearrange("1 n c -> n c")(conversion.LabToRgb(extracted))
 
     @abstractmethod
     def extract_from_pixels(self, pixels):

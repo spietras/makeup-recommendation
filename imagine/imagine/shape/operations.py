@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+from imagine.functional import functional as f
 from imagine.functional.functional import ImageOperation
 from imagine.shape.figures import Rect
 
@@ -18,7 +19,7 @@ def biggest_contour(binary_mask):
     """
     binary_mask = binary_mask.astype(np.uint8)
     if binary_mask.ndim == 2:
-        binary_mask = np.expand_dims(binary_mask, 2)
+        binary_mask = f.Rearrange("h w -> h w 1")(binary_mask)
     contours, _ = cv2.findContours(binary_mask, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_NONE)
     if not contours:
         return np.array([[]], dtype=np.int)
@@ -100,7 +101,7 @@ def erode(img, kernel, shape=cv2.MORPH_ELLIPSE, bg=0):
     """
     org_shape = img.shape
     if img.ndim == 2:
-        img = np.expand_dims(img, 2)
+        img = f.Rearrange("h w -> h w 1")(img)
     if not isinstance(kernel, tuple):
         kernel = (kernel, kernel)
     element = cv2.getStructuringElement(shape, kernel)
@@ -124,7 +125,7 @@ def dilate(img, kernel, shape=cv2.MORPH_ELLIPSE, bg=0):
     """
     org_shape = img.shape
     if img.ndim == 2:
-        img = np.expand_dims(img, 2)
+        img = f.Rearrange("h w -> h w 1")(img)
     if not isinstance(kernel, tuple):
         kernel = (kernel, kernel)
     element = cv2.getStructuringElement(shape, kernel)

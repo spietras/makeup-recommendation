@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 
 from imagine.color import conversion
+from imagine.functional import functional as f
 from mtcnn import MTCNN
 
 
@@ -16,7 +17,7 @@ def load_image():
 
 class MTCNNTestCase(unittest.TestCase):
 
-    img = np.expand_dims(load_image(), 0)
+    img = f.Rearrange("h w c -> 1 h w c")(load_image())
     mtcnn = MTCNN()
 
     def test_mtcnn_returns_correct_shape(self):

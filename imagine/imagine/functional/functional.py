@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from collections import Iterable
 
+import einops as ein
 import numpy as np
 
 
@@ -199,20 +200,6 @@ class Constant(BatchOperation):
         return self.constant
 
 
-class Channelize(SinglePositionalArgCallable):
-    """Adds singular channel dimension"""
-
-    def __call__(self, x, **kwargs):
-        return x[..., np.newaxis]
-
-
-class Dechannelize(SinglePositionalArgCallable):
-    """Removes singular channel dimension"""
-
-    def __call__(self, x, **kwargs):
-        return x[..., -1]
-
-
 class Lambda(BatchOperation):
     """Operation with custom logic for single sample"""
 
@@ -235,3 +222,37 @@ class Join(SinglePositionalArgCallable):
         for operation in self.operations:
             x = operation(x, **kwargs)
         return x
+
+
+class Rearrange(SinglePositionalArgCallable):
+    """ Rearrange input shape according to einops pattern """
+    def __init__(self, pattern, **axes_lengths):
+        super().__init__()
+        self.pattern = pattern
+        self.axes_lengths = axes_lengths
+
+    def __call__(self, x, **kwargs):
+        return ein.rearrange(x, self.pattern, **self.axes_lengths)
+
+
+class Reduce(SinglePositionalArgCallable):
+    """ Reduce input shape according to einops pattern """
+    def __init__(self, pattern, reduction, **axes_lengths):
+        super().__init__()
+        self.pattern = pattern
+        self.reduction = reduction
+        self.axes_lengths = axes_lengths
+
+    def __call__(self, x, **kwargs):
+        return ein.reduce(x, self.pattern, self.reduction, **self.axes_lengths)
+
+
+class Repeat(SinglePositionalArgCallable):
+    """ Repeat input shape according to einops pattern """
+    def __init__(self, pattern, **axes_lengths):
+        super().__init__()
+        self.pattern = pattern
+        self.axes_lengths = axes_lengths
+
+    def __call__(self, x, **kwargs):
+        return ein.repeat(x, self.pattern, **self.axes_lengths)

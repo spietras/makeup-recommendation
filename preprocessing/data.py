@@ -9,7 +9,7 @@ import pandas as pd
 from torch.utils.data import Dataset, DataLoader
 
 from imagine.color import conversion
-from imagine.functional import functional
+from imagine.functional import functional as f
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ class IndexedImageDictDataLoader(DataLoader):
     def __init__(self,
                  dataset,
                  batch_size=1,
-                 align=functional.Identity,
+                 align=f.Identity,
                  shuffle=True):
         super().__init__(dataset, batch_size, shuffle, collate_fn=self.Collator(align).collate)
 
