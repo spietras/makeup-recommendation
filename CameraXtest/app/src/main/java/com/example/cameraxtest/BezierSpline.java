@@ -21,6 +21,7 @@ public class BezierSpline {
 
     private boolean mResolved;
     private ControlPointsResolver mResolver;
+    private int cur;
 
     public BezierSpline(int knots) throws IllegalArgumentException {
         if (knots <= 1) {
@@ -36,6 +37,8 @@ public class BezierSpline {
         mPY1 = new float[segments];
         mPX2 = new float[segments];
         mPY2 = new float[segments];
+
+        cur = 0;
     }
 
     /**
@@ -58,6 +61,15 @@ public class BezierSpline {
     public void set(int knot, float x, float y) {
         mX[knot] = x;
         mY[knot] = y;
+        mResolved = false;
+    }
+
+    /**
+     * Sets coordinates of current knot.
+     */
+    public void set(float x, float y) {
+        mX[cur] = x;
+        mY[cur++] = y;
         mResolved = false;
     }
 

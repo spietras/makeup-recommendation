@@ -85,4 +85,16 @@ public abstract class Utils {
         }
         return 0;
     }
+
+    public static int brightenColor(int color, float ScaleFactor)
+    {
+        int r,g,b;
+        r =(int) Math.min(Color.red(color) * ScaleFactor, 255);
+        r = Math.max(r, 200);
+        g =(int) Math.min(Color.green(color) * ScaleFactor, 255);
+        g = Math.max(g, 200);
+        b =(int) Math.min(Color.blue(color) * ScaleFactor, 255);
+        b = Math.max(b, 200);
+        return Color.argb(255, r, g, b);
+    }
 }
