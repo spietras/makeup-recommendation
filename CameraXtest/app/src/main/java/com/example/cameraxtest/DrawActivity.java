@@ -14,6 +14,7 @@ import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.InputQueue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
@@ -94,6 +95,7 @@ public class DrawActivity extends AppCompatActivity {
         //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         overlay = findViewById(R.id.graphicOverlay);
         picture = new CameraImageGraphic(overlay);
+        overlay.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         bmp = null;
         try {

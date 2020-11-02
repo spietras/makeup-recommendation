@@ -20,6 +20,7 @@ import android.graphics.BlendMode;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.MaskFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -28,6 +29,7 @@ import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.Xfermode;
 import android.util.Log;
 
@@ -76,6 +78,11 @@ public class FaceGraphic extends Graphic {
     private final Paint[] labelPaints;
     private final Paint lipsPaint = new Paint();
     private final Paint lipsPaintOver = new Paint();
+    private final Paint eyeshadowPaint = new Paint();
+    private int[] colors;
+    private Path dummyShadow;
+    private PointF dummyCenter = new PointF(89.5F,63F);
+    private int dummySize = 105;
 
     private volatile Face face;
 
@@ -106,12 +113,31 @@ public class FaceGraphic extends Graphic {
             labelPaints[i].setColor(COLORS[i][1]  /* background color */);
             labelPaints[i].setStyle(Paint.Style.FILL);
         }
-        lipsPaint.setColor(Color.RED);
-        //lipsPaint.setAlpha(245);
-        lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
-        lipsPaintOver.setColor(Color.GREEN);
-        lipsPaintOver.setAlpha(25);
+        lipsPaint.setColor(Color.rgb(194,83, 107));
+        lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        lipsPaintOver.setColor(Color.rgb(194,83, 107));
+        lipsPaint.setAlpha(125);
+        lipsPaintOver.setAlpha(50);
+        eyeshadowPaint.setAlpha(50);
+        //eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        colors = new int[3];
+        colors[0] = Color.rgb(143,15,58);
+        colors[1] = Color.rgb(205, 0, 93);
+        colors[2] = Color.rgb(221, 96,129);
+       for(int i=0; i<colors.length; ++i)
+        {
+            //colors[i] = Utils.brightenColor(colors[i],3);
+        }
         overlay_scale = overlay.scaleFactor;
+
+        int[] dummyCoords = {16,49,21,42,31,37,45,32,57,28,69,26,87,24,102,26,117,31,130,39,140, 50,145,61,148,68,128,74,112,82,92,87,75,87,58,83,40,75,25,64,21,60,17,56,16,49};
+        dummyShadow = new Path();
+        dummyShadow.moveTo(dummyCoords[0],dummyCoords[1]);
+        for (int i=2; i<dummyCoords.length; i+=2)
+        {
+            dummyShadow.lineTo(dummyCoords[i],dummyCoords[i+1]);
+        }
+        dummyShadow.close();
     }
 
     /**
@@ -127,7 +153,7 @@ public class FaceGraphic extends Graphic {
         // Draws a circle at the position of the detected face, with the face's track id below.
         float x = translateX(face.getBoundingBox().centerX());
         float y = translateY(face.getBoundingBox().centerY());
-        canvas.drawCircle(x, y, FACE_POSITION_RADIUS, facePositionPaint);
+        //canvas.drawCircle(x, y, FACE_POSITION_RADIUS, facePositionPaint);
 
         // Calculate positions.
         float left = x - scale(face.getBoundingBox().width() / 2.0f);
@@ -236,10 +262,10 @@ public class FaceGraphic extends Graphic {
         }
 
         // Draw facial landmarks
-        drawFaceLandmark(canvas, FaceLandmark.LEFT_EYE);
+        /*drawFaceLandmark(canvas, FaceLandmark.LEFT_EYE);
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_EYE);
         drawFaceLandmark(canvas, FaceLandmark.LEFT_CHEEK);
-        drawFaceLandmark(canvas, FaceLandmark.RIGHT_CHEEK);
+        drawFaceLandmark(canvas, FaceLandmark.RIGHT_CHEEK);*/
         drawLipsSpline(canvas);
         drawEyeshadow(canvas, FaceContour.LEFT_EYE);
         drawEyeshadow(canvas, FaceContour.RIGHT_EYE);
@@ -265,47 +291,100 @@ public class FaceGraphic extends Graphic {
         Path shadow = new Path();
         Path shadow_big = new Path();
         shadow_big.setFillType(Path.FillType.EVEN_ODD);
+        shadow_big.addPath(dummyShadow);
+
+        //BezierSpline eyeTop = new BezierSpline(9);
+        //BezierSpline eyeBottom = new BezierSpline(9);
 
         List<PointF> points;
         points = contour.getPoints();
         Log.d(TAG, "drawEyeshadow: " + points);
-        PointF first, top_start, iter;
+        PointF first, top_end, iter;
         first = points.get(0);
-        top_start = points.get(4);
+        top_end = points.get(8);
         shadow.moveTo(translateX(first.x), translateY(first.y));
-        shadow_big.moveTo(translateX(first.x), translateY(first.y));
+        //shadow_big.moveTo(translateX(first.x), translateY(first.y));
 
-        for(int i=1; i<9; ++i)
+        /*for(int i=0; i<9; ++i)
+        {
+            iter = points.get(i);
+            eyeTop.set(translateX(iter.x), translateY(iter.y));
+        }
+        for(int i=8; i<16; ++i)
+        {
+            iter = points.get(i);
+            eyeBottom.set(translateX(iter.x), translateY(iter.y));
+        }
+        eyeBottom.set(translateX(first.x), translateY(first.y));*/
+
+        /*for(int i=1; i<9; ++i)
         {
             iter = points.get(i);
             shadow_big.lineTo(translateX(iter.x), translateY(iter.y));
-        }
+        }*/
         for(PointF it : points)
         {
             shadow.lineTo(translateX(it.x), translateY(it.y));
         }
         shadow.close();
 
+        /*eyeTop.applyToPath(shadow);
+        eyeBottom.applyToPath(shadow);
+        eyeTop.applyToPath(shadow_big);*/
+
         Matrix scaleMatrix = new Matrix();
         RectF rectF = new RectF();
         shadow.computeBounds(rectF, true);
-        scaleMatrix.setScale(1f, 2f,rectF.centerX(),rectF.centerY());
-        shadow_big.transform(scaleMatrix);
 
-        for(int i=8; i<16; ++i)
+        scaleMatrix.setTranslate(rectF.centerX()-dummyCenter.x, rectF.centerY()-dummyCenter.y);
+        shadow_big.transform(scaleMatrix);
+        float scaleFactor = (translateX(first.x)-translateX(points.get(8).x))/dummySize;
+        scaleMatrix = new Matrix();
+        if(eyeContour == FaceContour.LEFT_EYE)
+        {
+            scaleMatrix.setScale(-scaleFactor, scaleFactor,rectF.centerX(),rectF.centerY());
+        }
+        else
+        {
+            scaleMatrix.setScale(scaleFactor, scaleFactor,rectF.centerX(),rectF.centerY());
+        }
+        shadow_big.transform(scaleMatrix);
+        //eyeBottom.applyToPath(shadow_big);
+
+        /*for(int i=8; i<16; ++i)
         {
             iter = points.get(i);
             shadow_big.lineTo(translateX(iter.x), translateY(iter.y));
         }
-        shadow_big.lineTo(translateX(first.x),translateY(first.y));
-        shadow_big.close();
+        shadow_big.lineTo(translateX(first.x),translateY(first.y));*/
+        //shadow_big.close();
 
-        scaleMatrix = new Matrix();
-        shadow.computeBounds(rectF, true);
-        scaleMatrix.setScale(1.5f, 1.5f,rectF.centerX(),rectF.centerY());
-        shadow_big.transform(scaleMatrix);
+        //scaleMatrix = new Matrix();
+        //shadow.computeBounds(rectF, true);
+        //scaleMatrix.setScale(1.5f, 1.5f,rectF.centerX(),rectF.centerY());
+        //shadow_big.transform(scaleMatrix);
         shadow_big.addPath(shadow);
-        canvas.drawPath(shadow_big, lipsPaintOver);
+
+        float x1,x2;
+        if(eyeContour == FaceContour.LEFT_EYE)
+        {
+            x1 = first.x;
+            x2 = top_end.x;
+        }
+        else
+        {
+            x1 = top_end.x;
+            x2 = first.x;
+        }
+
+        eyeshadowPaint.setShader(new LinearGradient(
+                translateX(x1), 0,
+                translateX(x2), 0,
+                colors,
+                null,
+                Shader.TileMode.MIRROR
+        ));
+        canvas.drawPath(shadow_big, eyeshadowPaint);
     }
 
     private void drawLipsSpline(Canvas canvas)
@@ -341,8 +420,15 @@ public class FaceGraphic extends Graphic {
         BlurMaskFilter blur = new BlurMaskFilter(Math.abs(firstBottom.x-firstTop.x)/10, BlurMaskFilter.Blur.NORMAL);
         lipsPaint.setMaskFilter(blur);
         lipsPaintOver.setMaskFilter(blur);
+        eyeshadowPaint.setMaskFilter(blur);
         canvas.drawPath(lips, lipsPaint);
-        //canvas.drawPath(lips, lipsPaintOver);
+
+        Matrix scaleMatrix = new Matrix();
+        RectF rectF = new RectF();
+        lips.computeBounds(rectF, true);
+        scaleMatrix.setScale(0.75f, 0.75f,rectF.centerX(),rectF.centerY());
+        //lips.transform(scaleMatrix);
+        canvas.drawPath(lips, lipsPaintOver);
     }
 
     private void drawLips(Canvas canvas)
