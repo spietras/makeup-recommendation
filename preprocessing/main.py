@@ -9,10 +9,10 @@ from automakeup import dlib_predictor_path
 from automakeup.face import extract as face_extraction
 from automakeup.face.bounding import MTCNNBoundingBoxFinder
 from automakeup.feature import extract as feature_extraction
-from preprocessing.data import IndexedImageDictDataLoader, MakeupDataset, DataFrameCsvSaver
 from facenet import Facenet
 from faceparsing import FaceParser
 from mtcnn import MTCNN
+from preprocessing.data import IndexedImageDictDataLoader, MakeupDataset, DataFrameCsvSaver
 from preprocessing.pipeline import PreprocessingPipeline
 from preprocessing.preprocessors import MakeupDataPreprocessor
 
@@ -24,12 +24,10 @@ def parse_args():
                                              default_config_files=[str(config_path)])
         argparser.add_argument("directory",
                                help="path to directory containing makeup images")
-        argparser.add_argument("output_directory",
-                               help="path to directory that should contain output data file")
+        argparser.add_argument("output_file",
+                               help="path to the output data file")
         argparser.add_argument('--config', is_config_file=True,
                                help='config file path')
-        argparser.add_argument("--output_file", default="data",
-                               help="name of the output data file")
         argparser.add_argument("--batchsize", type=int, default=1,
                                help="batch size (how many images to process at once)")
         argparser.add_argument("--facesize", type=int, default=512,
@@ -91,9 +89,10 @@ if __name__ == '__main__':
     config_function = get_colors_config if args.method == "colors" else get_facenet_config
     data_loader, preprocessor = config_function(device, args.facesize, args.directory, args.batchsize)
 
-    data_saver = DataFrameCsvSaver(args.output_directory, args.output_file, limit=args.limit)
+    with open(args.output_file, "w") as out:
+        data_saver = DataFrameCsvSaver(out, limit=args.limit)
 
-    logger.info("Loaded")
+        logger.info("Loaded")
 
-    pipeline = PreprocessingPipeline(data_loader, preprocessor.preprocess, data_saver)
-    pipeline.run()
+        pipeline = PreprocessingPipeline(data_loader, preprocessor.preprocess, data_saver)
+        pipeline.run()
