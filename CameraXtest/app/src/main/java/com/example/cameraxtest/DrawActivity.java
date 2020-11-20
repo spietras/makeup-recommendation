@@ -119,7 +119,7 @@ public class DrawActivity extends AppCompatActivity {
                 break;
         }*/
         BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inSampleSize = 2;
+        //opts.inSampleSize = 2;
         String path = message.substring(5);
         InputImage image = InputImage.fromBitmap(BitmapFactory.decodeFile(path, opts), 270);//bmp, 0);
         overlay.clear();
@@ -172,7 +172,7 @@ public class DrawActivity extends AppCompatActivity {
                     break;
             }*/
             graphic = new FaceGraphic(overlay, face);
-            graphic.face_scale = 2;
+            //graphic.face_scale = 2;
             overlay.add(graphic);
         }
         overlay.postInvalidate();
