@@ -3,9 +3,17 @@ package com.example.cameraxtest;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.RectF;
+
 import com.example.cameraxtest.CameraImageGraphic.Layer;
+import com.google.mlkit.vision.face.Face;
+import com.google.mlkit.vision.face.FaceContour;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class Utils {
     //rotate bitmap by a specified angle using a matrix
@@ -96,5 +104,28 @@ public abstract class Utils {
         b =(int) Math.min(Color.blue(color) * ScaleFactor, 255);
         b = Math.max(b, 200);
         return Color.argb(255, r, g, b);
+    }
+
+    public static double calculateDistance(float x1, float y1, float x2, float y2)
+    {
+        return Math.sqrt(Math.pow(x1-x2,2) + Math.pow(y1-y2,2));
+    }
+
+    public static PointF getEyebrowCenter(List<PointF> top, List<PointF> bottom)
+    {
+        Path brow = new Path();
+        PointF it = top.get(0);
+        brow.moveTo(it.x, it.y);
+        for (PointF point: top) {
+            brow.lineTo(point.x,point.y);
+        }
+        for(int i=bottom.size()-1; i>=0; --i)
+        {
+            it = bottom.get(i);
+            brow.lineTo(it.x, it.y);
+        }
+        RectF boundingBox = new RectF();
+        brow.computeBounds(boundingBox, true);
+        return new PointF(boundingBox.centerX(), boundingBox.centerY());
     }
 }

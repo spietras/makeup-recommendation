@@ -1,30 +1,27 @@
 package com.example.cameraxtest
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.view.View
-import android.net.Uri
+import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import java.util.concurrent.Executors
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
-import com.google.mlkit.vision.common.InputImage
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+
 typealias LumaListener = (luma: Double) -> Unit
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
+    private val PICK_IMAGE = 100
 
     private lateinit var analyzer: ImageAnalyzer
     private lateinit var overlay: GraphicOverlay
@@ -44,13 +42,16 @@ class MainActivity : AppCompatActivity() {
 
         overlay = findViewById(R.id.Overlay)
         analyzer = ImageAnalyzer(overlay)
+        var gallery = findViewById<Button>(R.id.choosePicture)
+        gallery.setOnClickListener { openGallery(); };
 
         // Request camera permissions
         if (allPermissionsGranted()) {
             startCamera()
         } else {
             ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
         }
 
         // Setup the listener for take photo button
@@ -70,12 +71,12 @@ class MainActivity : AppCompatActivity() {
 
             // Preview
             preview = Preview.Builder()
-                .setTargetResolution(Size(720,1280))
+                .setTargetResolution(Size(720, 1280))
                 .build()
 
             // ImageCapture
             imageCapture = ImageCapture.Builder()
-                .setTargetResolution(Size(720,1280))
+                .setTargetResolution(Size(720, 1280))
                 .build()
 
             // ImageAnalysis
@@ -89,7 +90,8 @@ class MainActivity : AppCompatActivity() {
 
 
             // Select back camera
-            val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
+            val cameraSelector =
+                CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
 
             try {
                 // Unbind use cases before rebinding
@@ -97,11 +99,12 @@ class MainActivity : AppCompatActivity() {
 
 
                 // Bind use cases to camera
-                preview?.setSurfaceProvider(viewFinder.createSurfaceProvider())
+                preview?.setSurfaceProvider(viewFinder.surfaceProvider)
                 camera = cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture)//, imageAnalyzer)
+                    this, cameraSelector, preview, imageCapture
+                )//, imageAnalyzer)
 
-            } catch(exc: Exception) {
+            } catch (exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
             }
 
@@ -115,8 +118,10 @@ class MainActivity : AppCompatActivity() {
         // Create timestamped output file to hold the image
         val photoFile = File(
             outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.US
-            ).format(System.currentTimeMillis()) + ".jpg")
+            SimpleDateFormat(
+                FILENAME_FORMAT, Locale.US
+            ).format(System.currentTimeMillis()) + ".jpg"
+        )
 
         // Create output options object which contains file + metadata
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
@@ -124,7 +129,9 @@ class MainActivity : AppCompatActivity() {
         // Setup image capture listener which is triggered after photo has
         // been taken
         imageCapture.takePicture(
-            outputOptions, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
@@ -135,9 +142,10 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
 
-                    val intent = Intent( this@MainActivity, DrawActivity/*PlotActivity*/::class.java).apply {
-                        putExtra(EXTRA_MESSAGE, savedUri.toString())
-                    }
+                    val intent =
+                        Intent(this@MainActivity, DrawActivity/*PlotActivity*/::class.java).apply {
+                            putExtra(EXTRA_MESSAGE, savedUri.toString())
+                        }
                     startActivity(intent)
                 }
             })
@@ -172,22 +180,43 @@ class MainActivity : AppCompatActivity() {
         })*/
     }
 
+    private fun openGallery() {
+        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        startActivityForResult(gallery, PICK_IMAGE)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            //Log.d(TAG, "onActivityResult: "+ (data!!.data?.path ?: String))
+            val intent =
+                Intent(this@MainActivity, DrawActivity/*PlotActivity*/::class.java).apply {
+                    putExtra(EXTRA_MESSAGE, data?.data?.toString())
+                }
+            startActivity(intent)
+        }
+    }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
-            baseContext, it) == PackageManager.PERMISSION_GRANTED
+            baseContext, it
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray) {
+        IntArray
+    ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
-                Toast.makeText(this,
+                Toast.makeText(
+                    this,
                     "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
                 finish()
             }
         }
@@ -206,6 +235,6 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 }

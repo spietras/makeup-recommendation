@@ -29,9 +29,9 @@ public class ImageAnalyzer implements ImageAnalysis.Analyzer {
     private GraphicOverlay overlay;
     private FaceDetectorOptions options;
     public FaceDetector detector;
-    private String TAG = "DETECTOR";
+    private String TAG = "ANALYZER";
 
-    public ImageAnalyzer(@NonNull GraphicOverlay o)
+     public ImageAnalyzer(@NonNull GraphicOverlay o)
     {
         overlay = o;
         options = new FaceDetectorOptions.Builder()
@@ -44,19 +44,24 @@ public class ImageAnalyzer implements ImageAnalysis.Analyzer {
     }
 
     @Override
+    @androidx.camera.core.ExperimentalGetImage
     public void analyze(@NonNull ImageProxy imageProxy) {
-        Log.d("CAMERAX_ANALYZER", "Analyzing frame");
-        @SuppressLint("UnsafeExperimentalUsageError") Image mediaImage = imageProxy.getImage();
+        Log.d("CAMERAX_ANALYZER", "Analyzing frame: "+imageProxy.getWidth()+" x "+ imageProxy.getHeight());
+        /*@SuppressLint("UnsafeExperimentalUsageError") Image mediaImage = imageProxy.getImage();
         if(mediaImage == null)
         {
             Log.d(TAG, "analyze: mediaimage is null");
             return;
-        }
+        }*/
+        //Bitmap bmp = BitmapUtils.getBitmap(imageProxy);
+        Image mediaImage = imageProxy.getImage();
         InputImage image =
                 InputImage.fromMediaImage(mediaImage, imageProxy.getImageInfo().getRotationDegrees());
-        overlay.setImageSourceInfo(imageProxy.getWidth(), imageProxy.getHeight(), false);
+                //InputImage.fromByteArray(imageProxy.getImage().getPlanes(), imageProxy.getWidth(), imageProxy.getHeight(), 270, InputImage.IMAGE_FORMAT_YUV_420_888);
+                //InputImage.fromBitmap(bmp, 0);
+        overlay.setImageSourceInfo(imageProxy.getWidth(), imageProxy.getHeight(), true);
 
-        Task<List<Face>> result =
+        //Task<List<Face>> result =
                 detector.process(image)
                         .addOnSuccessListener(
                                 new OnSuccessListener<List<Face>>() {
@@ -80,6 +85,7 @@ public class ImageAnalyzer implements ImageAnalysis.Analyzer {
                                 new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "Failure");
                                         // Task failed with an exception
                                         // ...
                                     }

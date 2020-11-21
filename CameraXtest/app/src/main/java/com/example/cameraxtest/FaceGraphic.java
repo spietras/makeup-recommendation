@@ -82,7 +82,8 @@ public class FaceGraphic extends Graphic {
     private int[] colors;
     private Path dummyShadow;
     private PointF dummyCenter = new PointF(89.5F,63F);
-    private int dummySize = 105;
+    private int dummySize = 100;
+    private int dummyHeight = 73;
 
     private volatile Face face;
 
@@ -118,16 +119,16 @@ public class FaceGraphic extends Graphic {
         lipsPaintOver.setColor(Color.rgb(194,83, 107));
         lipsPaint.setAlpha(125);
         lipsPaintOver.setAlpha(50);
-        eyeshadowPaint.setAlpha(50);
+        //eyeshadowPaint.setAlpha(50);
         //eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
         colors = new int[3];
         colors[0] = Color.rgb(143,15,58);
         colors[1] = Color.rgb(205, 0, 93);
         colors[2] = Color.rgb(221, 96,129);
-       for(int i=0; i<colors.length; ++i)
+       /*for(int i=0; i<colors.length; ++i)
         {
             //colors[i] = Utils.brightenColor(colors[i],3);
-        }
+        }*/
         overlay_scale = overlay.scaleFactor;
 
         int[] dummyCoords = {16,49,21,42,31,37,45,32,57,28,69,26,87,24,102,26,117,31,130,39,140, 50,145,61,148,68,128,74,112,82,92,87,75,87,58,83,40,75,25,64,21,60,17,56,16,49};
@@ -288,6 +289,9 @@ public class FaceGraphic extends Graphic {
             return;
         FaceContour contour = face.getContour(eyeContour);
         if(contour == null) return;
+        int eye;
+        if(eyeContour == FaceContour.LEFT_EYE) eye = -1;
+        else eye = 1;
         Path shadow = new Path();
         Path shadow_big = new Path();
         shadow_big.setFillType(Path.FillType.EVEN_ODD);
@@ -338,16 +342,16 @@ public class FaceGraphic extends Graphic {
 
         scaleMatrix.setTranslate(rectF.centerX()-dummyCenter.x, rectF.centerY()-dummyCenter.y);
         shadow_big.transform(scaleMatrix);
-        float scaleFactor = (translateX(first.x)-translateX(points.get(8).x))/dummySize;
-        scaleMatrix = new Matrix();
-        if(eyeContour == FaceContour.LEFT_EYE)
-        {
-            scaleMatrix.setScale(-scaleFactor, scaleFactor,rectF.centerX(),rectF.centerY());
-        }
-        else
-        {
-            scaleMatrix.setScale(scaleFactor, scaleFactor,rectF.centerX(),rectF.centerY());
-        }
+        //ODLEGLOSC NIE DX - OBRACANIE
+        float scaleFactor = (float) Utils.calculateDistance(translateX(first.x), translateY(first.y),translateX(points.get(8).x), translateY(points.get(8).y))/dummySize;
+        if(eye==-1) iter = Utils.getEyebrowCenter(face.getContour(FaceContour.LEFT_EYEBROW_TOP).getPoints(), face.getContour(FaceContour.LEFT_EYEBROW_BOTTOM).getPoints());
+        else iter = Utils.getEyebrowCenter(face.getContour(FaceContour.RIGHT_EYEBROW_TOP).getPoints(), face.getContour(FaceContour.RIGHT_EYEBROW_BOTTOM).getPoints());
+        float scaleY = (float) Utils.calculateDistance(translateX(iter.x), translateY(iter.y), rectF.centerX(), rectF.centerY())/dummyHeight;
+        Log.d(TAG, "drawEyeshadow: "+scaleY+" "+scaleFactor);
+        //SCALEY - ŚRODEK OKA DO ŚRODKA BRWI DAVAI CYKA
+        scaleMatrix.setScale(eye*scaleFactor, scaleY,rectF.centerX(),rectF.centerY());
+        shadow_big.transform(scaleMatrix);
+        scaleMatrix.setRotate(face.getHeadEulerAngleZ(),rectF.centerX(),rectF.centerY());
         shadow_big.transform(scaleMatrix);
         //eyeBottom.applyToPath(shadow_big);
 
@@ -359,7 +363,6 @@ public class FaceGraphic extends Graphic {
         shadow_big.lineTo(translateX(first.x),translateY(first.y));*/
         //shadow_big.close();
 
-        //scaleMatrix = new Matrix();
         //shadow.computeBounds(rectF, true);
         //scaleMatrix.setScale(1.5f, 1.5f,rectF.centerX(),rectF.centerY());
         //shadow_big.transform(scaleMatrix);

@@ -60,6 +60,10 @@ public class DrawActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        if(message.startsWith("/"))
+        {
+            message = "file:" + message.substring(5);
+        }
 
         /*File file = new File(URI.create(message));
 
@@ -118,10 +122,12 @@ public class DrawActivity extends AppCompatActivity {
             case 0:
                 break;
         }*/
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inSampleSize = 2;
-        String path = message.substring(5);
-        InputImage image = InputImage.fromBitmap(BitmapFactory.decodeFile(path, opts), 270);//bmp, 0);
+        //BitmapFactory.Options opts = new BitmapFactory.Options();
+        //opts.inSampleSize = 2;
+
+        //String path = message.substring(5);
+        InputImage image = InputImage.fromBitmap(bmp,0);
+        //InputImage image = InputImage.fromBitmap(BitmapFactory.decodeFile(path, opts), 270);//bmp, 0);
         overlay.clear();
         overlay.setImageSourceInfo(bmp.getWidth(), bmp.getHeight(), true);
         overlay.add(picture);
@@ -172,7 +178,7 @@ public class DrawActivity extends AppCompatActivity {
                     break;
             }*/
             graphic = new FaceGraphic(overlay, face);
-            graphic.face_scale = 2;
+            //graphic.face_scale = 2;
             overlay.add(graphic);
         }
         overlay.postInvalidate();
