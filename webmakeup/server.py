@@ -5,12 +5,14 @@ from webmakeup.handlers import EndpointHandler
 
 
 FLASK_PRETTYPRINT_OPTION_NAME = 'JSONIFY_PRETTYPRINT_REGULAR'
+DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = 8080
 
 
 class Server:
-    def __init__(self, worker, port=DEFAULT_PORT, pretty_print=True):
+    def __init__(self, worker, host=DEFAULT_HOST, port=DEFAULT_PORT, pretty_print=True):
         self.worker = worker
+        self.host = host
         self.port = port
         self.app = self._get_flask_app(__package__, pretty_print)
 
@@ -24,7 +26,7 @@ class Server:
         return app
 
     def run(self):
-        self.app.run(port=self.port)
+        self.app.run(host=self.host, port=self.port)
 
     def cleanup(self):
         self.worker.cleanup()
