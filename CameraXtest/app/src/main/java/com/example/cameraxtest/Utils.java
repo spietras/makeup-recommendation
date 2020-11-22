@@ -8,6 +8,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.cameraxtest.CameraImageGraphic.Layer;
 import com.google.mlkit.vision.face.Face;
@@ -142,11 +143,13 @@ public abstract class Utils {
     public static Response uploadImage(String url, Uri imagePath) throws IOException {//, JSONException {
         OkHttpClient okHttpClient = new OkHttpClient();
         File file = new File(imagePath.getPath().substring(5));
-        RequestBody image = RequestBody.create(file, MediaType.parse("image/png"));
+        String FileType = "image/png";
+        if(file.getName().endsWith("jpg")) FileType = "image/jpg";
+        RequestBody image = RequestBody.create(file, MediaType.parse(FileType));
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file", imagePath.getPath().substring(5), image)
+                .addFormDataPart("file", file.getPath(), image)
                 .build();
         Request request = new Request.Builder()
                 .url(url)

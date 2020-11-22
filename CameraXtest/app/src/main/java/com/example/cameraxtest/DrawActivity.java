@@ -74,7 +74,7 @@ public class DrawActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    Response response = Utils.uploadImage("http://192.168.1.100:8080/", Uri.parse(message));
+                    Response response = Utils.uploadImage("http://192.168.1.104:8080/", Uri.parse(message));
                     if (!response.isSuccessful()) {
                         Log.d("POST", "http post failure");
                     }
@@ -86,7 +86,6 @@ public class DrawActivity extends AppCompatActivity {
                 }
             }
         });
-
         /*File file = new File(URI.create(message));
 
         Request request = new Request.Builder()
@@ -123,15 +122,24 @@ public class DrawActivity extends AppCompatActivity {
         picture = new CameraImageGraphic(overlay);
         overlay.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         int rotation = (intent.getIntExtra(MainActivity.EXTRA_TYPE, 0) == 0)? 270:1;
+        InputImage image = null;
+        try {
+            image = InputImage.fromFilePath(this, Uri.parse(message));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Cannot open chosen file", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        bmp = image.getBitmapInternal();
 
-        bmp = null;
+        /*bmp = null;
         try {
             bmp = Utils.RotateBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(message)), rotation);
         } catch (IOException e) {
             Toast.makeText(this, "Image not found!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return;
-        }
+        }*/
 
         /*switch (Utils.checkBrightness(bmp)) {
             case -1:
@@ -149,7 +157,7 @@ public class DrawActivity extends AppCompatActivity {
         //opts.inSampleSize = 2;
 
         //String path = message.substring(5);
-        InputImage image = InputImage.fromBitmap(bmp,0);
+        //InputImage image = InputImage.fromBitmap(bmp,0);
         //InputImage image = InputImage.fromBitmap(BitmapFactory.decodeFile(path, opts), 270);//bmp, 0);
         overlay.clear();
         overlay.setImageSourceInfo(bmp.getWidth(), bmp.getHeight(), true);
