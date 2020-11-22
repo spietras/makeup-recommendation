@@ -145,6 +145,7 @@ class MainActivity : AppCompatActivity() {
                     val intent =
                         Intent(this@MainActivity, DrawActivity/*PlotActivity*/::class.java).apply {
                             putExtra(EXTRA_MESSAGE, savedUri.toString())
+                            putExtra(EXTRA_TYPE, 0)
                         }
                     startActivity(intent)
                 }
@@ -193,6 +194,7 @@ class MainActivity : AppCompatActivity() {
             val intent =
                 Intent(this@MainActivity, DrawActivity/*PlotActivity*/::class.java).apply {
                     putExtra(EXTRA_MESSAGE, data?.data?.toString())
+                    putExtra(EXTRA_TYPE, 1)
                 }
             startActivity(intent)
         }
@@ -232,9 +234,11 @@ class MainActivity : AppCompatActivity() {
     companion object {
         @kotlin.jvm.JvmField
         public var EXTRA_MESSAGE = "com.example.CameraXtest.MESSAGE"
+        @kotlin.jvm.JvmField
+        public var EXTRA_TYPE = "com.example.CameraXtest.TYPE"
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET)
     }
 }

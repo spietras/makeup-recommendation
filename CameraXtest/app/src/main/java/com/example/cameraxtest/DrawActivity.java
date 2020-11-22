@@ -33,12 +33,15 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.List;
 import java.util.Timer;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.internal.Util;
 
 public class DrawActivity extends AppCompatActivity {
 
@@ -59,11 +62,30 @@ public class DrawActivity extends AppCompatActivity {
         setContentView(R.layout.activity_draw);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         if(message.startsWith("/"))
         {
             message = "file:" + message.substring(5);
         }
+
+        Executor webExecutor = Executors.newSingleThreadExecutor();
+
+        webExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response response = Utils.uploadImage("http://192.168.1.100:8080/", Uri.parse(message));
+                    if (!response.isSuccessful()) {
+                        Log.d("POST", "http post failure");
+                    }
+                    else {
+                        Log.d("POST", "http post success");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         /*File file = new File(URI.create(message));
 
@@ -100,10 +122,11 @@ public class DrawActivity extends AppCompatActivity {
         overlay = findViewById(R.id.graphicOverlay);
         picture = new CameraImageGraphic(overlay);
         overlay.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        int rotation = (intent.getIntExtra(MainActivity.EXTRA_TYPE, 0) == 0)? 270:1;
 
         bmp = null;
         try {
-            bmp = Utils.RotateBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(message)), 270);
+            bmp = Utils.RotateBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(message)), rotation);
         } catch (IOException e) {
             Toast.makeText(this, "Image not found!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();

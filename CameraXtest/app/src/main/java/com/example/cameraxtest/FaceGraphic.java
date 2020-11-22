@@ -119,8 +119,8 @@ public class FaceGraphic extends Graphic {
         lipsPaintOver.setColor(Color.rgb(194,83, 107));
         lipsPaint.setAlpha(125);
         lipsPaintOver.setAlpha(50);
-        //eyeshadowPaint.setAlpha(50);
-        //eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        eyeshadowPaint.setAlpha(80);
+        eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
         colors = new int[3];
         colors[0] = Color.rgb(143,15,58);
         colors[1] = Color.rgb(205, 0, 93);

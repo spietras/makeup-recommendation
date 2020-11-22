@@ -7,13 +7,23 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.Uri;
 
 import com.example.cameraxtest.CameraImageGraphic.Layer;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public abstract class Utils {
     //rotate bitmap by a specified angle using a matrix
@@ -127,5 +137,23 @@ public abstract class Utils {
         RectF boundingBox = new RectF();
         brow.computeBounds(boundingBox, true);
         return new PointF(boundingBox.centerX(), boundingBox.centerY());
+    }
+
+    public static Response uploadImage(String url, Uri imagePath) throws IOException {//, JSONException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        File file = new File(imagePath.getPath().substring(5));
+        RequestBody image = RequestBody.create(file, MediaType.parse("image/png"));
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", imagePath.getPath().substring(5), image)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        return okHttpClient.newCall(request).execute();
+        //JSONObject jsonObject = new JSONObject(response.body().string());
+        //return jsonObject.optString("image");
     }
 }
