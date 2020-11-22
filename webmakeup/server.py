@@ -17,8 +17,10 @@ class Server:
         self.app = self._get_flask_app(__package__, pretty_print)
 
     def _get_flask_app(self, name, pretty_print):
-        def add_endpoint(app, route, f):
-            app.add_url_rule(route, f.__name__, EndpointHandler(f))
+        def add_endpoint(app, route, f, methods=None):
+            if methods is None:
+                methods = ['GET', 'POST']
+            app.add_url_rule(route, f.__name__, EndpointHandler(f), methods=methods)
 
         app = Flask(name)
         app.config[FLASK_PRETTYPRINT_OPTION_NAME] = pretty_print
