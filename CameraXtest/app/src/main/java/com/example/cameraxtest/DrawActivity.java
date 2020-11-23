@@ -1,47 +1,37 @@
 package com.example.cameraxtest;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.MediaStore;
+import android.os.Looper;
 import android.util.Log;
-import android.view.InputQueue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Toast;
-import com.example.cameraxtest.CameraImageGraphic.BlendModes;
 
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cameraxtest.CameraImageGraphic.BlendModes;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
-import java.io.File;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.net.URI;
-import java.time.Instant;
 import java.util.List;
-import java.util.Timer;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.internal.Util;
 
 public class DrawActivity extends AppCompatActivity {
 
@@ -53,6 +43,7 @@ public class DrawActivity extends AppCompatActivity {
     private static final MediaType MEDIA_TYPE_IMAGE = MediaType.parse("image/jpg");
     private String message;
     private long startTime, stopTime;
+    private Lock lock;
 
     private final OkHttpClient client = new OkHttpClient();
 
@@ -70,43 +61,30 @@ public class DrawActivity extends AppCompatActivity {
 
         Executor webExecutor = Executors.newSingleThreadExecutor();
 
-        webExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Response response = Utils.uploadImage("http://192.168.1.104:8080/", Uri.parse(message));
-                    if (!response.isSuccessful()) {
-                        Log.d("POST", "http post failure");
-                    }
-                    else {
-                        Log.d("POST", "http post success");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+        lock = new ReentrantLock();
+        lock.lock();
+
+        webExecutor.execute(() -> {
+            String TAG = "POST";
+            try {
+                Response response = Utils.uploadImage("http://192.168.1.104:8080/", Uri.parse(message));
+                if (!response.isSuccessful()) {
+                    Log.d(TAG, "http post failure");
+                    finish();
                 }
+                else {
+                    Log.d(TAG, "http post success");
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    Log.d(TAG, "lips_color returned " + jsonObject.getString("lips_color"));
+                    lock.lock();
+                    drawMakeup();
+                    lock.unlock();
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+                finish();
             }
         });
-        /*File file = new File(URI.create(message));
-
-        Request request = new Request.Builder()
-                .url("https://192.168.8.114:8080")
-                .post(RequestBody.create(MEDIA_TYPE_IMAGE, file))
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                Log.d(TAG, "http post failure");
-                finish();
-            }
-            else {
-                Log.d(TAG, "http post success");
-                finish();
-            }
-        }
-        catch (IOException e){
-            Log.e(TAG, "DrawActivity: " + e.getMessage(), e);
-            finish();
-        }*/
 
         FaceDetectorOptions options = new FaceDetectorOptions.Builder()
                 .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
@@ -121,13 +99,26 @@ public class DrawActivity extends AppCompatActivity {
         overlay = findViewById(R.id.graphicOverlay);
         picture = new CameraImageGraphic(overlay);
         overlay.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        int rotation = (intent.getIntExtra(MainActivity.EXTRA_TYPE, 0) == 0)? 270:1;
+        lock.unlock();
+
+        /*overlay.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                overlay.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                overlay.setLayoutParams(new ConstraintLayout.LayoutParams(overlay.getWidth(), overlay.getWidth()*overlay.getImageHeight()/overlay.getImageWidth()));
+            }
+        });*/
+    }
+
+    public void drawMakeup()
+    {
+        //int rotation = (intent.getIntExtra(MainActivity.EXTRA_TYPE, 0) == 0)? 270:1;
         InputImage image = null;
         try {
             image = InputImage.fromFilePath(this, Uri.parse(message));
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Cannot open chosen file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot open selected file", Toast.LENGTH_SHORT).show();
             finish();
         }
         bmp = image.getBitmapInternal();
@@ -167,16 +158,8 @@ public class DrawActivity extends AppCompatActivity {
         startTime = System.currentTimeMillis();
         //Task<List<Face>> result =
         detector.process(image)
-                        .addOnSuccessListener(this::onSuccess)
-                        .addOnFailureListener(this::onFailure);
-
-        /*overlay.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                overlay.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                overlay.setLayoutParams(new ConstraintLayout.LayoutParams(overlay.getWidth(), overlay.getWidth()*overlay.getImageHeight()/overlay.getImageWidth()));
-            }
-        });*/
+                .addOnSuccessListener(this::onSuccess)
+                .addOnFailureListener(this::onFailure);
     }
 
     public void onSuccess(List<Face> faces) {
@@ -213,13 +196,10 @@ public class DrawActivity extends AppCompatActivity {
             overlay.add(graphic);
         }
         overlay.postInvalidate();
-        //finish();
     }
 
     public void onFailure(@NonNull Exception e) {
             stopTime = System.currentTimeMillis();
-            // Task failed with an exception
-            // ...
             e.printStackTrace();
             Toast.makeText(this, "Failed to detect faces", Toast.LENGTH_SHORT).show();
         }

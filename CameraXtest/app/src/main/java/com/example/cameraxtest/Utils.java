@@ -5,18 +5,13 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
-import android.util.Log;
 
 import com.example.cameraxtest.CameraImageGraphic.Layer;
-import com.google.mlkit.vision.face.Face;
-import com.google.mlkit.vision.face.FaceContour;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -149,7 +144,7 @@ public abstract class Utils {
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file", file.getPath(), image)
+                .addFormDataPart("img", file.getPath(), image)
                 .build();
         Request request = new Request.Builder()
                 .url(url)
