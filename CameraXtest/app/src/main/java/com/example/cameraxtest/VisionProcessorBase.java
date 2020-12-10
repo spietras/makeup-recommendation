@@ -130,10 +130,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
             ByteBuffer data, final FrameMetadata frameMetadata, final GraphicOverlay graphicOverlay) {
         // If live viewport is on (that is the underneath surface view takes care of the camera preview
         // drawing), skip the unnecessary bitmap creation that used for the manual preview drawing.
-        /*Bitmap bitmap =
-                PreferenceUtils.isCameraLiveViewportEnabled(graphicOverlay.getContext())
-                        ? null
-                        : BitmapUtils.getBitmap(data, frameMetadata);*/
+        Bitmap bitmap = BitmapUtils.getBitmap(data, frameMetadata);
 
         requestDetectInImage(
                 InputImage.fromByteBuffer(
@@ -143,7 +140,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
                         frameMetadata.getRotation(),
                         InputImage.IMAGE_FORMAT_NV21),
                 graphicOverlay,
-                null,//bitmap,
+                bitmap,
                 /* shouldShowFps= */ true)
                 .addOnSuccessListener(executor, results -> processLatestImage(graphicOverlay));
     }
@@ -180,10 +177,10 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
                             }
 
                             graphicOverlay.clear();
-                            assert(originalCameraImage == null);
-                            //if (originalCameraImage != null) {
-                                //graphicOverlay.add(new CameraImageGraphic(graphicOverlay, originalCameraImage));
-                            //}
+                            //assert(originalCameraImage == null);
+                            if (originalCameraImage != null) {
+                                graphicOverlay.add(new CameraImageGraphic(graphicOverlay, originalCameraImage));
+                            }
                             graphicOverlay.add(
                                     new InferenceInfoGraphic(
                                             graphicOverlay, currentLatencyMs, shouldShowFps ? framesPerSecond : null));

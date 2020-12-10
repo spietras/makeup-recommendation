@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cameraxtest.CameraImageGraphic.BlendModes;
+//import com.example.cameraxtest.CameraImageGraphic.BlendModes;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
@@ -97,7 +97,7 @@ public class DrawActivity extends AppCompatActivity {
         //Intent intent = getIntent();
         //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         overlay = findViewById(R.id.graphicOverlay);
-        picture = new CameraImageGraphic(overlay);
+        //picture = new CameraImageGraphic(overlay);
         overlay.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         lock.unlock();
 
@@ -152,9 +152,9 @@ public class DrawActivity extends AppCompatActivity {
         //InputImage image = InputImage.fromBitmap(BitmapFactory.decodeFile(path, opts), 270);//bmp, 0);
         overlay.clear();
         overlay.setImageSourceInfo(bmp.getWidth(), bmp.getHeight(), true);
-        overlay.add(picture);
-        picture.clearLayers();
-        picture.addLayer(bmp, BlendModes.Normal);
+        overlay.add(new CameraImageGraphic(overlay, bmp));
+        //picture.clearLayers();
+        //picture.addLayer(bmp, BlendModes.Normal);
         startTime = System.currentTimeMillis();
         //Task<List<Face>> result =
         detector.process(image)

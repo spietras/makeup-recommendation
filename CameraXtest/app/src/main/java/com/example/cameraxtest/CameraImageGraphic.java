@@ -30,6 +30,21 @@ import java.util.List;
  */
 public class CameraImageGraphic extends Graphic {
 
+    private final Bitmap bitmap;
+
+    public CameraImageGraphic(GraphicOverlay overlay, Bitmap bitmap) {
+        super(overlay);
+        this.bitmap = bitmap;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(bitmap, getTransformationMatrix(), null);
+    }
+}
+
+/*public class CameraImageGraphic extends Graphic {
+
     public enum BlendModes{
         Normal,
         Multiply,
@@ -75,4 +90,4 @@ public class CameraImageGraphic extends Graphic {
         }
         canvas.drawBitmap(layer.bitmap, getTransformationMatrix(), null);
     }
-}
+}*/

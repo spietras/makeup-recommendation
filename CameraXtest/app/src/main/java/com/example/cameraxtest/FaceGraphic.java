@@ -43,6 +43,8 @@ import com.google.mlkit.vision.face.FaceLandmark.LandmarkType;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.internal.Util;
+
 /**
  * Graphic instance for rendering face position, contour, and landmarks within the associated
  * graphic overlay view.
@@ -292,11 +294,11 @@ public class FaceGraphic extends Graphic {
         if(eye==-1) iter = Utils.getEyebrowCenter(face.getContour(FaceContour.LEFT_EYEBROW_TOP).getPoints(), face.getContour(FaceContour.LEFT_EYEBROW_BOTTOM).getPoints());
         else iter = Utils.getEyebrowCenter(face.getContour(FaceContour.RIGHT_EYEBROW_TOP).getPoints(), face.getContour(FaceContour.RIGHT_EYEBROW_BOTTOM).getPoints());
         float scaleY = (float) Utils.calculateDistance(translateX(iter.x), translateY(iter.y), rectF.centerX(), rectF.centerY())/dummyHeight;
-        Log.d(TAG, "drawEyeshadow: "+scaleY+" "+scaleFactor);
-        //SCALEY - ŚRODEK OKA DO ŚRODKA BRWI DAVAI CYKA
+        //Log.d(TAG, "drawEyeshadow: "+scaleY+" "+scaleFactor);
         scaleMatrix.setScale(eye*scaleFactor, scaleY,rectF.centerX(),rectF.centerY());
         shadow_big.transform(scaleMatrix);
-        scaleMatrix.setRotate(face.getHeadEulerAngleZ(),rectF.centerX(),rectF.centerY());
+        Log.d(TAG, "drawEyeshadow: euler"+Utils.calculateAngle(first, top_end));
+        scaleMatrix.setRotate((float) Math.toDegrees(-Utils.calculateAngle(first, top_end)),rectF.centerX(),rectF.centerY());
         shadow_big.transform(scaleMatrix);
         //eyeBottom.applyToPath(shadow_big);
 
@@ -365,18 +367,39 @@ public class FaceGraphic extends Graphic {
         }
         lipsTop.applyToPath(lips);
         lips.close();
-        BlurMaskFilter blur = new BlurMaskFilter(Math.abs(firstBottom.x-firstTop.x)/10, BlurMaskFilter.Blur.NORMAL);
+
+        BlurMaskFilter blur = new BlurMaskFilter((float) (Utils.calculateDistance(firstBottom,firstTop)/10), BlurMaskFilter.Blur.NORMAL);
         lipsPaint.setMaskFilter(blur);
         lipsPaintOver.setMaskFilter(blur);
         eyeshadowPaint.setMaskFilter(blur);
+
+
+        if(true) //TODO check if lips open
+        {
+            Path lipsInner = new Path();
+            contour = face.getContour(FaceContour.UPPER_LIP_BOTTOM);
+            points = contour.getPoints();
+            firstTop = points.get(0);
+            lipsInner.moveTo(translateX(firstTop.x), translateY(firstTop.y));
+            for (PointF it : points) {
+                lipsInner.lineTo(translateX(it.x), translateY(it.y));
+            }
+            contour = face.getContour(FaceContour.LOWER_LIP_TOP);
+            points = contour.getPoints();
+            for (PointF it : points) {
+                lipsInner.lineTo(translateX(it.x), translateY(it.y));
+            }
+            lips.addPath(lipsInner);
+        }
+
         canvas.drawPath(lips, lipsPaint);
 
-        Matrix scaleMatrix = new Matrix();
+        /*Matrix scaleMatrix = new Matrix();
         RectF rectF = new RectF();
         lips.computeBounds(rectF, true);
         scaleMatrix.setScale(0.75f, 0.75f,rectF.centerX(),rectF.centerY());
         //lips.transform(scaleMatrix);
-        canvas.drawPath(lips, lipsPaintOver);
+        canvas.drawPath(lips, lipsPaintOver);*/
     }
 
     private void drawLips(Canvas canvas)

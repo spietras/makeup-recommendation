@@ -8,7 +8,7 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.net.Uri;
 
-import com.example.cameraxtest.CameraImageGraphic.Layer;
+//import com.example.cameraxtest.CameraImageGraphic.Layer;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public abstract class Utils {
     }
 
     //blend layers together using specified blender
-    public static Layer blend(Layer bottom, Layer top)
+    /*public static Layer blend(Layer bottom, Layer top)
     {
         Blender blender = null;
         switch (top.Type)
@@ -60,7 +60,7 @@ public abstract class Utils {
             }
         }
         return result;
-    }
+    }*/
 
     public static int[] calcHist(Bitmap input)
     {
@@ -115,6 +115,21 @@ public abstract class Utils {
     public static double calculateDistance(float x1, float y1, float x2, float y2)
     {
         return Math.sqrt(Math.pow(x1-x2,2) + Math.pow(y1-y2,2));
+    }
+
+    public static double calculateDistance(PointF first, PointF second)
+    {
+        return calculateDistance(first.x,first.y,second.x,second.y);
+    }
+
+    public static float calculateAngle(float x1, float y1, float x2, float y2)
+    {
+        return (float) Math.atan2(y2 - y1, x2 - x1);
+    }
+
+    public static float calculateAngle(PointF first, PointF second)
+    {
+        return calculateAngle(first.x, first.y, second.x, second.y);
     }
 
     public static PointF getEyebrowCenter(List<PointF> top, List<PointF> bottom)
