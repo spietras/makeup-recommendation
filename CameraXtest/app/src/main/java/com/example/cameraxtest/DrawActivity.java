@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,8 +66,8 @@ public class DrawActivity extends AppCompatActivity {
         lock.lock();
 
         webExecutor.execute(() -> {
-            String TAG = "POST";
-            try {
+            String TAG = "HTTPPOST";
+            /*try {
                 Response response = Utils.uploadImage("http://192.168.1.104:8080/", Uri.parse(message));
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "http post failure");
@@ -83,7 +84,10 @@ public class DrawActivity extends AppCompatActivity {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
                 finish();
-            }
+            }*/
+            lock.lock();
+            drawMakeup();
+            lock.unlock();
         });
 
         FaceDetectorOptions options = new FaceDetectorOptions.Builder()
@@ -100,6 +104,13 @@ public class DrawActivity extends AppCompatActivity {
         //picture = new CameraImageGraphic(overlay);
         overlay.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         lock.unlock();
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                runLivePreview();
+            }
+        });
 
         /*overlay.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -210,5 +221,11 @@ public class DrawActivity extends AppCompatActivity {
         //Log.d(TAG, "onDestroy: Detection took " + (stopTime - startTime) + " milliseconds");
         super.onDestroy();
         detector.close();
+    }
+
+    public void runLivePreview()
+    {
+        Intent intent = new Intent(this, LivePreviewActivity.class);
+        startActivity(intent);
     }
 }

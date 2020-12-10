@@ -39,9 +39,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val intent =
-            Intent(this@MainActivity, LivePreviewActivity/*DrawActivity*//*PlotActivity*/::class.java)
-        startActivity(intent)
 
         overlay = findViewById(R.id.Overlay)
         analyzer = ImageAnalyzer(overlay)
