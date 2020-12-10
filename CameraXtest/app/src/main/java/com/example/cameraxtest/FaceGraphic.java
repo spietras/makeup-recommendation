@@ -207,61 +207,6 @@ public class FaceGraphic extends Graphic {
         }*/
 
 
-        // Draws smiling and left/right eye open probabilities.
-        if (face.getSmilingProbability() != null) {
-            canvas.drawText(
-                    "Smiling: " + String.format(Locale.US, "%.2f", face.getSmilingProbability()),
-                    left,
-                    top + yLabelOffset,
-                    idPaints[colorID]);
-            yLabelOffset += lineHeight;
-        }
-
-        FaceLandmark leftEye = face.getLandmark(FaceLandmark.LEFT_EYE);
-        if (leftEye != null && face.getLeftEyeOpenProbability() != null) {
-            canvas.drawText(
-                    "Left eye open: " + String.format(Locale.US, "%.2f", face.getLeftEyeOpenProbability()),
-                    translateX(leftEye.getPosition().x) + ID_X_OFFSET,
-                    translateY(leftEye.getPosition().y) + ID_Y_OFFSET,
-                    idPaints[colorID]);
-        } else if (leftEye != null && face.getLeftEyeOpenProbability() == null) {
-            canvas.drawText(
-                    "Left eye",
-                    left,
-                    top + yLabelOffset,
-                    idPaints[colorID]);
-            yLabelOffset += lineHeight;
-        } else if (leftEye == null && face.getLeftEyeOpenProbability() != null) {
-            canvas.drawText(
-                    "Left eye open: " + String.format(Locale.US, "%.2f", face.getLeftEyeOpenProbability()),
-                    left,
-                    top + yLabelOffset,
-                    idPaints[colorID]);
-            yLabelOffset += lineHeight;
-        }
-
-        FaceLandmark rightEye = face.getLandmark(FaceLandmark.RIGHT_EYE);
-        if (rightEye != null && face.getRightEyeOpenProbability() != null) {
-            canvas.drawText(
-                    "Right eye open: " + String.format(Locale.US, "%.2f", face.getRightEyeOpenProbability()),
-                    translateX(rightEye.getPosition().x) + ID_X_OFFSET,
-                    translateY(rightEye.getPosition().y) + ID_Y_OFFSET,
-                    idPaints[colorID]);
-        } else if (rightEye != null && face.getRightEyeOpenProbability() == null) {
-            canvas.drawText(
-                    "Right eye",
-                    left,
-                    top + yLabelOffset,
-                    idPaints[colorID]);
-            yLabelOffset += lineHeight;
-        } else if (rightEye == null && face.getRightEyeOpenProbability() != null) {
-            canvas.drawText(
-                    "Right eye open: " + String.format(Locale.US, "%.2f", face.getRightEyeOpenProbability()),
-                    left,
-                    top + yLabelOffset,
-                    idPaints[colorID]);
-        }
-
         // Draw facial landmarks
         /*drawFaceLandmark(canvas, FaceLandmark.LEFT_EYE);
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_EYE);

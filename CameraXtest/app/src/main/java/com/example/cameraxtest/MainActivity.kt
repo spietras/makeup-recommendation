@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity() {
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
     private val PICK_IMAGE = 100
+    private lateinit var cameraProvider: ProcessCameraProvider
+    private val cameraSelector =
+        CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
 
     private lateinit var analyzer: ImageAnalyzer
     private lateinit var overlay: GraphicOverlay
@@ -36,11 +39,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val intent =
+            Intent(this@MainActivity, LivePreviewActivity/*DrawActivity*//*PlotActivity*/::class.java)
+        startActivity(intent)
 
         overlay = findViewById(R.id.Overlay)
         analyzer = ImageAnalyzer(overlay)
-        var gallery = findViewById<Button>(R.id.choosePicture)
-        gallery.setOnClickListener { openGallery(); };
+        val gallery = findViewById<Button>(R.id.choosePicture)
+        gallery.setOnClickListener { openGallery(); }
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -64,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         cameraProviderFuture.addListener(Runnable {
             // Used to bind the lifecycle of cameras to the lifecycle owner
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            cameraProvider = cameraProviderFuture.get()
 
             // Preview
             preview = Preview.Builder()
@@ -86,9 +92,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-            // Select back camera
-            val cameraSelector =
-                CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
+            // Select front camera
 
             try {
                 // Unbind use cases before rebinding
@@ -227,6 +231,22 @@ class MainActivity : AppCompatActivity() {
         return if (mediaDir != null && mediaDir.exists())
             mediaDir else filesDir
     }
+
+    /*override fun onPause() {
+        super.onPause()
+        if (this::cameraProvider.isInitialized) {
+            // As required by CameraX API, unbinds all use cases before trying to re-bind any of them.
+            cameraProvider.unbind(preview)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (this::cameraProvider.isInitialized) {
+            // As required by CameraX API, unbinds all use cases before trying to re-bind any of them.
+            cameraProvider.bindToLifecycle(this, cameraSelector, preview)
+        }
+    }*/
 
     companion object {
         @kotlin.jvm.JvmField
