@@ -297,7 +297,7 @@ public class FaceGraphic extends Graphic {
         //Log.d(TAG, "drawEyeshadow: "+scaleY+" "+scaleFactor);
         scaleMatrix.setScale(eye*scaleFactor, scaleY,rectF.centerX(),rectF.centerY());
         shadow_big.transform(scaleMatrix);
-        Log.d(TAG, "drawEyeshadow: euler"+Utils.calculateAngle(first, top_end));
+        //Log.d(TAG, "drawEyeshadow: euler"+Utils.calculateAngle(first, top_end));
         scaleMatrix.setRotate((float) Math.toDegrees(-Utils.calculateAngle(first, top_end)),rectF.centerX(),rectF.centerY());
         shadow_big.transform(scaleMatrix);
         //eyeBottom.applyToPath(shadow_big);
@@ -368,14 +368,18 @@ public class FaceGraphic extends Graphic {
         lipsTop.applyToPath(lips);
         lips.close();
 
-        BlurMaskFilter blur = new BlurMaskFilter((float) (Utils.calculateDistance(firstBottom,firstTop)/10), BlurMaskFilter.Blur.NORMAL);
+        float scale = (float) (Utils.calculateDistance(firstBottom,firstTop));
+        BlurMaskFilter blur = new BlurMaskFilter(scale/10, BlurMaskFilter.Blur.NORMAL);
         lipsPaint.setMaskFilter(blur);
         lipsPaintOver.setMaskFilter(blur);
         eyeshadowPaint.setMaskFilter(blur);
 
-
-        if(true) //TODO check if lips open
+        Log.d(TAG, "drawLipsSpline: scale="+scale);
+        float delta = (float) Utils.calculateDistance(face.getContour(FaceContour.UPPER_LIP_BOTTOM).getPoints().get(4), face.getContour(FaceContour.LOWER_LIP_TOP).getPoints().get(4));
+        Log.d(TAG, "drawLipsSpline: delta="+delta);
+        if(scale/40<delta)
         {
+            Log.d(TAG, "drawLipsSpline: weszło");
             Path lipsInner = new Path();
             contour = face.getContour(FaceContour.UPPER_LIP_BOTTOM);
             points = contour.getPoints();

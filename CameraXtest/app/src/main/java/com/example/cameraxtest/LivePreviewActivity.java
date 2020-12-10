@@ -37,7 +37,7 @@ public class LivePreviewActivity extends AppCompatActivity {
         }
 
         createCameraSource("Face Detection");
-        startCameraSource();
+        //startCameraSource();
     }
 
     private void createCameraSource(String model) {

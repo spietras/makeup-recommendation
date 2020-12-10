@@ -42,11 +42,11 @@ public class CameraSourcePreview extends ViewGroup {
         super(context, attrs);
         this.context = context;
         startRequested = false;
-        surfaceAvailable = false;
+        surfaceAvailable = true;
 
         surfaceView = new SurfaceView(context);
-        surfaceView.getHolder().addCallback(new SurfaceCallback());
-        addView(surfaceView);
+        //surfaceView.getHolder().addCallback(new SurfaceCallback());
+        //addView(surfaceView);
     }
 
     private void start(CameraSource cameraSource) throws IOException {
@@ -83,7 +83,7 @@ public class CameraSourcePreview extends ViewGroup {
 
     private void startIfReady() throws IOException, SecurityException {
         if (startRequested && surfaceAvailable) {
-            if (/*PreferenceUtils.isCameraLiveViewportEnabled(context)*/ true) {
+            if (/*PreferenceUtils.isCameraLiveViewportEnabled(context)*/ false) {
                 cameraSource.start(surfaceView.getHolder());
             } else {
                 cameraSource.start();
