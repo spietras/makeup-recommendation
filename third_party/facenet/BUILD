@@ -6,4 +6,7 @@ py_library(
     data = glob(["facenet/resources/**/*"]),
     imports = ["."],
     visibility = ["//visibility:public"],
+    deps = [
+        "//modelutils",
+    ],
 )

@@ -2,7 +2,7 @@ import importlib.resources as pkg_resources
 
 import torch
 
-from faceparsing.model import BiSeNet
+from faceparsing.networks import BiSeNet
 
 model_file = "bisenet.pth"
 
@@ -31,13 +31,10 @@ class FaceParser:
     }
 
     def __init__(self, device=torch.device('cpu')):
-        self.n_classes = 19
         self.device = device
 
-        self.net = BiSeNet(n_classes=self.n_classes)
-
         with pkg_resources.path("{}.resources".format(__package__), model_file) as p:
-            self.net.load_state_dict(torch.load(p, map_location=self.device))
+            self.net = BiSeNet.load(torch.load(p, map_location=self.device))
 
         self.net.to(self.device)
         self.net.eval()

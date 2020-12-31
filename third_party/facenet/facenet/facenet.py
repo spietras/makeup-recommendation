@@ -2,9 +2,9 @@ import importlib.resources as pkg_resources
 
 import torch
 
-from facenet.models import InceptionResnetV1
+from facenet.networks import InceptionResnetV1
 
-facenet_model_path = "inception_resnet_v1_vggface2.pt"
+model_file = "inception_resnet_v1_vggface2.pt"
 
 
 class Facenet:
@@ -15,10 +15,8 @@ class Facenet:
 
         self.device = device
 
-        self.net = InceptionResnetV1()
-
-        with pkg_resources.path("{}.resources".format(__package__), facenet_model_path) as p:
-            self.net.load_state_dict(torch.load(p, map_location=self.device))
+        with pkg_resources.path("{}.resources".format(__package__), model_file) as p:
+            self.net = InceptionResnetV1.load(torch.load(p, map_location=self.device))
 
         self.net.to(self.device)
         self.net.eval()

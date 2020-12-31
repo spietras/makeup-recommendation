@@ -3,11 +3,9 @@ import importlib.resources as pkg_resources
 import numpy as np
 import torch
 
-from mtcnn import models
+from mtcnn import networks
 
-pnet_model_path = "pnet.pt"
-rnet_model_path = "rnet.pt"
-onet_model_path = "onet.pt"
+model_file = "mtcnn.pt"
 
 
 class MTCNN:
@@ -18,31 +16,11 @@ class MTCNN:
 
         self.device = device
 
-        pnet = models.PNet()
-        with pkg_resources.path("{}.resources".format(__package__), pnet_model_path) as p:
-            pnet.load_state_dict(torch.load(p, map_location=self.device))
-        pnet.to(device)
-        pnet.eval()
+        with pkg_resources.path("{}.resources".format(__package__), model_file) as p:
+            self.net = networks.MTCNN.load(torch.load(p, map_location=self.device), min_face_size=min_face_size)
 
-        rnet = models.RNet()
-        with pkg_resources.path("{}.resources".format(__package__), rnet_model_path) as p:
-            rnet.load_state_dict(torch.load(p, map_location=self.device))
-        rnet.to(device)
-        rnet.eval()
-
-        onet = models.ONet()
-        with pkg_resources.path("{}.resources".format(__package__), onet_model_path) as p:
-            onet.load_state_dict(torch.load(p, map_location=self.device))
-        onet.to(device)
-        onet.eval()
-
-        self.mtcnn = models.MTCNN(pnet,
-                                  rnet,
-                                  onet,
-                                  device,
-                                  min_face_size=min_face_size)
-        self.mtcnn.to(device)
-        self.mtcnn.eval()
+        self.net.to(device)
+        self.net.eval()
 
     def find(self, imgs):
         """
@@ -55,6 +33,6 @@ class MTCNN:
         """
         with torch.no_grad():
             imgs = torch.tensor(imgs).permute(0, 3, 1, 2).to(self.device)
-            bbs, probs = self.mtcnn(imgs)
+            bbs, probs = self.net(imgs)
 
         return [bb.astype(np.integer) if bb is not None else None for bb in bbs], probs
