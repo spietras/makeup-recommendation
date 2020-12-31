@@ -21,3 +21,4 @@ dependencies:
   - seaborn==0.11.0
   - pip:
     - dlib==19.21.0
+    - geomloss[full]==0.2.3
