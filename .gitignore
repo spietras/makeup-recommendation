@@ -252,3 +252,5 @@ server/bazel-out
 server/bazel-server
 
 server/bazel-testlogs
+
+data/
