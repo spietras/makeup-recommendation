@@ -1,5 +1,6 @@
 directories:
   # Add the directories you want added as source here
+  config
   automakeup
   climakeup
   imagine
