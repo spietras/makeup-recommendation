@@ -21,8 +21,8 @@ http_archive(
 ### RULES_CONDA ###
 
 RULES_CONDA_NAME = "rules_conda"
-RULES_CONDA_TAG = "0.0.3"
-RULES_CONDA_SHA = "17cd7377a8af8e726e188f99c4a0c2fa9e8e29eabe50b0d447a3533a56ca3a6f"
+RULES_CONDA_TAG = "0.0.4"
+RULES_CONDA_SHA = "6c05d098ea82c172cd83d99c5fc892a488ffbf5f64ab3b2a32ab642c2a264e31"
 RULES_CONDA_REPO = "spietras"
 RULES_CONDA_ARCHIVE = "zip"
 RULES_CONDA_URL = "https://github.com/{repo}/{name}/releases/download/{tag}/{name}-{tag}.{archive}".format(repo=RULES_CONDA_REPO, name=RULES_CONDA_NAME, tag=RULES_CONDA_TAG, archive=RULES_CONDA_ARCHIVE)
@@ -42,13 +42,15 @@ load("@rules_conda//:defs.bzl", "load_conda", "conda_create", "register_toolchai
 
 # download and install conda
 load_conda(
-    version="4.8.4" # optional, defaults to 4.8.4
+    version = "4.8.4",  # optional, defaults to 4.8.4
+    quiet = False
 )
 
 # create environment
 conda_create(
     name = "my_env",
-    environment = "@//third_party/conda:environment.yml" # label pointing to environment.yml file
+    environment = "@//third_party/conda:environment.yml",  # label pointing to environment.yml file
+    quiet = False
 )
 
 # register pythons from environment as toolchain
