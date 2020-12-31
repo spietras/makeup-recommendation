@@ -12,6 +12,7 @@ py_binary(
     data = ["notebooks"],
     deps = [
         "//automakeup",
+        "//ganette",
         "//imagine",
         "//preprocessing",
         "//third_party/facenet",
