@@ -48,3 +48,15 @@ class ConditionalGenerativeModel(BaseEstimator, ABC):
     @abstractmethod
     def score(self, x, y):
         return NotImplemented
+
+
+class LearningLogger:
+    def __init__(self):
+        super().__init__()
+        self.history = {}
+
+    def log(self, value, label="loss"):
+        if label not in self.history:
+            self.history[label] = []
+
+        self.history[label].append(value)

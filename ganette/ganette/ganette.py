@@ -7,11 +7,12 @@ import pykeops
 import torch
 from geomloss import SamplesLoss
 from torch import nn, optim
+from torch.autograd import grad
 
-from modelutils import ConditionalGenerativeModel
+from modelutils import ConditionalGenerativeModel, LearningLogger
 
 
-class Ganette(ConditionalGenerativeModel):  # TODO: Loadable, WGAN
+class Ganette(ConditionalGenerativeModel):  # TODO: Loadable
     class Generator(nn.Module):
         def __init__(self, x_features, y_features, latent_size, layers):
             super().__init__()
@@ -36,7 +37,7 @@ class Ganette(ConditionalGenerativeModel):  # TODO: Loadable, WGAN
             layers = list(itertools.chain.from_iterable(
                 [(nn.Linear(s1, s2), nn.LeakyReLU(), nn.Dropout(dropout_prob)) for s1, s2 in
                  zip(layer_sizes, layer_sizes[1:])]
-            ))[:-2] + [nn.Sigmoid()]
+            ))[:-2]
 
             self.model = nn.Sequential(*layers)
 
@@ -51,6 +52,7 @@ class Ganette(ConditionalGenerativeModel):  # TODO: Loadable, WGAN
                  discriminator_dropout_prob=0.03,
                  generator_lr=0.0001,
                  discriminator_lr=0.0004,
+                 gp_lambda=10,
                  device=torch.device('cpu'),
                  batch_size=4,
                  shuffle=True,
@@ -63,6 +65,7 @@ class Ganette(ConditionalGenerativeModel):  # TODO: Loadable, WGAN
         self.discriminator_dropout_prob = discriminator_dropout_prob
         self.generator_lr = generator_lr
         self.discriminator_lr = discriminator_lr
+        self.gp_lambda = gp_lambda
         self.device = device
         self.batch_size = batch_size
         self.shuffle = shuffle
@@ -78,28 +81,37 @@ class Ganette(ConditionalGenerativeModel):  # TODO: Loadable, WGAN
                            self.latent_size, self.generator_n_layers).to(self.device)
         d = self.Discriminator(x_features, y_features,
                                self.discriminator_n_layers, self.discriminator_dropout_prob).to(self.device)
-        loss = nn.BCELoss()
         g_optimizer = optim.Adam(g.parameters(), lr=self.generator_lr)
         d_optimizer = optim.Adam(d.parameters(), lr=self.discriminator_lr)
 
         dataset = torch.utils.data.TensorDataset(x, y)
         loader = torch.utils.data.DataLoader(dataset, batch_size=self.batch_size, shuffle=self.shuffle)
 
+        self.logger_ = LearningLogger()
+
         for _ in range(self.epochs):
+            d_total_loss, g_total_loss = 0, 0
             for x, y in loader:
-                self._train_d(d, g, x, y, loss, d_optimizer)
-                self._train_g(g, d, x, y, loss, g_optimizer)
+                d_optimizer.zero_grad()
+                d_loss = self._loss_d(d, g, x, y)
+                d_total_loss += d_loss.item()
+                d_loss.backward()
+                d_optimizer.step()
+
+                g_optimizer.zero_grad()
+                g_loss = self._loss_g(g, d, x, y)
+                g_total_loss += g_loss.item()
+                g_loss.backward()
+                g_optimizer.step()
+
+            self.logger_.log(d_total_loss / len(loader), "d_loss")
+            self.logger_.log(g_total_loss / len(loader), "g_loss")
 
         self.g_ = g
         return self
 
-    def _train_d(self, d, g, x, y, loss, optimizer):
+    def _loss_d(self, d, g, x, y):
         n_samples = len(x)
-
-        d.zero_grad()
-
-        t_real = torch.ones(n_samples, 1, device=self.device, dtype=x.dtype)
-        t_fake = torch.zeros(n_samples, 1, device=self.device, dtype=x.dtype)
 
         d_in_real = torch.cat([x, y], dim=1)
 
@@ -107,27 +119,26 @@ class Ganette(ConditionalGenerativeModel):  # TODO: Loadable, WGAN
         g_in = torch.cat([z, y], dim=1)
         d_in_fake = torch.cat([g(g_in), y], dim=1)
 
-        real_loss, fake_loss = loss(d(d_in_real), t_real), loss(d(d_in_fake), t_fake)
+        real_loss, fake_loss = d(d_in_real).mean(), d(d_in_fake).mean()
+        gradient_penalty = self._gradient_penalty(d, d_in_real, d_in_fake)
 
-        d_loss = real_loss + fake_loss
-        d_loss.backward()
-        optimizer.step()
+        return fake_loss - real_loss + self.gp_lambda * gradient_penalty
 
-    def _train_g(self, g, d, x, y, loss, optimizer):
+    def _gradient_penalty(self, d, real, fake):
+        n_samples = len(real)
+        alpha = torch.rand(n_samples, 1, device=self.device, dtype=real.dtype)
+        interpolations = torch.lerp(real, fake, alpha)
+        loss = d(interpolations).mean()
+        return (grad(loss, interpolations, create_graph=True)[0].norm() - 1).pow(2)
+
+    def _loss_g(self, g, d, x, y):
         n_samples = len(x)
-
-        g.zero_grad()
-
-        t_fake = torch.ones(n_samples, 1, device=self.device, dtype=x.dtype)
 
         z = torch.randn(n_samples, self.latent_size, device=self.device, dtype=x.dtype)
         g_in = torch.cat([z, y], dim=1)
         d_in = torch.cat([g(g_in), y], dim=1)
 
-        g_loss = loss(d(d_in), t_fake)
-
-        g_loss.backward()
-        optimizer.step()
+        return -d(d_in).mean()
 
     def sample(self, y, state=None):  # TODO: use state, check correctness
         y = torch.as_tensor(y, device=self.device, dtype=torch.float)
