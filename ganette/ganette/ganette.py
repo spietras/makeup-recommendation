@@ -6,13 +6,15 @@ import numpy as np
 import pykeops
 import torch
 from geomloss import SamplesLoss
+from sklearn.base import BaseEstimator
+from sklearn.utils.validation import check_is_fitted, check_array
 from torch import nn, optim
 from torch.autograd import grad
 
 from modelutils import ConditionalGenerativeModel, LearningLogger
 
 
-class Ganette(ConditionalGenerativeModel):  # TODO: Loadable
+class Ganette(ConditionalGenerativeModel, BaseEstimator):  # TODO: Loadable
     class Generator(nn.Module):
         def __init__(self, x_features, y_features, latent_size, layers):
             super().__init__()
@@ -57,7 +59,8 @@ class Ganette(ConditionalGenerativeModel):  # TODO: Loadable
                  batch_size=4,
                  shuffle=True,
                  epochs=50,
-                 score_sample_times=1):
+                 score_sample_times=1,
+                 random_state=None):
         super().__init__()
         self.generator_n_layers = generator_n_layers
         self.discriminator_n_layers = discriminator_n_layers
@@ -71,9 +74,33 @@ class Ganette(ConditionalGenerativeModel):  # TODO: Loadable
         self.shuffle = shuffle
         self.epochs = epochs
         self.score_sample_times = score_sample_times
+        self.random_state = random_state
+
+    def _more_tags(self):
+        return {'requires_y': True}
+
+    def _validate_array_param(self, input, param_name, features_attrib_name, reset=False):
+        input = check_array(input)
+        n_features = input.shape[1]
+        if reset:
+            self.__setattr__(features_attrib_name, n_features)
+        expected_features = self.__getattribute__(features_attrib_name)
+        if n_features != expected_features:
+            raise ValueError(
+                f"{param_name} has {n_features} features, but {self.__class__.__name__} "
+                f"is expecting {expected_features} features as input.")
+        return input
+
+    def _validate_x(self, x, reset=False):
+        return self._validate_array_param(x, "X", "x_n_features_in_", reset)
+
+    def _validate_y(self, x, reset=False):
+        return self._validate_array_param(x, "y", "y_n_features_in_", reset)
 
     def fit(self, x, y):
-        # TODO: check input
+        x, y = self._validate_x(x, reset=True), self._validate_y(y, reset=True)
+        if self.random_state is not None:
+            torch.manual_seed(self.random_state)
         x = torch.as_tensor(x, device=self.device, dtype=torch.float)
         y = torch.as_tensor(y, device=self.device, dtype=torch.float)
         x_features, y_features = x.shape[1], y.shape[1]
@@ -140,13 +167,22 @@ class Ganette(ConditionalGenerativeModel):  # TODO: Loadable
 
         return -d(d_in).mean()
 
-    def sample(self, y, state=None):  # TODO: use state, check correctness
+    def sample(self, y, state=None):
+        check_is_fitted(self)
+        y = self._validate_y(y)
         y = torch.as_tensor(y, device=self.device, dtype=torch.float)
         n_samples = len(y)
-        g_in = torch.cat([torch.randn(n_samples, self.latent_size, device=self.device, dtype=y.dtype), y], dim=1)
+        rng = torch.Generator(device=self.device)
+        if state is not None:
+            rng.manual_seed(state)
+        g_in = torch.cat([
+            torch.randn(n_samples, self.latent_size, device=self.device, dtype=y.dtype, generator=rng),
+            y], dim=1)
         return self.g_(g_in).detach().numpy()
 
     def score(self, x, y):
+        check_is_fitted(self)
+        x, y = self._validate_x(x), self._validate_y(y)
         pykeops.config.gpu_available = False
         Loss = SamplesLoss("sinkhorn", p=1, blur=.005, scaling=.9, backend="online")
 
