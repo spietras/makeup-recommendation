@@ -7,7 +7,7 @@ import pykeops
 import torch
 from geomloss import SamplesLoss
 from sklearn.base import BaseEstimator
-from sklearn.utils.validation import check_is_fitted, check_array
+from sklearn.utils.validation import check_is_fitted, check_array, check_consistent_length
 from torch import nn, optim
 from torch.autograd import grad
 
@@ -79,10 +79,12 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
     def _more_tags(self):
         return {'requires_y': True}
 
-    def _validate_array_param(self, input, param_name, features_attrib_name, reset=False):
+    def _validate_array_param(self, input, param_name, reset=False):
         input = check_array(input)
-        n_features = input.shape[1]
+        dtype, n_features = input.dtype, input.shape[1]
+        dtype_attrib_name, features_attrib_name = f"{param_name}_dtype_", f"{param_name}_n_features_in_"
         if reset:
+            self.__setattr__(dtype_attrib_name, dtype)
             self.__setattr__(features_attrib_name, n_features)
         expected_features = self.__getattribute__(features_attrib_name)
         if n_features != expected_features:
@@ -92,13 +94,14 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
         return input
 
     def _validate_x(self, x, reset=False):
-        return self._validate_array_param(x, "X", "x_n_features_in_", reset)
+        return self._validate_array_param(x, "x", reset)
 
     def _validate_y(self, x, reset=False):
-        return self._validate_array_param(x, "y", "y_n_features_in_", reset)
+        return self._validate_array_param(x, "y", reset)
 
     def fit(self, x, y):
         x, y = self._validate_x(x, reset=True), self._validate_y(y, reset=True)
+        check_consistent_length(x, y)
         if self.random_state is not None:
             torch.manual_seed(self.random_state)
         x = torch.as_tensor(x, device=self.device, dtype=torch.float)
@@ -178,11 +181,12 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
         g_in = torch.cat([
             torch.randn(n_samples, self.latent_size, device=self.device, dtype=y.dtype, generator=rng),
             y], dim=1)
-        return self.g_(g_in).detach().numpy()
+        return self.g_(g_in).detach().numpy().astype(self.x_dtype_)
 
     def score(self, x, y):
         check_is_fitted(self)
         x, y = self._validate_x(x), self._validate_y(y)
+        check_consistent_length(x, y)
         pykeops.config.gpu_available = False
         Loss = SamplesLoss("sinkhorn", p=1, blur=.005, scaling=.9, backend="online")
 
