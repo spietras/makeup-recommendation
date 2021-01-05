@@ -11,13 +11,13 @@ from sklearn.utils.validation import check_is_fitted, check_array
 from torch import nn, optim
 from torch.autograd import grad
 
-from modelutils import ConditionalGenerativeModel, LearningLogger
+from modelutils import ConditionalGenerativeModel, LearningLogger, Picklable, LoadableModule
 
 
-class Ganette(ConditionalGenerativeModel, BaseEstimator):  # TODO: Loadable
-    class Generator(nn.Module):
+class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
+    class Generator(LoadableModule):
         def __init__(self, x_features, y_features, latent_size, layers):
-            super().__init__()
+            super().__init__(x_features, y_features, latent_size, layers)
 
             layer_sizes = np.linspace(latent_size + y_features, x_features, layers + 1).astype(np.int)
 
@@ -193,3 +193,13 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator):  # TODO: Loadable
         with open(os.devnull, "w") as f, contextlib.redirect_stdout(f):
             dist = Loss(x_fake.contiguous(), x.contiguous()).item()
         return -dist
+
+    def __getstate__(self):
+        state = super().__getstate__()
+        state["g_"] = self.g_.state_dict()
+        return state
+
+    def __setstate__(self, state):
+        self.g_ = self.Generator.load(state["g_"])
+        state.pop("g_")
+        super().__setstate__(state)

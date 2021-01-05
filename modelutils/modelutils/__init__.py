@@ -1,3 +1,4 @@
+import pickle
 from abc import ABC, abstractmethod
 from collections import OrderedDict
 
@@ -34,6 +35,15 @@ class LoadableModule(nn.Module):
             destination[prefix + "model"] = model_state_dict
             destination[prefix + "params"] = self.params
         return destination
+
+
+class Picklable:
+    def pickle(self, *args, **kwargs):
+        pickle.dump(self, *args, **kwargs)
+
+    @classmethod
+    def unpickle(cls, *args, **kwargs):
+        return pickle.load(*args, **kwargs)
 
 
 class ConditionalGenerativeModel(BaseEstimator, ABC):
