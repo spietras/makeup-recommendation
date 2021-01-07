@@ -181,7 +181,7 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
         g_in = torch.cat([
             torch.randn(n_samples, self.latent_size, device=self.device, dtype=y.dtype, generator=rng),
             y], dim=1)
-        return self.g_(g_in).detach().numpy().astype(self.x_dtype_)
+        return self.g_(g_in).detach().cpu().numpy().astype(self.x_dtype_)
 
     def score(self, x, y):
         check_is_fitted(self)
