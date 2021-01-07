@@ -50,7 +50,8 @@ load_conda(
 conda_create(
     name = "my_env",
     environment = "@//third_party/conda:environment.yml",  # label pointing to environment.yml file
-    quiet = False
+    quiet = False,
+    timeout = 7200
 )
 
 # register pythons from environment as toolchain
