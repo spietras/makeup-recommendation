@@ -1,11 +1,12 @@
 load("@rules_python//python:defs.bzl", "py_binary")
 
 py_binary(
-    name = "learn",
-    srcs = glob(["learn.py"]),
+    name = "search",
+    srcs = glob(["search.py"]),
     data = glob(["resources/**/*"]),
     deps = [
         "//ganette",
+        "//imagine",
     ],
 )
 
