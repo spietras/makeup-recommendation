@@ -190,12 +190,13 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
         pykeops.config.gpu_available = False
         Loss = SamplesLoss("sinkhorn", p=1, blur=.005, scaling=.9, backend="online")
 
-        x = torch.as_tensor(x, device=self.device, dtype=torch.float)
-        y = torch.as_tensor(y, device=self.device, dtype=torch.float)
-        x_fake = torch.cat([torch.as_tensor(self.sample(y), device=self.device, dtype=torch.float)
-                            for _ in range(self.score_sample_times)])
+        xy_fake = torch.as_tensor(
+            np.vstack([np.hstack([self.sample(y), y]) for _ in range(self.score_sample_times)]),
+            dtype=torch.float
+        )
+        xy = torch.as_tensor(np.hstack([x, y]), dtype=torch.float)
         with open(os.devnull, "w") as f, contextlib.redirect_stdout(f):
-            dist = Loss(x_fake.contiguous(), x.contiguous()).item()
+            dist = Loss(xy_fake.cpu().contiguous(), xy.cpu().contiguous()).item()
         return -dist
 
     def __getstate__(self):
