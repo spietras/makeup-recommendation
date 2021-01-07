@@ -3,22 +3,23 @@ channels:
   - conda-forge
 dependencies:
   - python==3.8.5
-  - pip==20.2.4
-  - cmake==3.18.2
+  - pip==20.3.3
   - configargparse==1.2.3
-  - opencv==4.4.0
+  - dlib==19.21.1
+  - opencv==4.5.0
   - ffmpeg==4.3.1
   - pytorch==1.6.0
   - torchvision==0.7.0
   - cudatoolkit=10.2
-  - scikit-learn==0.23.2
-  - numpy==1.19.2
-  - pandas==1.1.3
+  - scikit-learn==0.24.0
+  - numpy==1.19.5
+  - scipy==1.6.0
+  - pandas==1.2.0
   - einops==0.3.0
   - flask==1.1.2
-  - jupyterlab==2.2.8
-  - matplotlib==3.3.2
-  - seaborn==0.11.0
+  - jupyterlab==3.0.1
+  - matplotlib==3.3.3
+  - seaborn==0.11.1
   - pip:
-    - dlib==19.21.0
-    - geomloss[full]==0.2.3
+    - pykeops==1.4.2
+    - geomloss==0.2.3
