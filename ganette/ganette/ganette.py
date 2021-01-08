@@ -199,9 +199,14 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
             dist = Loss(xy_fake.cpu().contiguous(), xy.cpu().contiguous()).item()
         return -dist
 
+    def to(self, device):
+        self.device = device
+        self.g_ = self.g_.to(device)
+        return self
+
     def __getstate__(self):
         state = super().__getstate__()
-        state["g_"] = self.g_.state_dict()
+        state["g_"] = self.g_.cpu().state_dict()
         return state
 
     def __setstate__(self, state):
