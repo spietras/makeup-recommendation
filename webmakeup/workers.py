@@ -1,5 +1,13 @@
+import logging
 from abc import ABC, abstractmethod
 from typing import BinaryIO
+
+import cv2
+import numpy as np
+
+from imagine.color.conversion import BgrToRgb
+
+logger = logging.getLogger("workers")
 
 
 class Worker(ABC):
@@ -39,8 +47,18 @@ class Worker(ABC):
 
 
 class MakeupWorker(Worker):
-    def __init__(self, recommender):
-        self.recommender = recommender
+    def __init__(self, pipeline):
+        self.pipeline = pipeline
+
+    @staticmethod
+    def stream_to_rgb(input):
+        array = np.frombuffer(input.read(), dtype=np.uint8)
+        return BgrToRgb(cv2.imdecode(array, cv2.IMREAD_COLOR))
 
     def work(self, img: BinaryIO):
-        return self.recommender.recommend(img)
+        try:
+            img_rgb = self.stream_to_rgb(img)
+        except Exception as e:
+            logger.warning("Exception occurred during image parameter conversion", exc_info=e)
+            raise ValueError("Can't convert parameter to image")
+        return self.pipeline.run(img_rgb)
