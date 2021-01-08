@@ -3,28 +3,42 @@ from abc import ABC, abstractmethod
 
 class Recommender(ABC):
     @abstractmethod
-    def recommend(self, input, *args):
+    def keys(self):
         return NotImplemented
 
+    @abstractmethod
+    def values(self, *args):
+        return NotImplemented
 
-class DummyRecommender(Recommender):
-    def recommend(self, input, *args):
-        return {
-            "lips_color": "red"
-        }
+    def recommend(self, *args):
+        keys = self.keys()
+        values = self.values(*args)
+        return {key: value for key, value in zip(keys, values)}
 
 
-class EncodingRecommender(Recommender):
-    def __init__(self, face_extractor, feature_extractor, encoded_recommender):
+class MakeupRecommender(Recommender, ABC):
+    def keys(self):
+        return ["lipstick_color", "eyeshadow_outer_color", "eyeshadow_middle_color", "eyeshadow_inner_color"]
+
+
+class DummyRecommender(MakeupRecommender):
+    def values(self):
+        return [[255, 0, 0],
+                [210, 105, 30],
+                [210, 105, 30],
+                [210, 105, 30]]
+
+
+class EncodingRecommender(MakeupRecommender):
+    def __init__(self, bb_finder, face_extractor, feature_extractor, encoded_recommender):
+        self.bb_finder = bb_finder
         self.face_extractor = face_extractor
         self.feature_extractor = feature_extractor
         self.encoded_recommender = encoded_recommender
 
-    def recommend(self, input, *args):
-        face = self.face_extractor.extract(input)
+    def values(self, image):
+        bb = self.bb_finder.find(image)
+        face = self.face_extractor.extract(image, bb)
         features = self.feature_extractor(face)
         y = self.encoded_recommender.recommend(features)
-        return {
-            "k1": y[0],
-            "k2": y[1]
-        }
+        return [y[i:i + 3].tolist() for i in range(0, len(y), 3)]

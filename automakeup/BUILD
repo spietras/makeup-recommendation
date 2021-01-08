@@ -7,6 +7,9 @@ py_library(
     imports = ["."],
     visibility = ["//visibility:public"],
     deps = [
+        "//ganette",
         "//imagine",
+        "//third_party/faceparsing",
+        "//third_party/mtcnn",
     ],
 )
