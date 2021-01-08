@@ -43,7 +43,7 @@ class FaceParser:
     def _normalize(imgs):
         mean = torch.as_tensor((0.485, 0.456, 0.406), dtype=torch.float)
         std = torch.as_tensor((0.229, 0.224, 0.225), dtype=torch.float)
-        return torch.tensor(imgs, dtype=torch.float).div(255.).sub(mean).div(std).permute(0, 3, 1, 2)
+        return torch.as_tensor(imgs, dtype=torch.float).div(255.).sub(mean).div(std).permute(0, 3, 1, 2)
 
     def parse(self, imgs):
         """

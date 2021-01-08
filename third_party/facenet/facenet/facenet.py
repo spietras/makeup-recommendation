@@ -23,7 +23,7 @@ class Facenet:
 
     @staticmethod
     def _normalize(imgs):
-        return torch.tensor(imgs, dtype=torch.float).sub(127.5).div(128.).permute(0, 3, 1, 2)
+        return torch.as_tensor(imgs, dtype=torch.float).sub(127.5).div(128.).permute(0, 3, 1, 2)
 
     def embed(self, imgs):
         """

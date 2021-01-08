@@ -32,7 +32,7 @@ class MTCNN:
             of detection probabilities. Returned boxes will be sorted in descending order by detection probability
         """
         with torch.no_grad():
-            imgs = torch.tensor(imgs).permute(0, 3, 1, 2).to(self.device)
+            imgs = torch.as_tensor(imgs).permute(0, 3, 1, 2).to(self.device)
             bbs, probs = self.net(imgs)
 
         return [bb.astype(np.integer) if bb is not None else None for bb in bbs], probs
