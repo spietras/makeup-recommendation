@@ -42,7 +42,7 @@ load("@rules_conda//:defs.bzl", "load_conda", "conda_create", "register_toolchai
 
 # download and install conda
 load_conda(
-    version = "4.8.4",  # optional, defaults to 4.8.4
+    version = "4.9.2",
     quiet = False
 )
 
