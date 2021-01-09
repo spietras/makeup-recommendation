@@ -178,6 +178,8 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
         rng = torch.Generator(device=self.device)
         if state is not None:
             rng.manual_seed(state)
+        else:
+            rng.seed()
         g_in = torch.cat([
             torch.randn(n_samples, self.latent_size, device=self.device, dtype=y.dtype, generator=rng),
             y], dim=1)
