@@ -8,14 +8,14 @@ from sklearn.neighbors import KNeighborsClassifier
 
 from automakeup.feature.utils import first_channel_ordering
 from imagine.color import conversion
-from imagine.color.extract import MedianColorExtractor, ClusteringColorExtractor
+from imagine.color.extract import ClusteringColorExtractor, GeometricMedianColorExtractor
 from imagine.shape import operations
 from imagine.shape.segment import ClusteringSegmenter
 
 
 class EyeshadowShapeExtractor:
     def __init__(self,
-                 skin_color_extractor=MedianColorExtractor(),
+                 skin_color_extractor=GeometricMedianColorExtractor(),
                  eyeshadow_clustering=AgglomerativeClustering(6, linkage='average'),
                  cluster_classifier=KNeighborsClassifier(n_neighbors=3),
                  outer_eye_factor=2.25,
@@ -87,7 +87,7 @@ class EyeshadowColorExtractor:
 
 
 class LipstickColorExtractor:
-    def __init__(self, color_extractor=MedianColorExtractor()):
+    def __init__(self, color_extractor=GeometricMedianColorExtractor()):
         super().__init__()
         self.color_extractor = color_extractor
 
