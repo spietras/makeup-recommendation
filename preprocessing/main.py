@@ -90,9 +90,7 @@ if __name__ == '__main__':
     data_loader, preprocessor = config_function(device, args.facesize, args.directory, args.batchsize)
 
     with open(args.output_file, "w") as out:
-        data_saver = DataFrameCsvSaver(out, limit=args.limit)
-
-        logger.info("Loaded")
-
-        pipeline = PreprocessingPipeline(data_loader, preprocessor.preprocess, data_saver)
-        pipeline.run()
+        with DataFrameCsvSaver(out, limit=args.limit) as data_saver:
+            logger.info("Loaded")
+            pipeline = PreprocessingPipeline(data_loader, preprocessor.preprocess, data_saver)
+            pipeline.run()
