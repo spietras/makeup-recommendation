@@ -11,7 +11,6 @@ dependencies:
   - torchvision==0.8.1
   - cudatoolkit=11.0
   - scikit-learn==0.24.0
-  - hdmedians==0.14.1
   - numpy==1.19.5
   - scipy==1.6.0
   - pandas==1.2.0
@@ -24,3 +23,4 @@ dependencies:
       - opencv-python-headless==4.5.1.48
       - pykeops==1.4.2
       - geomloss==0.2.3
+      - hdmedians==0.14.1
