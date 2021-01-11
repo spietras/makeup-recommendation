@@ -7,6 +7,7 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.util.Log;
 
 //import com.example.cameraxtest.CameraImageGraphic.Layer;
 
@@ -150,9 +151,19 @@ public abstract class Utils {
         return new PointF(boundingBox.centerX(), boundingBox.centerY());
     }
 
-    public static Response uploadImage(String url, Uri imagePath) throws IOException {//, JSONException {
+    public static Response uploadImage(String url, Uri imagePath, Boolean fromCamera) throws IOException {//, JSONException {
         OkHttpClient okHttpClient = new OkHttpClient();
-        File file = new File(imagePath.getPath().substring(5));
+        String path = imagePath.getPath();
+        File file;
+        Log.d("DRAWACTIVITY", "uploadImage: " + fromCamera.toString());
+        if (fromCamera)
+        {
+            file = new File(path);
+        }
+        else
+        {
+            file = new File(path.substring(5));
+        }
         String FileType = "image/png";
         if(file.getName().endsWith("jpg")) FileType = "image/jpg";
         RequestBody image = RequestBody.create(file, MediaType.parse(FileType));

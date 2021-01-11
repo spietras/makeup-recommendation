@@ -18,9 +18,17 @@
 package com.example.cameraxtest;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import androidx.annotation.NonNull;
+
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
@@ -28,6 +36,11 @@ import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 import com.google.mlkit.vision.face.FaceLandmark;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -37,6 +50,70 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
     private static final String TAG = "FaceDetectorProcessor";
 
     private final FaceDetector detector;
+    private final Path dummyShadow = new Path();
+    private final Paint lipsPaint = new Paint();
+    private final Paint lipsPaintOver = new Paint();
+    private final Paint eyeshadowPaint = new Paint();
+    private int[] colors;
+    private final JSONObject makeup;
+
+    public void setup() {
+        lipsPaint.setColor(Color.rgb(194, 83, 107));
+        lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        lipsPaintOver.setColor(Color.rgb(194, 83, 107));
+        lipsPaint.setAlpha(125);
+        lipsPaintOver.setAlpha(50);
+        eyeshadowPaint.setAlpha(80);
+        eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        colors = new int[3];
+        colors[0] = Color.rgb(143, 15, 58);
+        colors[1] = Color.rgb(205, 0, 93);
+        colors[2] = Color.rgb(221, 96, 129);
+        int[] dummyCoords = {16,49,21,42,31,37,45,32,57,28,69,26,87,24,102,26,117,31,130,39,140, 50,145,61,148,68,128,74,112,82,92,87,75,87,58,83,40,75,25,64,21,60,17,56,16,49};
+        dummyShadow.moveTo(dummyCoords[0],dummyCoords[1]);
+        for (int i=2; i<dummyCoords.length; i+=2)
+        {
+            dummyShadow.lineTo(dummyCoords[i],dummyCoords[i+1]);
+        }
+        dummyShadow.close();
+    }
+
+    public void setupJSON() throws JSONException {
+        JSONArray array = this.makeup.getJSONArray("lipstick_color");
+        JSONArray base = this.makeup.getJSONArray("lips");
+        int r,g,b;
+        r = (int) (base.getDouble(0) * 256 / array.getDouble(0));
+        g = (int) (base.getDouble(1) * 256 / array.getDouble(1));
+        b = (int) (base.getDouble(2) * 256 / array.getDouble(2));
+        r = Math.min(r, 255);
+        g = Math.min(g, 255);
+        b = Math.min(b, 255);
+                    /*r = array.getInt(0) - base.getInt(0);
+                    g = array.getInt(1) - base.getInt(1);
+                    b = array.getInt(2) - base.getInt(2);*/
+        //lipsPaint.setColor(Color.rgb(r,g,b));
+        lipsPaint.setColor(Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2)));
+        lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        lipsPaintOver.setColor(Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2)));
+        lipsPaint.setAlpha(125);
+        lipsPaintOver.setAlpha(50);//50);
+        eyeshadowPaint.setAlpha(80);
+        eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        colors = new int[3];
+        array = this.makeup.getJSONArray("eyeshadow_outer_color");
+        colors[0] = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
+        array = this.makeup.getJSONArray("eyeshadow_middle_color");
+        colors[1] = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
+        array = this.makeup.getJSONArray("eyeshadow_inner_color");
+        colors[2] = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
+        int[] dummyCoords = {16,49,21,42,31,37,45,32,57,28,69,26,87,24,102,26,117,31,130,39,140, 50,145,61,148,68,128,74,112,82,92,87,75,87,58,83,40,75,25,64,21,60,17,56,16,49};
+        dummyShadow.moveTo(dummyCoords[0],dummyCoords[1]);
+        for (int i=2; i<dummyCoords.length; i+=2)
+        {
+            dummyShadow.lineTo(dummyCoords[i],dummyCoords[i+1]);
+        }
+        dummyShadow.close();
+    }
 
     public FaceDetectorProcessor(Context context) {
         this(
@@ -44,11 +121,23 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
                 new FaceDetectorOptions.Builder()
                         .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
                         .enableTracking()
-                        .build());
+                        .build(),
+                null);
     }
 
-    public FaceDetectorProcessor(Context context, FaceDetectorOptions options) {
+    public FaceDetectorProcessor(Context context, FaceDetectorOptions options, JSONObject colors) {
         super(context);
+        this.makeup = colors;
+        if(this.makeup != null) {
+            try {
+                setupJSON();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(context, "Błąd pobrania kolorów", Toast.LENGTH_SHORT).show();
+                setup();
+            }
+        }
+        else setup();
         Log.v(MANUAL_TESTING_LOG, "Face detector options: " + options);
         detector = FaceDetection.getClient(options);
     }
@@ -67,8 +156,9 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
     @Override
     protected void onSuccess(@NonNull List<Face> faces, @NonNull GraphicOverlay graphicOverlay) {
         for (Face face : faces) {
-            graphicOverlay.add(new FaceGraphic(graphicOverlay, face));
-            logExtrasForTesting(face);
+            graphicOverlay.add(new FastGraphic(graphicOverlay, face, lipsPaint, lipsPaintOver, eyeshadowPaint, dummyShadow, colors));
+            //graphicOverlay.add(new FaceGraphic(graphicOverlay, face));
+            //logExtrasForTesting(face);
         }
     }
 

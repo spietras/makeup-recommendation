@@ -2,6 +2,7 @@ package com.example.cameraxtest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -21,11 +25,18 @@ public class LivePreviewActivity extends AppCompatActivity {
     private CameraSource cameraSource = null;
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
+    private JSONObject colors = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_preview);
+        Intent intent = getIntent();
+        try {
+            this.colors = new JSONObject(intent.getStringExtra("colors"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         preview = findViewById(R.id.preview_view);
         if (preview == null) {
@@ -55,7 +66,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                     .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_NONE)
                     .build();
             cameraSource.setMachineLearningFrameProcessor(
-                    new FaceDetectorProcessor(this, faceDetectorOptions));
+                    new FaceDetectorProcessor(this, faceDetectorOptions, this.colors));
         } catch (Exception e) {
             Log.e(TAG, "Can not create image processor: " + model, e);
             Toast.makeText(

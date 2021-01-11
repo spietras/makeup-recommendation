@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import numpy as np
 
 
 class Recommender(ABC):
@@ -18,7 +19,7 @@ class Recommender(ABC):
 
 class MakeupRecommender(Recommender, ABC):
     def keys(self):
-        return ["lipstick_color", "eyeshadow_outer_color", "eyeshadow_middle_color", "eyeshadow_inner_color"]
+        return ["lipstick_color", "eyeshadow_outer_color", "eyeshadow_middle_color", "eyeshadow_inner_color", "skin", "hair", "lips", "eyes"]
 
 
 class DummyRecommender(MakeupRecommender):
@@ -41,4 +42,5 @@ class EncodingRecommender(MakeupRecommender):
         face = self.face_extractor.extract(image, bb)
         features = self.feature_extractor(face)
         y = self.encoded_recommender.recommend(features)
+        y = np.append(y, features)
         return [y[i:i + 3].tolist() for i in range(0, len(y), 3)]

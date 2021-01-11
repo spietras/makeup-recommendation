@@ -2,6 +2,11 @@ package com.example.cameraxtest;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
@@ -20,6 +25,7 @@ import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,6 +51,9 @@ public class DrawActivity extends AppCompatActivity {
     private String message;
     private long startTime, stopTime;
     private Lock lock;
+    private Boolean fromCamera = false;
+    private JSONObject colors = null;
+    private Boolean ready = false;
 
     private final OkHttpClient client = new OkHttpClient();
 
@@ -55,9 +64,15 @@ public class DrawActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        //Log.d(TAG, "onCreate: " + message);
         if(message.startsWith("/"))
         {
             message = "file:" + message.substring(5);
+            fromCamera = true;
+        }
+        if(message.startsWith("file"))
+        {
+            fromCamera = true;
         }
 
         Executor webExecutor = Executors.newSingleThreadExecutor();
@@ -67,16 +82,17 @@ public class DrawActivity extends AppCompatActivity {
 
         webExecutor.execute(() -> {
             String TAG = "HTTPPOST";
-            /*try {
-                Response response = Utils.uploadImage("http://192.168.1.104:8080/", Uri.parse(message));
+            try {
+                Response response = Utils.uploadImage("http://192.168.8.138:8080/", Uri.parse(message), fromCamera);
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "http post failure");
                     finish();
                 }
                 else {
                     Log.d(TAG, "http post success");
-                    JSONObject jsonObject = new JSONObject(response.body().string());
-                    Log.d(TAG, "lips_color returned " + jsonObject.getString("lips_color"));
+                    this.colors = new JSONObject(response.body().string());
+                    Button button = findViewById(R.id.button);
+                    ready = true;
                     lock.lock();
                     drawMakeup();
                     lock.unlock();
@@ -84,10 +100,7 @@ public class DrawActivity extends AppCompatActivity {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
                 finish();
-            }*/
-            lock.lock();
-            drawMakeup();
-            lock.unlock();
+            }
         });
 
         FaceDetectorOptions options = new FaceDetectorOptions.Builder()
@@ -108,7 +121,8 @@ public class DrawActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runLivePreview();
+                if(ready) runLivePreview();
+                else Toast.makeText(DrawActivity.this, "Proszę czekać, kolory nie są jeszcze gotowe", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -179,7 +193,19 @@ public class DrawActivity extends AppCompatActivity {
             Toast.makeText(DrawActivity.this, "Nie wykryto twarzy na zdjęciu", Toast.LENGTH_SHORT).show();
             return;
         }
-        FaceGraphic graphic = null;
+        Path dummyShadow;
+        Paint lipsPaint = new Paint();
+        Paint lipsPaintOver = new Paint();
+        Paint eyeshadowPaint = new Paint();
+        int[] colors;
+        int[] dummyCoords = {16,49,21,42,31,37,45,32,57,28,69,26,87,24,102,26,117,31,130,39,140, 50,145,61,148,68,128,74,112,82,92,87,75,87,58,83,40,75,25,64,21,60,17,56,16,49};
+        dummyShadow = new Path();
+        dummyShadow.moveTo(dummyCoords[0],dummyCoords[1]);
+        for (int i=2; i<dummyCoords.length; i+=2)
+        {
+            dummyShadow.lineTo(dummyCoords[i],dummyCoords[i+1]);
+        }
+        dummyShadow.close();
         //Toast.makeText(DrawActivity.this, "Detection took " + (stopTime - startTime) + " milliseconds", Toast.LENGTH_SHORT).show();
         //Face face = faces.get(0);
         //Rect crop;
@@ -202,9 +228,47 @@ public class DrawActivity extends AppCompatActivity {
                 case 0:
                     break;
             }*/
-            graphic = new FaceGraphic(overlay, face);
-            //graphic.face_scale = 2;
-            overlay.add(graphic);
+            if(this.colors == null) {
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                //overlay.add(new FaceGraphic(overlay, face));
+            }
+            else {
+                try {
+                    JSONArray array = this.colors.getJSONArray("lipstick_color");
+                    JSONArray base = this.colors.getJSONArray("lips");
+                    int r,g,b;
+                    r = (int) (base.getDouble(0) * 256 / array.getDouble(0));
+                    g = (int) (base.getDouble(1) * 256 / array.getDouble(1));
+                    b = (int) (base.getDouble(2) * 256 / array.getDouble(2));
+                    r = Math.min(r, 255);
+                    g = Math.min(g, 255);
+                    b = Math.min(b, 255);
+                    /*r = array.getInt(0) - base.getInt(0);
+                    g = array.getInt(1) - base.getInt(1);
+                    b = array.getInt(2) - base.getInt(2);*/
+                    Log.d(TAG, "base: " + base.toString() + "\nlipstick: " + array.toString() + "\ncrap: " + r + " " + g + " " + b);
+                    lipsPaint.setColor(Color.rgb(r,g,b));
+                    //lipsPaint.setColor(Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2)));
+                    lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
+                    lipsPaintOver.setColor(Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2)));
+                    //lipsPaint.setAlpha(125);
+                    lipsPaintOver.setAlpha(0);//50);
+                    eyeshadowPaint.setAlpha(80);
+                    eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+                    colors = new int[3];
+                    array = this.colors.getJSONArray("eyeshadow_outer_color");
+                    colors[0] = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
+                    array = this.colors.getJSONArray("eyeshadow_middle_color");
+                    colors[1] = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
+                    array = this.colors.getJSONArray("eyeshadow_inner_color");
+                    colors[2] = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
+                }
+                catch(JSONException e){
+                    e.printStackTrace();
+                    return;
+                }
+                overlay.add((new FastGraphic(overlay, face, lipsPaint, lipsPaintOver, eyeshadowPaint, dummyShadow, colors)));
+            }
         }
         overlay.postInvalidate();
     }
@@ -226,6 +290,7 @@ public class DrawActivity extends AppCompatActivity {
     public void runLivePreview()
     {
         Intent intent = new Intent(this, LivePreviewActivity.class);
+        intent.putExtra("colors", this.colors.toString());
         startActivity(intent);
     }
 }
