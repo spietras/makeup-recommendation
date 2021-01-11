@@ -119,6 +119,12 @@ class PartialDataSaver(DataSaver, ABC):
     def dump(self):
         return NotImplemented
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.dump()
+
 
 class DataFrameFileSaver(PartialDataSaver, ABC):
     def __init__(self, file, limit=100):

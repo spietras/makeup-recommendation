@@ -14,6 +14,8 @@ def parse_args():
         argparser = configargparse.ArgParser(prog=__package__,
                                              description="{} - automakeup server".format(__package__),
                                              default_config_files=[str(config_path)])
+        argparser.add_argument('--config', is_config_file=True,
+                               help='config file path')
         argparser.add_argument('--host', type=str, default=DEFAULT_HOST, help='host at which to run the server')
         argparser.add_argument('--port', type=int, default=DEFAULT_PORT, help='port at which to run the server')
     return argparser.parse_args()

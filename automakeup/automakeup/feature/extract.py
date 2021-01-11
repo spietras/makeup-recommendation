@@ -4,7 +4,7 @@ import numpy as np
 
 from automakeup.feature.face import ClusteringIrisShapeExtractor
 from automakeup.feature.makeup import LipstickColorExtractor, EyeshadowColorExtractor
-from imagine.color.extract import MedianColorExtractor
+from imagine.color.extract import GeometricMedianColorExtractor
 from imagine.functional.functional import ImageOperation, Batchable
 from imagine.shape import operations
 from imagine.shape.segment import ParsingSegmenter
@@ -31,7 +31,7 @@ class ColorsFeatureExtractor(Batchable, ImageOperation, FeatureExtractor):
 
     def __init__(self,
                  parser,
-                 color_extractor=MedianColorExtractor(),
+                 color_extractor=GeometricMedianColorExtractor(),
                  iris_extractor=ClusteringIrisShapeExtractor()):
         super().__init__()
         self.out_codes = {"skin": 1,

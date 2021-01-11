@@ -7,12 +7,11 @@ dependencies:
   - pip==20.3.3
   - configargparse==1.2.3
   - dlib==19.21.1
-  - opencv==4.5.0
-  - gnutls==3.6.13
   - pytorch==1.7.0
   - torchvision==0.8.1
   - cudatoolkit=11.0
   - scikit-learn==0.24.0
+  - hdmedians==0.14.1
   - numpy==1.19.5
   - scipy==1.6.0
   - pandas==1.2.0
@@ -22,5 +21,6 @@ dependencies:
   - matplotlib==3.3.3
   - seaborn==0.11.1
   - pip:
+      - opencv-python-headless==4.5.1.48
       - pykeops==1.4.2
       - geomloss==0.2.3

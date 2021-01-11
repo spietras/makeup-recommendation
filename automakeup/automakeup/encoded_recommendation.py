@@ -28,7 +28,7 @@ class GanetteRecommender(EncodedRecommender):
         ])
         self.postprocess = f.Join([
             f.Rearrange("1 (f fs) -> 1 f fs", fs=3),
-            f.Lambda(lambda x: x.astype(np.uint8), ImageBatchClassifier()),
+            normalization.Round(),
             conversion.LabToRgb,
             f.Rearrange("1 f fs -> (f fs)", fs=3)
         ])

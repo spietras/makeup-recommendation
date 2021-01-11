@@ -60,5 +60,5 @@ class Recolor(ImageOperation):
             numpy array of the same shape as img with recolored pixels
         """
         if mask is None:
-            mask = np.zeros(img.shape, dtype=bool)
+            mask = np.zeros(img.shape[:-1], dtype=bool)
         return recolor(img, mask, self.color, self.alpha)

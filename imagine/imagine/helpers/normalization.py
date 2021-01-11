@@ -43,16 +43,23 @@ def denormalize_range(img):
     Args:
         img: any numpy array
     """
-    return np.round(img * 255).astype(np.uint8)
+    return np.rint(img * 255).astype(np.uint8)
 
 
 # Functional Interface
 
 class ToUInt8(Batchable, ImageOperation):
-    """Normalize float images to range [0-255] and converts all images to uint8. Batchable."""
+    """Normalize float images from range [0-1] to range [0-255] and converts all images to uint8. Batchable."""
 
     def perform(self, imgs, **kwargs):
         return normalize_images(imgs)
+
+
+class Round(Batchable, ImageOperation):
+    """Rounds images to uint8. Batchable."""
+
+    def perform(self, imgs, **kwargs):
+        return np.rint(imgs).astype(np.uint8)
 
 
 class Normalize(Batchable, ImageOperation):
