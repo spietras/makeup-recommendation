@@ -7,7 +7,7 @@ Let the app find the most suitable makeup for you and apply it on your face in r
 ## How it works
 
 Now you don't have to worry about what lipstick to choose for a date ever again.
-Trust in statistics and let the computer be your makeup artist.
+Trust in statistics and let the computer be your makeup artist, sweetie.
 
 Run the Android app, point the camera at your face and click a button. 
 Picture of your face will be uploaded to the server, 
