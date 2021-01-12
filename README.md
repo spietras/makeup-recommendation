@@ -1,35 +1,34 @@
 # makeup-recommendation
+
 Makeup recommendation system 💄💅
 
-## Requirements for everything except Android
+Let the app find the most suitable makeup for you and apply it on your face in real-time.
 
-- Bazel requirements (to run Bazel itself):
+## How it works
 
-	Linux:
+Now you don't have to worry about what lipstick to choose for a date ever again.
+Trust in statistics and let the computer be your makeup artist, sweetie.
 
-	- ```glibc``` (it should be available in most Linux distributions, but for smaller ones like ```alpine``` this can be a problem)
+Run the Android app, point the camera at your face and click a button. 
+Picture of your face will be uploaded to the server, 
+where a trained neural network will generate a makeup that suits you best*.
+After that, the results will be transferred back to the Android app
+and the generated makeup will be applied to your face in real-time.
 
-	Windows:
+<sub><sup>* At least it will try, but beauty is subjective 😉</sup></sub>
 
-	- TOCHECK
+## Requirements
 
-- Tooling requirements (to configure all build tools):
+Regular targets (e.g. ```webmakeup```, ```jupyter```) requirements:
+- [Bazel](https://www.bazel.build/) dependencies
+- [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/#system-requirements) dependencies
+- [rules_python](https://github.com/bazelbuild/rules_python) dependencies
+- (Optional) ```CUDA``` compatible GPU if you want to use GPU processing
 
-	Linux:
+```andromakeup``` runtime requirements:
+- Android device with API level ```23``` at minimum
 
-	- any C compiler (like ```gcc```)
-
-	- any ```python``` (note: ```python``` command must be on ```PATH```, if you don't have ```python``` but have ```python2``` or ```python3``` you should create a symlink)
-
-	Windows:
-
-	- TOCHECK
-
-- Dependencies requirements (to setup all third party dependencies):
-
-	- If you want to use ```dlib``` in GPU mode, you need ```CUDA``` compatible GPU and ```CUDA Toolkit``` installed. Otherwise ```dlib``` will run in CPU mode.
-
-## Usage
+## Regular targets usage
 
 Building only:
 
@@ -43,14 +42,42 @@ Running:
 ./bazelw run TARGET [-- args...]
 ```
 
-Runnable targets: ```webmakeup```, ```climakeup```
-
 Testing:
 
 ```sh
 ./bazelw test TARGET/...
 ```
 
-See the chosen target's README for further details.
-
 If you are on Windows, use ```bazelw``` instead of ```./bazelw```.
+
+## ```andromakeup``` usage
+
+From ```andromakeup``` directory run:
+
+```bash
+./gradlew TASK
+```
+
+See [here](https://developer.android.com/studio/build/building-cmdline) for more details or just use ```Android Studio```.
+
+## Project structure
+
+Main runnables:
+- ```webmakeup``` - server for makeup recommendation
+- ```andromakeup``` - main app for Android
+
+Other runnables:
+- ```climakeup``` - command line interface for makeup recommendation
+- ```jupyter``` - jupyterlab with useful notebooks
+- ```preprocessing``` - data preprocessing pipeline
+
+Libraries:
+- ```imagine``` - image processing library
+- ```modelutils``` - machine learning model utilities
+- ```ganette``` - main model used for recommendation
+- ```automakeup``` - makeup recommendation library
+
+Other:
+- ```third_party``` - third-party code and environment definition
+- ```config``` - project configuration
+- ```tools``` - project tools

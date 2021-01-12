@@ -1,3 +1,4 @@
+import json
 import logging
 from abc import ABC, abstractmethod
 from typing import BinaryIO
@@ -47,8 +48,13 @@ class Worker(ABC):
 
 
 class MakeupWorker(Worker):
-    def __init__(self, pipeline):
+    class SimpleEncoder(json.JSONEncoder):
+        def default(self, o):
+            return o.__dict__
+
+    def __init__(self, pipeline, encoder=SimpleEncoder):
         self.pipeline = pipeline
+        self.encoder = encoder
 
     @staticmethod
     def stream_to_rgb(input):
@@ -61,4 +67,4 @@ class MakeupWorker(Worker):
         except Exception as e:
             logger.warning("Exception occurred during image parameter conversion", exc_info=e)
             raise ValueError("Can't convert parameter to image")
-        return self.pipeline.run(img_rgb)
+        return json.loads(json.dumps(self.pipeline.run(img_rgb), cls=self.encoder))

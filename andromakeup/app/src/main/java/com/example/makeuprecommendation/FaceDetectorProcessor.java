@@ -80,7 +80,7 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
 
     public void setupJSON() throws JSONException {
         JSONArray array = this.makeup.getJSONArray("lipstick_color");
-        JSONArray base = this.makeup.getJSONArray("lips");
+        JSONArray base = this.makeup.getJSONArray("lips_color");
         int r,g,b;
         r = (int) (base.getDouble(0) * 256 / array.getDouble(0));
         g = (int) (base.getDouble(1) * 256 / array.getDouble(1));

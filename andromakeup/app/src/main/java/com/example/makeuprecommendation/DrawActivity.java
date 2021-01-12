@@ -173,7 +173,7 @@ public class DrawActivity extends AppCompatActivity {
             else {
                 try {
                     JSONArray array = this.colors.getJSONArray("lipstick_color");
-                    JSONArray base = this.colors.getJSONArray("lips");
+                    JSONArray base = this.colors.getJSONArray("lips_color");
                     int brightness = base.getInt(0) + base.getInt(1) + base.getInt(2);
                     /*int r,g,b;
                     r = (int) (base.getDouble(0) * 256 / array.getDouble(0));

@@ -2,7 +2,7 @@ load("@rules_python//python:defs.bzl", "py_binary")
 
 alias(
     name = "climakeup",
-    actual = "main"
+    actual = "main",
 )
 
 py_binary(
@@ -10,6 +10,7 @@ py_binary(
     srcs = glob(["**/*.py"]),
     data = glob(["resources/**/*"]),
     deps = [
-        "//automakeup"
-    ]
+        "//automakeup",
+        "//imagine",
+    ],
 )
