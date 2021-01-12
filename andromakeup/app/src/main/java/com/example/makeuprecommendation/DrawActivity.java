@@ -89,14 +89,15 @@ public class DrawActivity extends AppCompatActivity {
                 else {
                     Log.d(TAG, "http post success");
                     this.colors = new JSONObject(response.body().string());
-                    ready = true;
-                    lock.lock();
-                    drawMakeup();
-                    lock.unlock();
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
-                finish();
+                this.colors = null;
+            } finally{
+                ready = true;
+                lock.lock();
+                drawMakeup();
+                lock.unlock();
             }
         });
 
@@ -166,7 +167,7 @@ public class DrawActivity extends AppCompatActivity {
         dummyShadow.close();
         for (Face face : faces) {
             if(this.colors == null) {
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Połączenie z serwerem nie udało się, zostaną przydzielone kolory zastępcze", Toast.LENGTH_SHORT).show();
                 overlay.add(new FaceGraphic(overlay, face));
             }
             else {
@@ -229,7 +230,7 @@ public class DrawActivity extends AppCompatActivity {
     public void runLivePreview()
     {
         Intent intent = new Intent(this, LivePreviewActivity.class);
-        intent.putExtra("colors", this.colors.toString());
+        intent.putExtra("colors", this.colors == null?null:this.colors.toString());
         startActivity(intent);
     }
 }

@@ -32,7 +32,8 @@ public class LivePreviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_live_preview);
         Intent intent = getIntent();
         try {
-            this.colors = new JSONObject(Objects.requireNonNull(intent.getStringExtra("colors")));
+            String s = intent.getStringExtra("colors");
+            if (s!=null) this.colors = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
         }

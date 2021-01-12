@@ -14,6 +14,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -30,38 +31,6 @@ public abstract class Utils {
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
-
-    //blend layers together using specified blender
-    /*public static Layer blend(Layer bottom, Layer top)
-    {
-        Blender blender = null;
-        switch (top.Type)
-        {
-            case Normal:
-                blender = new NormalBlender();
-                break;
-            case Multiply:
-                blender = new MultiplyBlender();
-                break;
-            case Screen:
-                blender = new ScreenBlender();
-                break;
-            case HardLight:
-                blender = new HardLightBlender();
-                break;
-            case Overlay:
-                blender = new OverlayBlender();
-                break;
-        }
-        Layer result = new Layer(bottom.bitmap.copy(bottom.bitmap.getConfig(), true), bottom.Type);
-        for (int x = 0; x < bottom.bitmap.getWidth(); x++) {
-            for (int y = 0; y < bottom.bitmap.getHeight(); y++) {
-                result.bitmap.setPixel(x, y, blender.blend(bottom.bitmap.getPixel(x, y),
-                                                            top.bitmap.getPixel(x, y)));
-            }
-        }
-        return result;
-    }*/
 
     public static int[] calcHist(Bitmap input)
     {
@@ -152,7 +121,7 @@ public abstract class Utils {
     }
 
     public static Response uploadImage(String url, Uri imagePath, Boolean fromCamera) throws IOException {//, JSONException {
-        OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(1, TimeUnit.SECONDS).build();
         String path = imagePath.getPath();
         File file;
         Log.d("DRAWACTIVITY", "uploadImage: " + fromCamera.toString());

@@ -189,7 +189,7 @@ public class FaceGraphic extends Graphic {
         }
 
         // Draw labels
-        canvas.drawRect(left - BOX_STROKE_WIDTH,
+        /*canvas.drawRect(left - BOX_STROKE_WIDTH,
                 top + yLabelOffset,
                 left + textWidth + (2 * BOX_STROKE_WIDTH),
                 top,
@@ -198,7 +198,7 @@ public class FaceGraphic extends Graphic {
         canvas.drawRect(left, top, right, bottom, boxPaints[colorID]);
         canvas.drawText("ID: " + face.getTrackingId(), left, top + yLabelOffset,
                 idPaints[colorID]);
-        yLabelOffset += lineHeight;
+        yLabelOffset += lineHeight;*/
 
         // Draws all face contours.
         /*for (FaceContour contour : face.getAllContours()) {
