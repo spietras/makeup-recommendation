@@ -1,33 +1,34 @@
 from abc import ABC, abstractmethod
+
 import numpy as np
+
+
+class Results:
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.__dict__.update(kwargs)
 
 
 class Recommender(ABC):
     @abstractmethod
-    def keys(self):
-        return NotImplemented
-
-    @abstractmethod
-    def values(self, *args):
-        return NotImplemented
-
     def recommend(self, *args):
-        keys = self.keys()
-        values = self.values(*args)
-        return {key: value for key, value in zip(keys, values)}
+        return NotImplemented
 
 
 class MakeupRecommender(Recommender, ABC):
-    def keys(self):
-        return ["lipstick_color", "eyeshadow_outer_color", "eyeshadow_middle_color", "eyeshadow_inner_color", "skin", "hair", "lips", "eyes"]
+    class MakeupResults(Results):
+        def __init__(self, skin_color, hair_color, lips_color, eyes_color, lipstick_color,
+                     eyeshadow_outer_color, eyeshadow_middle_color, eyeshadow_inner_color):
+            super().__init__(skin_color=skin_color, hair_color=hair_color, lips_color=lips_color,
+                             eyes_color=eyes_color, lipstick_color=lipstick_color,
+                             eyeshadow_outer_color=eyeshadow_outer_color,
+                             eyeshadow_middle_color=eyeshadow_middle_color,
+                             eyeshadow_inner_color=eyeshadow_inner_color)
 
 
 class DummyRecommender(MakeupRecommender):
-    def values(self):
-        return [[255, 0, 0],
-                [210, 105, 30],
-                [210, 105, 30],
-                [210, 105, 30]]
+    def recommend(self):
+        return self.MakeupResults(*np.random.randint(0, 256, (8, 3)).tolist())
 
 
 class EncodingRecommender(MakeupRecommender):
@@ -37,10 +38,10 @@ class EncodingRecommender(MakeupRecommender):
         self.feature_extractor = feature_extractor
         self.encoded_recommender = encoded_recommender
 
-    def values(self, image):
+    def recommend(self, image):
         bb = self.bb_finder.find(image)
         face = self.face_extractor.extract(image, bb)
         features = self.feature_extractor(face)
         y = self.encoded_recommender.recommend(features)
-        y = np.append(y, features)
-        return [y[i:i + 3].tolist() for i in range(0, len(y), 3)]
+        out = np.append(features, y)
+        return self.MakeupResults(*[out[i:i + 3].tolist() for i in range(0, len(out), 3)])
