@@ -14,14 +14,13 @@ package com.example.makeuprecommendation;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * Modifications copyright (C) 2020 M. Kapuscinski
  */
 
-import android.graphics.BlendMode;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
-import android.graphics.MaskFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -30,10 +29,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.graphics.Xfermode;
 import android.util.Log;
 
-import com.example.makeuprecommendation.GraphicOverlay;
 import com.example.makeuprecommendation.GraphicOverlay.Graphic;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
@@ -42,8 +39,6 @@ import com.google.mlkit.vision.face.FaceLandmark.LandmarkType;
 
 import java.util.List;
 import java.util.Locale;
-
-import okhttp3.internal.Util;
 
 /**
  * Graphic instance for rendering face position, contour, and landmarks within the associated
