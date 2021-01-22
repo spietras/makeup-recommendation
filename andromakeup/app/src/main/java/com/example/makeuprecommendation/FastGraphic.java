@@ -111,7 +111,6 @@ public class FastGraphic extends GraphicOverlay.Graphic {
 
         scaleMatrix.setTranslate(rectF.centerX()-dummyCenter.x, rectF.centerY()-dummyCenter.y);
         shadow_big.transform(scaleMatrix);
-        //ODLEGLOSC NIE DX - OBRACANIE
         float scaleFactor = (float) Utils.calculateDistance(translateX(first.x), translateY(first.y),translateX(points.get(8).x), translateY(points.get(8).y))/dummySize;
         if(eye==-1) iter = Utils.getEyebrowCenter(face.getContour(FaceContour.LEFT_EYEBROW_TOP).getPoints(), face.getContour(FaceContour.LEFT_EYEBROW_BOTTOM).getPoints());
         else iter = Utils.getEyebrowCenter(face.getContour(FaceContour.RIGHT_EYEBROW_TOP).getPoints(), face.getContour(FaceContour.RIGHT_EYEBROW_BOTTOM).getPoints());

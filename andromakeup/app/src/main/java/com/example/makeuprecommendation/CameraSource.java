@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * Modifications copyright (C) 2020 M. Kapuscinski
  */
 
 package com.example.makeuprecommendation;
@@ -268,15 +269,10 @@ public class CameraSource {
         }
         Camera camera = Camera.open(requestedCameraId);
 
-        SizePair sizePair = //PreferenceUtils.getCameraPreviewSizePair(activity, requestedCameraId);
-            new SizePair(Size.parseSize("480x360"), Size.parseSize("4000x3000"));
-        if (sizePair == null) {
-            sizePair =
-                    selectSizePair(
+        SizePair sizePair = selectSizePair(
                             camera,
                             DEFAULT_REQUESTED_CAMERA_PREVIEW_WIDTH,
                             DEFAULT_REQUESTED_CAMERA_PREVIEW_HEIGHT);
-        }
 
         if (sizePair == null) {
             throw new IOException("Could not find suitable preview size.");

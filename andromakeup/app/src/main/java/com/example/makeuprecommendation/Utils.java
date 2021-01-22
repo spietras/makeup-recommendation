@@ -1,5 +1,6 @@
 package com.example.makeuprecommendation;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -10,6 +11,14 @@ import android.net.Uri;
 import android.util.Log;
 
 //import com.example.makeuprecommendation.CameraImageGraphic.Layer;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.face.Face;
+import com.google.mlkit.vision.face.FaceDetection;
+import com.google.mlkit.vision.face.FaceDetector;
+import com.google.mlkit.vision.face.FaceDetectorOptions;
 
 import java.io.File;
 import java.io.IOException;
