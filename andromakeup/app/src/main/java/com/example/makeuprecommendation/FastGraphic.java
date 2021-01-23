@@ -147,12 +147,11 @@ public class FastGraphic extends GraphicOverlay.Graphic {
     {
         Path lips = new Path();
         lips.setFillType(Path.FillType.EVEN_ODD);
-        BezierSpline lipsTop = new BezierSpline(face.getContour(FaceContour.UPPER_LIP_TOP).getPoints().size());
-        BezierSpline lipsBottom = new BezierSpline(face.getContour(FaceContour.LOWER_LIP_BOTTOM).getPoints().size());
         PointF firstBottom, firstTop;
         FaceContour contour = face.getContour(FaceContour.LOWER_LIP_BOTTOM);
         if (contour == null) return;
         List<PointF> points = contour.getPoints();
+        BezierSpline lipsBottom = new BezierSpline(face.getContour(FaceContour.LOWER_LIP_BOTTOM).getPoints().size());
         firstBottom = points.get(0);
         lips.moveTo(translateX(firstBottom.x), translateY(firstBottom.y));
         int i=0;
@@ -164,6 +163,7 @@ public class FastGraphic extends GraphicOverlay.Graphic {
         contour = face.getContour(FaceContour.UPPER_LIP_TOP);
         if (contour == null) return;
         points = contour.getPoints();
+        BezierSpline lipsTop = new BezierSpline(face.getContour(FaceContour.UPPER_LIP_TOP).getPoints().size());
         firstTop = points.get(0);
         lips.lineTo(translateX(firstTop.x), translateY(firstTop.y));
         i=0;
