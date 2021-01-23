@@ -1,27 +1,16 @@
 package com.example.makeuprecommendation;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.net.Uri;
-import android.util.Log;
 
-//import com.example.makeuprecommendation.CameraImageGraphic.Layer;
+import org.apache.commons.io.IOUtils;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.face.Face;
-import com.google.mlkit.vision.face.FaceDetection;
-import com.google.mlkit.vision.face.FaceDetector;
-import com.google.mlkit.vision.face.FaceDetectorOptions;
-
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +20,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+//import com.example.makeuprecommendation.CameraImageGraphic.Layer;
 
 public abstract class Utils {
     //rotate bitmap by a specified angle using a matrix
@@ -129,26 +120,17 @@ public abstract class Utils {
         return new PointF(boundingBox.centerX(), boundingBox.centerY());
     }
 
-    public static Response uploadImage(String url, Uri imagePath, Boolean fromCamera) throws IOException {//, JSONException {
+    public static Response uploadImage(String url, InputStream imageStream) throws IOException {//, JSONException {
         OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(1, TimeUnit.SECONDS).build();
-        String path = imagePath.getPath();
-        File file;
-        Log.d("DRAWACTIVITY", "uploadImage: " + fromCamera.toString());
-        if (fromCamera)
-        {
-            file = new File(path);
-        }
-        else
-        {
-            file = new File(path.substring(5));
-        }
-        String FileType = "image/png";
-        if(file.getName().endsWith("jpg")) FileType = "image/jpg";
-        RequestBody image = RequestBody.create(file, MediaType.parse(FileType));
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("img", file.getPath(), image)
+                .addFormDataPart(
+                        "img",
+                        "img",
+                        RequestBody.create(
+                                IOUtils.toByteArray(imageStream),
+                                MediaType.parse("image/*")))
                 .build();
         Request request = new Request.Builder()
                 .url(url)

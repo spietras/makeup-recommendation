@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -81,7 +82,8 @@ public class DrawActivity extends AppCompatActivity {
         webExecutor.execute(() -> {
             String TAG = "HTTPPOST";
             try {
-                Response response = Utils.uploadImage("http://192.168.8.138:8080/", Uri.parse(message), fromCamera);
+                InputStream imageStream = getContentResolver().openInputStream(Uri.parse(message));
+                Response response = Utils.uploadImage("http://192.168.8.138:8080/", imageStream);
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "http post failure");
                     finish();
