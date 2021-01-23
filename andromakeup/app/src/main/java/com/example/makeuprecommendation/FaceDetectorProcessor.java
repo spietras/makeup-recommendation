@@ -98,7 +98,7 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
         lipsPaintOver.setColor(Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2)));
         lipsPaint.setAlpha(125);
         lipsPaintOver.setAlpha(50);//50);
-        eyeshadowPaint.setAlpha(80);
+        eyeshadowPaint.setAlpha(200);
         eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
         colors = new int[3];
         array = this.makeup.getJSONArray("eyeshadow_outer_color");
