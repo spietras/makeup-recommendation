@@ -49,7 +49,7 @@ class Ganette(ConditionalGenerativeModel, BaseEstimator, Picklable):
     def __init__(self,
                  *,
                  generator_n_layers=2,
-                 discriminator_n_layers=6,
+                 discriminator_n_layers=4,
                  latent_size=12,
                  discriminator_dropout_prob=0.05,
                  generator_lr=0.0001,
