@@ -55,13 +55,15 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
     private final Paint lipsPaint = new Paint();
     private final Paint lipsPaintOver = new Paint();
     private final Paint eyeshadowPaint = new Paint();
-    private int[] colors;
+    public int[] colors;
+    public int lipstick;
     private final JSONObject makeup;
 
     public void setup() {
-        lipsPaint.setColor(Color.rgb(194, 83, 107));
+        lipstick = Color.rgb(194, 83, 107);
+        lipsPaint.setColor(lipstick);
         lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
-        lipsPaintOver.setColor(Color.rgb(194, 83, 107));
+        lipsPaintOver.setColor(lipstick);
         lipsPaint.setAlpha(125);
         lipsPaintOver.setAlpha(50);
         eyeshadowPaint.setAlpha(80);
@@ -79,6 +81,15 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
         dummyShadow.close();
     }
 
+    public void changeLips(int color){
+        lipstick = color;
+        lipsPaint.setColor(color);
+        lipsPaintOver.setColor(color);
+        lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        lipsPaint.setAlpha(125);
+        lipsPaintOver.setAlpha(50);//50);
+    }
+
     public void setupJSON() throws JSONException {
         JSONArray array = this.makeup.getJSONArray("lipstick_color");
         JSONArray base = this.makeup.getJSONArray("lips_color");
@@ -93,9 +104,10 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
                     g = array.getInt(1) - base.getInt(1);
                     b = array.getInt(2) - base.getInt(2);*/
         //lipsPaint.setColor(Color.rgb(r,g,b));
-        lipsPaint.setColor(Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2)));
+        lipstick = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
+        lipsPaint.setColor(lipstick);
         lipsPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
-        lipsPaintOver.setColor(Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2)));
+        lipsPaintOver.setColor(lipstick);
         lipsPaint.setAlpha(125);
         lipsPaintOver.setAlpha(50);//50);
         eyeshadowPaint.setAlpha(200);

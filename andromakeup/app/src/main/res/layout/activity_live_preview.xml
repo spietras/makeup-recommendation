@@ -2,9 +2,66 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:keepScreenOn="true">
+
+    <Button
+        android:id="@+id/lipsbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Szminka"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/preview_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:strokeColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/shadow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cień 1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/preview_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lipsbutton"
+        app:layout_constraintVertical_bias="0.0"
+        app:strokeColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/shadow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cień 2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/preview_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shadow1"
+        app:layout_constraintVertical_bias="0.0"
+        app:strokeColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/shadow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cień 3"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/preview_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shadow2"
+        app:layout_constraintVertical_bias="0.0"
+        app:strokeColor="#FFFFFF" />
 
     <com.example.makeuprecommendation.CameraSourcePreview
         android:id="@+id/preview_view"

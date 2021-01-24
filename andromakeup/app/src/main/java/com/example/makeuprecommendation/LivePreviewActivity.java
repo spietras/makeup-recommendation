@@ -1,20 +1,42 @@
 package com.example.makeuprecommendation;
 
+/*
+ * Copyright 2020 Google LLC. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Modifications copyright (C) 2020 M. Kapuscinski
+ */
+
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Objects;
+
+import top.defaults.colorpicker.ColorPickerPopup;
 
 public class LivePreviewActivity extends AppCompatActivity {
 
@@ -25,6 +47,7 @@ public class LivePreviewActivity extends AppCompatActivity {
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
     private JSONObject colors = null;
+    private FaceDetectorProcessor processor = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +73,11 @@ public class LivePreviewActivity extends AppCompatActivity {
 
         createCameraSource("Face Detection");
         //startCameraSource();
+        //Button lipsButton = findViewById(R.id.lipsbutton);
+        findViewById(R.id.lipsbutton).setOnClickListener(this::lipsColorPicker);
+        findViewById(R.id.shadow1).setOnClickListener(this::shadow1Picker);
+        findViewById(R.id.shadow2).setOnClickListener(this::shadow2Picker);
+        findViewById(R.id.shadow3).setOnClickListener(this::shadow3Picker);
     }
 
     private void createCameraSource(String model) {
@@ -66,7 +94,7 @@ public class LivePreviewActivity extends AppCompatActivity {
                     .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
                     .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_NONE)
                     .build();
-            cameraSource.setMachineLearningFrameProcessor(
+            cameraSource.setMachineLearningFrameProcessor( processor =
                     new FaceDetectorProcessor(this, faceDetectorOptions, this.colors));
         } catch (Exception e) {
             Log.e(TAG, "Can not create image processor: " + model, e);
@@ -122,6 +150,78 @@ public class LivePreviewActivity extends AppCompatActivity {
         if (cameraSource != null) {
             //cameraSource.release();
         }
+    }
+
+    public void lipsColorPicker(View v){
+        new ColorPickerPopup.Builder(this)
+                .initialColor(processor.lipstick) // Set initial color
+                .enableBrightness(true) // Enable brightness slider or not
+                .enableAlpha(false) // Enable alpha slider or not
+                .okTitle("OK")
+                .cancelTitle("Cancel")
+                .showIndicator(true)
+                .showValue(true)
+                .build()
+                .show(new ColorPickerPopup.ColorPickerObserver() {
+                    @Override
+                    public void onColorPicked(int color) {
+                        processor.changeLips(color);
+                    }
+                });
+    }
+
+    public void shadow1Picker(View v){
+        new ColorPickerPopup.Builder(this)
+                .initialColor(processor.colors[0]) // Set initial color
+                .enableBrightness(true) // Enable brightness slider or not
+                .enableAlpha(false) // Enable alpha slider or not
+                .okTitle("OK")
+                .cancelTitle("Cancel")
+                .showIndicator(true)
+                .showValue(true)
+                .build()
+                .show(new ColorPickerPopup.ColorPickerObserver() {
+                    @Override
+                    public void onColorPicked(int color) {
+                        processor.colors[0] = color;
+                    }
+                });
+    }
+
+    public void shadow2Picker(View v){
+        new ColorPickerPopup.Builder(this)
+                .initialColor(processor.colors[1]) // Set initial color
+                .enableBrightness(true) // Enable brightness slider or not
+                .enableAlpha(false) // Enable alpha slider or not
+                .okTitle("OK")
+                .cancelTitle("Cancel")
+                .showIndicator(true)
+                .showValue(true)
+                .build()
+                .show(new ColorPickerPopup.ColorPickerObserver() {
+                    @Override
+                    public void onColorPicked(int color) {
+                        processor.colors[1] = color;
+                    }
+                });
+    }
+
+    public void shadow3Picker(View v){
+        new ColorPickerPopup.Builder(this)
+                .initialColor(processor.colors[2]) // Set initial color
+                .enableBrightness(true) // Enable brightness slider or not
+                .enableAlpha(false) // Enable alpha slider or not
+                .okTitle("OK")
+                .cancelTitle("Cancel")
+                .showIndicator(true)
+                .showValue(true)
+                .build()
+                .show(new ColorPickerPopup.ColorPickerObserver() {
+                    @Override
+                    public void onColorPicked(int color) {
+                        processor.colors[2] = color;
+                    }
+                });
     }
 
 }

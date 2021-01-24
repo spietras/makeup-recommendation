@@ -54,4 +54,5 @@ dependencies {
     implementation "com.androidplot:androidplot-core:1.5.7"
     implementation "com.squareup.okhttp3:okhttp:4.8.0"
     implementation "commons-io:commons-io:2.8.0"
+    implementation 'com.github.duanhong169:colorpicker:1.1.6'
 }
