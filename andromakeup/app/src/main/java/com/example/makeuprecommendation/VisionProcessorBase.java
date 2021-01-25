@@ -13,6 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * Modifications copyright (C) 2020 M. Kapuscinski
  */
 
 package com.example.makeuprecommendation;
@@ -184,7 +185,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
                             graphicOverlay.add(
                                     new InferenceInfoGraphic(
                                             graphicOverlay, currentLatencyMs, shouldShowFps ? framesPerSecond : null));
-                            VisionProcessorBase.this.onSuccess(results, graphicOverlay);
+                            VisionProcessorBase.this.onSuccess(results, graphicOverlay, originalCameraImage);
                             graphicOverlay.postInvalidate();
                         })
                 .addOnFailureListener(
@@ -215,7 +216,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
 
     protected abstract Task<T> detectInImage(InputImage image);
 
-    protected abstract void onSuccess(@NonNull T results, @NonNull GraphicOverlay graphicOverlay);
+    protected abstract void onSuccess(@NonNull T results, @NonNull GraphicOverlay graphicOverlay, Bitmap bmp);
 
     protected abstract void onFailure(@NonNull Exception e);
 }

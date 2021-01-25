@@ -2,11 +2,13 @@ package com.example.makeuprecommendation;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -170,7 +172,7 @@ public class DrawActivity extends AppCompatActivity {
         for (Face face : faces) {
             if(this.colors == null) {
                 Toast.makeText(this, "Połączenie z serwerem nie udało się, zostaną przydzielone kolory zastępcze", Toast.LENGTH_SHORT).show();
-                overlay.add(new FaceGraphic(overlay, face));
+                overlay.add(new FaceGraphic(overlay, face, bmp));
             }
             else {
                 try {
@@ -195,7 +197,7 @@ public class DrawActivity extends AppCompatActivity {
                     lipsPaint.setAlpha(125);
                     lipsPaintOver.setAlpha(50);//50);
                     eyeshadowPaint.setAlpha(200);//80
-                    eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+                    //eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
                     colors = new int[3];
                     array = this.colors.getJSONArray("eyeshadow_outer_color");
                     colors[0] = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
@@ -208,7 +210,8 @@ public class DrawActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
-                overlay.add((new FastGraphic(overlay, face, lipsPaint, lipsPaintOver, eyeshadowPaint, dummyShadow, colors)));
+                BitmapShader shader = new BitmapShader(bmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+                overlay.add((new FastGraphic(overlay, face, lipsPaint, lipsPaintOver, eyeshadowPaint, dummyShadow, colors, shader)));
                 Log.d(TAG, "onSuccess: Makeup applied");
             }
         }

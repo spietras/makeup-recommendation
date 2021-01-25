@@ -19,6 +19,8 @@
 package com.example.makeuprecommendation;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -27,6 +29,7 @@ import androidx.annotation.NonNull;
 
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Shader;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -66,8 +69,8 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
         lipsPaintOver.setColor(lipstick);
         lipsPaint.setAlpha(125);
         lipsPaintOver.setAlpha(50);
-        eyeshadowPaint.setAlpha(80);
-        eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        eyeshadowPaint.setAlpha(200);
+        //eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
         colors = new int[3];
         colors[0] = Color.rgb(143, 15, 58);
         colors[1] = Color.rgb(205, 0, 93);
@@ -111,7 +114,7 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
         lipsPaint.setAlpha(125);
         lipsPaintOver.setAlpha(50);//50);
         eyeshadowPaint.setAlpha(200);
-        eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        //eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
         colors = new int[3];
         array = this.makeup.getJSONArray("eyeshadow_outer_color");
         colors[0] = Color.rgb(array.getInt(0), array.getInt(1), array.getInt(2));
@@ -167,9 +170,10 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
     }
 
     @Override
-    protected void onSuccess(@NonNull List<Face> faces, @NonNull GraphicOverlay graphicOverlay) {
+    protected void onSuccess(@NonNull List<Face> faces, @NonNull GraphicOverlay graphicOverlay, Bitmap bmp) {
+        BitmapShader shader = new BitmapShader(bmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         for (Face face : faces) {
-            graphicOverlay.add(new FastGraphic(graphicOverlay, face, lipsPaint, lipsPaintOver, eyeshadowPaint, dummyShadow, colors));
+            graphicOverlay.add(new FastGraphic(graphicOverlay, face, lipsPaint, lipsPaintOver, eyeshadowPaint, dummyShadow, colors, shader));
             Log.d(TAG, "onSuccess: Makeup applied");
             //graphicOverlay.add(new FaceGraphic(graphicOverlay, face));
             //logExtrasForTesting(face);

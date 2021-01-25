@@ -17,6 +17,7 @@ package com.example.makeuprecommendation;
  * Modifications copyright (C) 2020 M. Kapuscinski
  */
 
+import android.graphics.BitmapShader;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
@@ -46,10 +47,11 @@ public class FastGraphic extends GraphicOverlay.Graphic {
     private final int dummyHeight = 73;
     private final Path dummyShadow;
     private final int[] colors;
+    private Paint bitmapPaint;
 
     private volatile Face face;
 
-    FastGraphic(GraphicOverlay overlay, Face face, Paint lipsPaint, Paint lipsPaintOver, Paint eyeshadowPaint, Path dummyShadow, int[] colors) {
+    FastGraphic(GraphicOverlay overlay, Face face, Paint lipsPaint, Paint lipsPaintOver, Paint eyeshadowPaint, Path dummyShadow, int[] colors, Shader bmShader) {
         super(overlay);
 
         this.face = face;
@@ -60,6 +62,11 @@ public class FastGraphic extends GraphicOverlay.Graphic {
         this.dummyShadow = new Path();
         this.dummyShadow.addPath(dummyShadow);
         this.colors = colors;
+        this.bitmapPaint = new Paint();
+        bmShader.setLocalMatrix(getTransformationMatrix());
+        bitmapPaint.setShader(bmShader);
+        BlurMaskFilter blur = new BlurMaskFilter(10, BlurMaskFilter.Blur.NORMAL);
+        bitmapPaint.setMaskFilter(blur);
     }
 
     /**
@@ -141,6 +148,7 @@ public class FastGraphic extends GraphicOverlay.Graphic {
                 Shader.TileMode.MIRROR
         ));
         canvas.drawPath(shadow_big, eyeshadowPaint);
+        canvas.drawPath(shadow, bitmapPaint);
     }
 
     private void drawLipsSpline(Canvas canvas)
@@ -177,9 +185,10 @@ public class FastGraphic extends GraphicOverlay.Graphic {
         float scale = (float) (Utils.calculateDistance(firstBottom,firstTop));
         //BlurMaskFilter blur = new BlurMaskFilter(scale/10, BlurMaskFilter.Blur.NORMAL);
         BlurMaskFilter blur = new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL);
+        BlurMaskFilter blur2 = new BlurMaskFilter(40, BlurMaskFilter.Blur.NORMAL);
         lipsPaint.setMaskFilter(blur);
         lipsPaintOver.setMaskFilter(blur);
-        eyeshadowPaint.setMaskFilter(blur);
+        eyeshadowPaint.setMaskFilter(blur2);
 
         //Log.d(TAG, "drawLipsSpline: scale="+scale);
         float delta = (float) Utils.calculateDistance(face.getContour(FaceContour.UPPER_LIP_BOTTOM).getPoints().get(4), face.getContour(FaceContour.LOWER_LIP_TOP).getPoints().get(4));

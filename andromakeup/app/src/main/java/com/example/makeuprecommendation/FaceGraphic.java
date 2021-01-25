@@ -17,6 +17,8 @@ package com.example.makeuprecommendation;
  * Modifications copyright (C) 2020 M. Kapuscinski
  */
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -81,11 +83,19 @@ public class FaceGraphic extends Graphic {
     private PointF dummyCenter = new PointF(89.5F,63F);
     private int dummySize = 100;
     private int dummyHeight = 73;
+    private Paint bitmapPaint;
 
     private volatile Face face;
 
-    FaceGraphic(GraphicOverlay overlay, Face face) {
+    FaceGraphic(GraphicOverlay overlay, Face face, Bitmap bmp) {
         super(overlay);
+
+        BitmapShader shader = new BitmapShader(bmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        shader.setLocalMatrix(getTransformationMatrix());
+        bitmapPaint = new Paint();
+        bitmapPaint.setShader(shader);
+        BlurMaskFilter blur = new BlurMaskFilter(10, BlurMaskFilter.Blur.NORMAL);
+        bitmapPaint.setMaskFilter(blur);
 
         this.face = face;
         final int selectedColor = Color.WHITE;
@@ -116,8 +126,8 @@ public class FaceGraphic extends Graphic {
         lipsPaintOver.setColor(Color.rgb(194,83, 107));
         lipsPaint.setAlpha(125);
         lipsPaintOver.setAlpha(50);
-        eyeshadowPaint.setAlpha(80);
-        eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
+        eyeshadowPaint.setAlpha(200);
+        //eyeshadowPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
         colors = new int[3];
         colors[0] = Color.rgb(143,15,58);
         colors[1] = Color.rgb(205, 0, 93);
@@ -147,7 +157,6 @@ public class FaceGraphic extends Graphic {
         if (face == null) {
             return;
         }
-
         // Draws a circle at the position of the detected face, with the face's track id below.
         float x = translateX(face.getBoundingBox().centerX());
         float y = translateY(face.getBoundingBox().centerY());
@@ -330,6 +339,7 @@ public class FaceGraphic extends Graphic {
                 Shader.TileMode.MIRROR
         ));
         canvas.drawPath(shadow_big, eyeshadowPaint);
+        canvas.drawPath(shadow, bitmapPaint);
     }
 
     private void drawLipsSpline(Canvas canvas)
@@ -366,9 +376,10 @@ public class FaceGraphic extends Graphic {
         float scale = (float) (Utils.calculateDistance(firstBottom,firstTop));
         //BlurMaskFilter blur = new BlurMaskFilter(scale/10, BlurMaskFilter.Blur.NORMAL);
         BlurMaskFilter blur = new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL);
+        BlurMaskFilter blur2 = new BlurMaskFilter(40, BlurMaskFilter.Blur.NORMAL);
         lipsPaint.setMaskFilter(blur);
         lipsPaintOver.setMaskFilter(blur);
-        eyeshadowPaint.setMaskFilter(blur);
+        eyeshadowPaint.setMaskFilter(blur2);
 
         Log.d(TAG, "drawLipsSpline: scale="+scale);
         float delta = (float) Utils.calculateDistance(face.getContour(FaceContour.UPPER_LIP_BOTTOM).getPoints().get(4), face.getContour(FaceContour.LOWER_LIP_TOP).getPoints().get(4));
