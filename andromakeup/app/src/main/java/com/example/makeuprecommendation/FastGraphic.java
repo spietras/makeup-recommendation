@@ -175,7 +175,8 @@ public class FastGraphic extends GraphicOverlay.Graphic {
         lips.close();
 
         float scale = (float) (Utils.calculateDistance(firstBottom,firstTop));
-        BlurMaskFilter blur = new BlurMaskFilter(scale/10, BlurMaskFilter.Blur.NORMAL);
+        //BlurMaskFilter blur = new BlurMaskFilter(scale/10, BlurMaskFilter.Blur.NORMAL);
+        BlurMaskFilter blur = new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL);
         lipsPaint.setMaskFilter(blur);
         lipsPaintOver.setMaskFilter(blur);
         eyeshadowPaint.setMaskFilter(blur);
