@@ -19,6 +19,7 @@ dependencies:
   - jupyterlab==3.0.1
   - matplotlib==3.3.3
   - seaborn==0.11.1
+  - xlrd==2.0.1
   - pip:
       - opencv-python-headless==4.5.1.48
       - pykeops==1.4.2
