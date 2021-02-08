@@ -85,7 +85,7 @@ public class DrawActivity extends AppCompatActivity {
             String TAG = "HTTPPOST";
             try {
                 InputStream imageStream = getContentResolver().openInputStream(Uri.parse(message));
-                Response response = Utils.uploadImage("http://192.168.8.138:8080/", imageStream);
+                Response response = Utils.uploadImage( getString(R.string.server_ip), imageStream);
                 if (!response.isSuccessful()) {
                     Log.d(TAG, "http post failure");
                     finish();
