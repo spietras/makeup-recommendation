@@ -33,19 +33,19 @@ Regular targets (e.g. ```webmakeup```, ```jupyter```) requirements:
 Building only:
 
 ```sh
-./bazelw build TARGET
+./bazelw build webmakeup
 ```
 
 Running:
 
 ```sh
-./bazelw run TARGET [-- args...]
+./bazelw run webmakeup -- --host 0.0.0.0
 ```
 
 Testing:
 
 ```sh
-./bazelw test TARGET/...
+./bazelw test webmakeup/...
 ```
 
 If you are on Windows, use ```bazelw``` instead of ```./bazelw```.
