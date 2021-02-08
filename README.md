@@ -58,6 +58,8 @@ From ```andromakeup``` directory run:
 ./gradlew TASK
 ```
 
+Server IP is kept as a string resource, so make sure to change that to your server IP.
+
 See [here](https://developer.android.com/studio/build/building-cmdline) for more details or just use ```Android Studio```.
 
 ## Project structure
