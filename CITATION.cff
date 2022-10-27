@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: >-
+  Makeup recommendation using machine learning and
+  augmented reality
+message: >-
+  Feel free to use it however you want. Citing is
+  optional, but would be nice.
+type: software
+authors:
+  - given-names: Sebastian
+    family-names: Pietras
+    email: sebastian.pietras.stud@pw.edu.pl
+  - given-names: Maciej Konrad
+    family-names: Kapuściński
+    email: maciej.kapuscinski2.stud@pw.edu.pl
+repository-code: 'https://github.com/spietras/makeup-recommendation'
+keywords:
+  - makeup
+  - machine learning
+  - generative models
+  - face detection
