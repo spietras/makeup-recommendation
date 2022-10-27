@@ -1,8 +1,22 @@
 # makeup-recommendation
 
-Makeup recommendation system 💄💅
+Makeup recommendation using machine learning and augmented reality 💄💅
 
 Let the app find the most suitable makeup for you and apply it on your face in real-time.
+
+## About
+
+This repository provides the source code used in the paper
+**Makeup Recommendation Using Machine Learning and Augmented Reality**
+by [S. Pietras](https://github.com/spietras)
+and [M. K. Kapuściński](https://github.com/Daraniel1000).
+
+The paper was our Bachelor's thesis at the
+[Faculty of Electronics and Information Technology](https://www.elka.pw.edu.pl/eng)
+of the
+[Warsaw University of Technology](https://www.pw.edu.pl/engpw).
+It was completed in early 2021, but was written in Polish,
+so we need to translate it to English first before we can publish it here.
 
 ## How it works
 
