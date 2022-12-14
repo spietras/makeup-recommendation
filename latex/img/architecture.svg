@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="571.08"
+   height="411.08"
+   content="&lt;mxfile host=&quot;app.diagrams.net&quot; modified=&quot;2021-01-27T20:37:27.722Z&quot; agent=&quot;5.0 (Windows)&quot; etag=&quot;FgGw-pgBoCC89xz6VKV4&quot; version=&quot;14.2.7&quot; type=&quot;device&quot;&gt;&lt;diagram id=&quot;Vo8JCXhVLtz2zMbqWKCP&quot; name=&quot;Page-1&quot;&gt;5VpbU6MwGP01POoQoLQ8tlh1Rp1xprPr6stOFmKJDaSbpqX1128CoVx7cYfexhclJxeSc74TvkQ10w2XdwxOgyfqI6IZur/UzBvNMJweED8lsEqBjmGnwJhhP4VADozwJ1KgrtA59tGs1JBTSjielkGPRhHyeAmDjNG43OydkvJbp3CMasDIg6SOvmCfBynaM7o5fo/wOMjeDGwnrQlh1litZBZAn8YFyBxqpsso5elTuHQRkdxlvKT9bjfUrifGUMT36YDtlx/GWzxxl+yV3P/+0737+XClRllAMlcLVpPlq4wBRueRj+QgQDMHcYA5Gk2hJ2tjIbnAAh4SVa2GQ4yj5cZ5gvXqRdQgGiLOVqKJ6rCWXkWMqatynPNvZaQGRe5NBUKl+Xg9dk6LeFDMfIGlXo0U5IsoUUXKeEDHNIJkmKODnDZdlPI2j5ROFVkfiPOVCnk457RMJVpi/qvw/CqHuu6o0s1SjZwUVlkhEsv9VSwUesli3i0pZf3eacTVRAxrLaNc5HYRBSd0zjy0hTsVUByyMeJb2pnNQcEQgRwvyvNoXWCjZoMniCOB9D3xcsxXW1yh73ZFgV6nJZMYFZNYdZP0GjxiHcoizqVY5IChbu4Z6tYpQ92shfoNg/EZh7rZO7NQt2oMPkrVDP2ZoQVG58xlxzozLjs1Lh8IloupEifWzMvszDijE+RSQplAIhrJLeUdE1KBIMHjSBQ9MSwS+EAyiEWG11cVIfb9ZD9qkqMsWEERYGdlNUnQgj6WXtHHach9GvQxDqWPXdNnS0gfKT+s7AfrtK/AUWMQA/1QLHUbWLKJjFcfL0ps2X/nMt9PAudqlkRSXzQAvekyYSerl7NU4ZmDKoILjeyx/D1CLE5wkqK3yVvTugswUq9mpLR8C0NMpMj3iCyQfFM7AVQ1GWjYBI9qMmBeSvLUwvkCGO0mXdlpcWfWBTZExXHSrmyahT1iOBHOgxPvA8r7C+QF55YtGE7FKPaJswVgndIouTleCzW7jHLd7ZS8ckKnZPdnZ30UB01XUl/6mDq1b2n6KVR3k3t9JU/sPKt7bs6r531HdZ5RtJ6+r/VKzgOnc96+FwNAb46KIzmvfhjT3I7m9D2M5MPAncgvlU/Fj0//Q3MtzXE8DM8/xWzrJqJ6M92QONqNB49DKVY/nj1DgriUKYQTLDKLRLf5t5GounE2SdQ9qkT1s+Fb7h30bYQxzbIwRufUh67eofIMV6TycuU8huxzdanH8rYMWT1sn/pGCziH0n3T1vu99bd2+75pQ/4P/UUx/2t6Ulf4lwRz+A8=&lt;/diagram&gt;&lt;/mxfile&gt;"
+   version="1.1"
+   viewBox="-.5 -.5 571.08 411.08"
+   id="svg182"
+   sodipodi:docname="flowchart.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <defs
+     id="defs186" />
+  <sodipodi:namedview
+     id="namedview184"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.9728521"
+     inkscape:cx="261.04339"
+     inkscape:cy="124.18569"
+     inkscape:window-width="1920"
+     inkscape:window-height="988"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg182" />
+  <metadata
+     id="metadata2">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <rect
+     x="4.8747001"
+     y="231.73"
+     width="560.33002"
+     height="173.48"
+     rx="26.014999"
+     ry="26.021999"
+     fill="#ffffff"
+     pointer-events="all"
+     id="rect4"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <path
+     d="m 124.95,311.8 h 98.232"
+     fill="none"
+     pointer-events="stroke"
+     stroke-miterlimit="10"
+     id="path6"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <path
+     d="m 230.18,311.8 -9.3389,4.6705 2.3347,-4.6705 -2.3347,-4.6706 z"
+     pointer-events="all"
+     stroke-miterlimit="10"
+     id="path8"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <rect
+     x="18.216"
+     y="285.10999"
+     width="106.73"
+     height="53.377998"
+     fill="#ffffff"
+     pointer-events="all"
+     id="rect10"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <switch
+     stroke-width="0.74947"
+     id="switch18"
+     transform="matrix(1.3341,0,0,1.3344,4.5580463,3.9500553)">
+    <foreignObject
+       width="100%"
+       height="100%"
+       overflow="visible"
+       pointer-events="none"
+       text-align="left"
+       requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+      <xhtml:div
+         display="flex"
+         style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:11px;padding-top:230px;width:78px">
+        <xhtml:div
+           font-size="0"
+           text-align="center"
+           style="box-sizing:border-box">
+          <xhtml:div
+             color="#000000"
+             display="inline-block"
+             font-family="Helvetica"
+             font-size="9px"
+             pointer-events="all"
+             style="line-height:1.2;white-space:normal;word-wrap:normal">Main Activity</xhtml:div>
+        </xhtml:div>
+      </xhtml:div>
+    </foreignObject>
+    <text
+       x="50"
+       y="233"
+       fill="#000000"
+       font-family="Helvetica"
+       font-size="8.9936px"
+       stroke-width="0.5617"
+       text-anchor="middle"
+       id="text16"><tspan
+         font-family="Arial"
+         id="tspan14"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'">Main Activity</tspan></text>
+  </switch>
+  <path
+     d="m 338.41,311.8 h 98.232"
+     fill="none"
+     pointer-events="stroke"
+     stroke-miterlimit="10"
+     id="path22"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <path
+     d="m 443.64,311.8 -9.3389,4.6705 2.3347,-4.6705 -2.3347,-4.6706 z"
+     pointer-events="all"
+     stroke-miterlimit="10"
+     id="path24"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <rect
+     x="231.67999"
+     y="285.10999"
+     width="106.73"
+     height="53.377998"
+     fill="#ffffff"
+     pointer-events="all"
+     id="rect26"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <g
+     transform="matrix(1.3341,0,0,1.3344,4.4820497,3.9500553)"
+     stroke-width="0.74947"
+     id="g36">
+    <switch
+       stroke-width="0.74947"
+       id="switch34">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:171px;padding-top:230px;width:78px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="9px"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">Draw Activity</xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="210"
+         y="233"
+         fill="#000000"
+         font-family="Helvetica"
+         font-size="8.9936px"
+         stroke-width="0.5617"
+         text-anchor="middle"
+         id="text32"><tspan
+           font-family="Arial"
+           id="tspan30"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'">Draw Activity</tspan></text>
+    </switch>
+  </g>
+  <rect
+     x="445.14"
+     y="285.11"
+     width="106.73"
+     height="53.378"
+     fill="#fff"
+     pointer-events="all"
+     stroke="#000"
+     stroke-width=".74947"
+     id="rect38" />
+  <g
+     transform="matrix(1.3341,0,0,1.3344,4.4920714,-3.550607)"
+     stroke-width="0.74947"
+     id="g48">
+    <switch
+       stroke-width="0.74947"
+       id="switch46">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:331px;padding-top:230px;width:78px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="9px"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">Live Preview Activity</xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="370"
+         y="233"
+         fill="#000000"
+         font-family="Arial"
+         font-size="8.9936px"
+         stroke-width="0.74947"
+         text-anchor="middle"
+         id="text44"><tspan
+           sodipodi:role="line"
+           id="tspan1146"
+           x="370"
+           y="233"><tspan
+             x="370"
+             y="233"
+             id="tspan40"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'">Live Preview</tspan></tspan><tspan
+           sodipodi:role="line"
+           id="tspan1148"
+           x="370"
+           y="244.242">Activity</tspan></text>
+    </switch>
+  </g>
+  <rect
+     x="258.36"
+     y="351.83"
+     width="53.365"
+     height="26.689"
+     fill="none"
+     pointer-events="all"
+     stroke-width=".74947"
+     id="rect50" />
+  <g
+     transform="matrix(1.3341 0 0 1.3344 4.2077 13.66)"
+     stroke-width=".74947"
+     id="g58">
+    <switch
+       stroke-width=".74947"
+       id="switch56">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:191px;padding-top:270px;width:38px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="16px"
+               font-weight="bold"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">Klient</xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="210"
+         y="275"
+         fill="#000000"
+         font-family="Helvetica"
+         font-size="17.987px"
+         font-weight="bold"
+         stroke-width="0.5617"
+         text-anchor="middle"
+         id="text54"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros Bold'">Client</text>
+    </switch>
+  </g>
+  <rect
+     x="98.263"
+     y="4.8747"
+     width="373.55"
+     height="133.44"
+     rx="20.012"
+     ry="20.017"
+     fill="#fff"
+     pointer-events="all"
+     stroke="#000"
+     stroke-width=".74947"
+     id="rect60" />
+  <rect
+     x="258.36"
+     y="18.219"
+     width="53.365"
+     height="26.689"
+     fill="none"
+     pointer-events="all"
+     stroke-width=".74947"
+     id="rect62" />
+  <g
+     transform="matrix(1.3341 0 0 1.3344 4.2077 4.2075)"
+     stroke-width=".74947"
+     id="g70">
+    <switch
+       stroke-width=".74947"
+       id="switch68">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:191px;padding-top:20px;width:38px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="18px"
+               font-weight="bold"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">
+              <xhtml:div
+                 font-size="18px"
+                 align="center">Serwer</xhtml:div>
+            </xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="210"
+         y="25"
+         fill="#000000"
+         font-family="Helvetica"
+         font-size="17.987px"
+         font-weight="bold"
+         stroke-width="0.5617"
+         text-anchor="middle"
+         id="text66"><tspan
+           font-family="Arial"
+           font-weight="bold"
+           id="tspan64"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros Bold'">Server</tspan></text>
+    </switch>
+  </g>
+  <path
+     d="M 218.33,71.597 H 343.24"
+     fill="none"
+     pointer-events="stroke"
+     stroke-miterlimit="10"
+     id="path72"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <path
+     d="m 350.25,71.597 -9.3389,4.6705 2.3347,-4.6705 -2.3347,-4.6705 z"
+     pointer-events="all"
+     stroke-miterlimit="10"
+     id="path74"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <rect
+     x="111.6"
+     y="44.908001"
+     width="106.73"
+     height="53.377998"
+     fill="#ffffff"
+     pointer-events="all"
+     id="rect76"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <text
+     x="120"
+     y="53"
+     fill="#000000"
+     font-family="Arial"
+     font-size="8.9936px"
+     stroke-width="0.5617"
+     text-anchor="middle"
+     id="text80"
+     style="white-space:pre;inline-size:123.178"
+     transform="matrix(1.3341,0,0,1.3344,4.5790412,-2.3244827)"
+     xml:space="preserve"><tspan
+       x="120"
+       y="53"
+       id="tspan1258"><tspan
+         style="font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+         id="tspan1256">Facial features
+</tspan></tspan><tspan
+       x="120"
+       y="64.242001"
+       id="tspan1262"><tspan
+         style="font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+         id="tspan1260">extraction</tspan></tspan></text>
+  <path
+     d="m 405.11,98.286 0.04,93.411 h -93.389 l -0.04,84.91"
+     fill="none"
+     pointer-events="stroke"
+     stroke-miterlimit="10"
+     id="path86"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <path
+     d="m 311.72,283.61 -4.6694,-9.3411 4.6694,2.3353 4.6694,-2.3353 z"
+     pointer-events="all"
+     stroke-miterlimit="10"
+     id="path88"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <rect
+     x="351.75"
+     y="44.908001"
+     width="106.73"
+     height="53.377998"
+     fill="#ffffff"
+     pointer-events="all"
+     id="rect90"
+     style="stroke:#000000;stroke-width:0.74947" />
+  <switch
+     stroke-width="0.74947"
+     id="switch98"
+     transform="matrix(1.3341,0,0,1.3344,4.8610056,5.1581784)">
+    <foreignObject
+       width="100%"
+       height="100%"
+       overflow="visible"
+       pointer-events="none"
+       text-align="left"
+       requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+      <xhtml:div
+         display="flex"
+         style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:261px;padding-top:50px;width:78px">
+        <xhtml:div
+           font-size="0"
+           text-align="center"
+           style="box-sizing:border-box">
+          <xhtml:div
+             color="#000000"
+             display="inline-block"
+             font-family="Helvetica"
+             font-size="9px"
+             pointer-events="all"
+             style="line-height:1.2;white-space:normal;word-wrap:normal">
+            <xhtml:div
+               font-size="9px">Model</xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </xhtml:div>
+    </foreignObject>
+    <text
+       x="300"
+       y="53"
+       fill="#000000"
+       font-family="Helvetica"
+       font-size="8.9936px"
+       stroke-width="0.5617"
+       text-anchor="middle"
+       id="text96"><tspan
+         font-family="Arial"
+         id="tspan94"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'">Model</tspan></text>
+  </switch>
+  <g
+     stroke-width=".74947"
+     id="g108">
+    <path
+       d="m258.36 285.11 0.04-93.411h-93.389l-0.04-84.91"
+       fill="none"
+       pointer-events="stroke"
+       stroke="#000"
+       stroke-miterlimit="10"
+       id="path102" />
+    <path
+       d="m164.97 99.78 4.6694 9.3411-4.6694-2.3353-4.6694 2.3353z"
+       pointer-events="all"
+       stroke="#000"
+       stroke-miterlimit="10"
+       id="path104" />
+    <rect
+       x="138.29"
+       y="285.11"
+       width="80.047"
+       height="13.344"
+       fill="none"
+       pointer-events="all"
+       id="rect106" />
+  </g>
+  <g
+     transform="matrix(1.3341,0,0,1.3344,4.2077,10.341273)"
+     stroke-width="0.74947"
+     id="g122">
+    <switch
+       stroke-width="0.74947"
+       id="switch120">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:101px;padding-top:215px;width:58px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="9px"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">Ścieżka do zdjęcia</xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="130"
+         y="213.15433"
+         fill="#000000"
+         font-family="Helvetica"
+         font-size="8.9936px"
+         stroke-width="0.5617"
+         text-anchor="middle"
+         id="text118"><tspan
+           x="130"
+           y="213.15433"
+           id="tspan112"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'">Picture</tspan></text>
+    </switch>
+  </g>
+  <rect
+     x="351.75"
+     y="285.11"
+     width="93.389"
+     height="13.344"
+     fill="none"
+     pointer-events="all"
+     stroke-width=".74947"
+     id="rect124" />
+  <g
+     transform="matrix(1.3341,0,0,1.3344,-1.8281,2.6571)"
+     stroke-width="0.74947"
+     id="g138">
+    <switch
+       stroke-width="0.74947"
+       id="switch136">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:261px;padding-top:215px;width:68px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="9px"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">Paleta makijażu</xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="295"
+         y="218"
+         fill="#000000"
+         font-family="Helvetica"
+         font-size="8.9936px"
+         stroke-width="0.5617"
+         text-anchor="middle"
+         id="text134"><tspan
+           x="295"
+           y="218"
+           id="tspan128"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'">Makeup</tspan></text>
+    </switch>
+  </g>
+  <rect
+     x="164.97"
+     y="165.01"
+     width="53.365"
+     height="26.689"
+     fill="none"
+     pointer-events="all"
+     stroke-width=".74947"
+     id="rect140" />
+  <g
+     transform="matrix(1.3341,0,0,1.3344,24.963,0.0764)"
+     stroke-width="0.74947"
+     id="g148">
+    <switch
+       stroke-width="0.74947"
+       id="switch146">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:121px;padding-top:130px;width:38px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="9px"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">Zdjęcie</xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="140"
+         y="133"
+         fill="#000000"
+         font-family="Helvetica"
+         font-size="8.9936px"
+         stroke-width="0.5617"
+         text-anchor="middle"
+         id="text144"><tspan
+           font-family="Arial"
+           id="tspan142"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'">Picture</tspan></text>
+    </switch>
+  </g>
+  <rect
+     x="258.36"
+     y="84.941"
+     width="53.365"
+     height="26.689"
+     fill="none"
+     pointer-events="all"
+     stroke-width=".74947"
+     id="rect150" />
+  <g
+     transform="matrix(1.3341,0,0,1.3344,4.2077,-1.7925)"
+     stroke-width="0.74947"
+     id="g158">
+    <switch
+       stroke-width="0.74947"
+       id="switch156">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:191px;padding-top:70px;width:38px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="9px"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">
+              <xhtml:div
+                 font-size="9px">Cechy twarzy</xhtml:div>
+            </xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="210"
+         y="73"
+         fill="#000000"
+         font-family="Helvetica"
+         font-size="8.9936px"
+         stroke-width="0.5617"
+         text-anchor="middle"
+         id="text154"
+         style="white-space:pre;inline-size:88.2562"
+         xml:space="preserve"><tspan
+           x="210"
+           y="73"
+           id="tspan1266"><tspan
+             style="font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+             id="tspan1264">Facial features</tspan></tspan></text>
+    </switch>
+  </g>
+  <rect
+     x="311.72"
+     y="165.01"
+     width="93.389"
+     height="26.689"
+     fill="none"
+     pointer-events="all"
+     stroke-width=".74947"
+     id="rect160" />
+  <g
+     transform="matrix(1.3341,0,0,1.3344,4.2077,-1.1417076)"
+     stroke-width="0.74947"
+     id="g174">
+    <switch
+       stroke-width="0.74947"
+       id="switch172">
+      <foreignObject
+         width="100%"
+         height="100%"
+         overflow="visible"
+         pointer-events="none"
+         text-align="left"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           display="flex"
+           style="align-items:unsafe center;height:1px;justify-content:unsafe center;margin-left:231px;padding-top:130px;width:68px">
+          <xhtml:div
+             font-size="0"
+             text-align="center"
+             style="box-sizing:border-box">
+            <xhtml:div
+               color="#000000"
+               display="inline-block"
+               font-family="Helvetica"
+               font-size="9px"
+               pointer-events="all"
+               style="line-height:1.2;white-space:normal;word-wrap:normal">
+              <xhtml:div
+                 font-size="9px">Paleta makijażu</xhtml:div>
+            </xhtml:div>
+          </xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="265"
+         y="133"
+         fill="#000000"
+         font-family="Helvetica"
+         font-size="8.9936px"
+         stroke-width="0.5617"
+         text-anchor="middle"
+         id="text170"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'">Makeup</text>
+    </switch>
+  </g>
+</svg>

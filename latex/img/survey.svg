@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with matplotlib (https://matplotlib.org/) -->
+
+<svg
+   height="288pt"
+   version="1.1"
+   viewBox="0 0 432 288"
+   width="432pt"
+   id="svg147"
+   sodipodi:docname="survey.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview149"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     showgrid="false"
+     inkscape:zoom="2.1119792"
+     inkscape:cx="275.33416"
+     inkscape:cy="192.71023"
+     inkscape:window-width="1920"
+     inkscape:window-height="988"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg147" />
+  <metadata
+     id="metadata2">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:date>2021-01-25T19:03:44.816054</dc:date>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Matplotlib v3.3.3, https://matplotlib.org/</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <style
+       type="text/css"
+       id="style4">*{stroke-linecap:butt;stroke-linejoin:round;}</style>
+  </defs>
+  <g
+     id="figure_1">
+    <g
+       id="patch_1">
+      <path
+         d="M 0 288  L 432 288  L 432 0  L 0 0  z "
+         style="fill:none;opacity:0;"
+         id="path8" />
+    </g>
+    <g
+       id="axes_1">
+      <g
+         id="patch_2">
+        <path
+           d="M 54 252  L 388.8 252  L 388.8 34.56  L 54 34.56  z "
+           style="fill:#eaeaf2;"
+           id="path11" />
+      </g>
+      <g
+         id="matplotlib.axis_1">
+        <g
+           id="xtick_1">
+          <g
+             id="line2d_1">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 99.654545 252  L 99.654545 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path14" />
+          </g>
+          <g
+             id="text_1">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="99.654549"
+               y="267.94202"
+               id="text17"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1277">1</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_2">
+          <g
+             id="line2d_2">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 160.527273 252  L 160.527273 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path21" />
+          </g>
+          <g
+             id="text_2">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="160.52727"
+               y="267.94202"
+               id="text24"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1279">2</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_3">
+          <g
+             id="line2d_3">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 221.4 252  L 221.4 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path28" />
+          </g>
+          <g
+             id="text_3">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="221.39999"
+               y="267.94202"
+               id="text31"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1281">3</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_4">
+          <g
+             id="line2d_4">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 282.272727 252  L 282.272727 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path35" />
+          </g>
+          <g
+             id="text_4">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="282.27274"
+               y="267.94202"
+               id="text38"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1283">4</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_5">
+          <g
+             id="line2d_5">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 343.145455 252  L 343.145455 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path42" />
+          </g>
+          <g
+             id="text_5">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="343.14545"
+               y="267.94202"
+               id="text45"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1285">5</tspan></text>
+          </g>
+        </g>
+        <g
+           id="text_6">
+          <text
+             style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+             x="221.39999"
+             y="280.17282"
+             id="text49"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+               id="tspan1275">Position</tspan></text>
+        </g>
+      </g>
+      <g
+         id="matplotlib.axis_2">
+        <g
+           id="ytick_1">
+          <g
+             id="line2d_6">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 54 252  L 388.8 252  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path53" />
+          </g>
+          <g
+             id="text_7">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="255.22102"
+               id="text56"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1287">0</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_2">
+          <g
+             id="line2d_7">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 54 224.015444  L 388.8 224.015444  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path60" />
+          </g>
+          <g
+             id="text_8">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="227.23647"
+               id="text63"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1289">10</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_3">
+          <g
+             id="line2d_8">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 54 196.030888  L 388.8 196.030888  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path67" />
+          </g>
+          <g
+             id="text_9">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="199.25191"
+               id="text70"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1291">20</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_4">
+          <g
+             id="line2d_9">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 54 168.046332  L 388.8 168.046332  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path74" />
+          </g>
+          <g
+             id="text_10">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="171.26735"
+               id="text77"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1293">30</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_5">
+          <g
+             id="line2d_10">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 54 140.061776  L 388.8 140.061776  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path81" />
+          </g>
+          <g
+             id="text_11">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="143.28279"
+               id="text84"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1295">40</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_6">
+          <g
+             id="line2d_11">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 54 112.07722  L 388.8 112.07722  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path88" />
+          </g>
+          <g
+             id="text_12">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="115.29823"
+               id="text91"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1297">50</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_7">
+          <g
+             id="line2d_12">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 54 84.092664  L 388.8 84.092664  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path95" />
+          </g>
+          <g
+             id="text_13">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="87.313683"
+               id="text98"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1299">60</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_8">
+          <g
+             id="line2d_13">
+            <path
+               clip-path="url(#pb041df4e28)"
+               d="M 54 56.108108  L 388.8 56.108108  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path102" />
+          </g>
+          <g
+             id="text_14">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="59.329124"
+               id="text105"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1301">70</tspan></text>
+          </g>
+        </g>
+        <g
+           id="text_15">
+          <text
+             style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+             transform="rotate(-90,28.596094,143.28)"
+             x="28.596094"
+             y="143.28"
+             id="text109"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+               id="tspan1303">Frequency</tspan></text>
+        </g>
+      </g>
+      <g
+         id="patch_3">
+        <path
+           clip-path="url(#pb041df4e28)"
+           d="M 69.218182 252  L 130.090909 252  L 130.090909 140.061776  L 69.218182 140.061776  z "
+           style="fill:#4c72b0;stroke:#ffffff;stroke-linejoin:miter;"
+           id="path113" />
+      </g>
+      <g
+         id="patch_4">
+        <path
+           clip-path="url(#pb041df4e28)"
+           d="M 130.090909 252  L 190.963636 252  L 190.963636 120.472587  L 130.090909 120.472587  z "
+           style="fill:#4c72b0;stroke:#ffffff;stroke-linejoin:miter;"
+           id="path116" />
+      </g>
+      <g
+         id="patch_5">
+        <path
+           clip-path="url(#pb041df4e28)"
+           d="M 190.963636 252  L 251.836364 252  L 251.836364 123.271042  L 190.963636 123.271042  z "
+           style="fill:#4c72b0;stroke:#ffffff;stroke-linejoin:miter;"
+           id="path119" />
+      </g>
+      <g
+         id="patch_6">
+        <path
+           clip-path="url(#pb041df4e28)"
+           d="M 251.836364 252  L 312.709091 252  L 312.709091 131.666409  L 251.836364 131.666409  z "
+           style="fill:#4c72b0;stroke:#ffffff;stroke-linejoin:miter;"
+           id="path122" />
+      </g>
+      <g
+         id="patch_7">
+        <path
+           clip-path="url(#pb041df4e28)"
+           d="M 312.709091 252  L 373.581818 252  L 373.581818 44.914286  L 312.709091 44.914286  z "
+           style="fill:#4c72b0;stroke:#ffffff;stroke-linejoin:miter;"
+           id="path125" />
+      </g>
+      <g
+         id="patch_8">
+        <path
+           d="M 54 252  L 54 34.56  "
+           style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1.25;"
+           id="path128" />
+      </g>
+      <g
+         id="patch_9">
+        <path
+           d="M 388.8 252  L 388.8 34.56  "
+           style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1.25;"
+           id="path131" />
+      </g>
+      <g
+         id="patch_10">
+        <path
+           d="M 54 252  L 388.8 252  "
+           style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1.25;"
+           id="path134" />
+      </g>
+      <g
+         id="patch_11">
+        <path
+           d="M 54 34.56  L 388.8 34.56  "
+           style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1.25;"
+           id="path137" />
+      </g>
+    </g>
+  </g>
+  <defs
+     id="defs145">
+    <clipPath
+       id="pb041df4e28">
+      <rect
+         height="217.44"
+         width="334.8"
+         x="54"
+         y="34.56"
+         id="rect142" />
+    </clipPath>
+  </defs>
+</svg>

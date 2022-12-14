@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="75.553mm"
+   height="31.834mm"
+   version="1.1"
+   viewBox="0 0 75.553 31.834"
+   id="svg58"
+   sodipodi:docname="face_features.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs62" />
+  <sodipodi:namedview
+     id="namedview60"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.7262732"
+     inkscape:cx="134.0658"
+     inkscape:cy="33.3789"
+     inkscape:window-width="1920"
+     inkscape:window-height="988"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg58" />
+  <metadata
+     id="metadata2">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <rect
+     x="9.1552735e-08"
+     y="12.946002"
+     width="18.888"
+     height="18.888"
+     fill="#d7ae94"
+     id="rect14"
+     style="stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round" />
+  <rect
+     x="18.887997"
+     y="12.946002"
+     width="18.888"
+     height="18.888"
+     fill="#534233"
+     id="rect16"
+     style="stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round" />
+  <rect
+     x="37.775997"
+     y="12.946002"
+     width="18.888"
+     height="18.888"
+     fill="#c68679"
+     id="rect18"
+     style="stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round" />
+  <rect
+     x="56.660999"
+     y="12.946002"
+     width="18.888"
+     height="18.888"
+     fill="#5d5142"
+     id="rect20"
+     style="stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round" />
+  <g
+     id="g933"
+     transform="translate(0,-0.07590291)">
+    <text
+       transform="translate(9.413838,5.747627)"
+       fill="#ffffff"
+       font-family="'TeX Gyre Heros'"
+       font-size="3.175px"
+       text-align="center"
+       style="font-size:2.82222px;line-height:1.25;text-orientation:sideways;white-space:pre;shape-inside:url(#rect835);display:inline;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"
+       xml:space="preserve"
+       id="text12"
+       x="3.3718495"
+       y="0"><tspan
+         x="-2.7446086"
+         y="0"
+         id="tspan1081"><tspan
+           style="-inkscape-font-specification:'TeX Gyre Heros';text-anchor:middle;fill:#000000"
+           id="tspan1079">Skin
+</tspan></tspan><tspan
+         x="-3.0578752"
+         y="3.5277751"
+         id="tspan1085"><tspan
+           style="-inkscape-font-specification:'TeX Gyre Heros';text-anchor:middle;fill:#000000"
+           id="tspan1083">color
+</tspan></tspan></text>
+    <text
+       transform="translate(28.301835,5.719052)"
+       text-align="center"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros';text-orientation:sideways;white-space:pre;shape-inside:url(#rect851);display:inline;fill:#ffffff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"
+       xml:space="preserve"
+       id="text32"
+       x="0"
+       y="0"><tspan
+         x="-2.586565"
+         y="0"
+         id="tspan1089"><tspan
+           style="text-anchor:middle;fill:#000000"
+           id="tspan1087">Hair
+</tspan></tspan><tspan
+         x="-3.0578752"
+         y="3.5277751"
+         id="tspan1093"><tspan
+           style="text-anchor:middle;fill:#000000"
+           id="tspan1091">color</tspan></tspan></text>
+    <text
+       transform="translate(47.189835,5.719052)"
+       text-align="center"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros';text-orientation:sideways;white-space:pre;shape-inside:url(#rect857);display:inline;fill:#ffffff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"
+       xml:space="preserve"
+       id="text42"
+       x="0"
+       y="0"><tspan
+         x="-2.5879753"
+         y="0"
+         id="tspan1097"><tspan
+           style="-inkscape-font-specification:'TeX Gyre Heros';text-anchor:middle;fill:#000000"
+           id="tspan1095">Lips
+</tspan></tspan><tspan
+         x="-3.0578752"
+         y="3.5277751"
+         id="tspan1101"><tspan
+           style="-inkscape-font-specification:'TeX Gyre Heros';text-anchor:middle;fill:#000000"
+           id="tspan1099">color</tspan></tspan></text>
+    <text
+       transform="translate(66.074837,5.719052)"
+       text-align="center"
+       style="font-size:2.82222px;line-height:1.25;font-family:'TeX Gyre Heros';text-orientation:sideways;white-space:pre;shape-inside:url(#rect863);display:inline;fill:#ffffff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"
+       xml:space="preserve"
+       id="text52"
+       x="0"
+       y="0"><tspan
+         x="-2.3960648"
+         y="0"
+         id="tspan1105"><tspan
+           style="-inkscape-font-specification:'TeX Gyre Heros';text-anchor:middle;fill:#000000"
+           id="tspan1103">Eye
+</tspan></tspan><tspan
+         x="-3.0578752"
+         y="3.5277751"
+         id="tspan1109"><tspan
+           style="-inkscape-font-specification:'TeX Gyre Heros';text-anchor:middle;fill:#000000"
+           id="tspan1107">color</tspan></tspan></text>
+  </g>
+</svg>

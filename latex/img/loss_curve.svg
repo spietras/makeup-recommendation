@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with matplotlib (https://matplotlib.org/) -->
+
+<svg
+   height="288pt"
+   version="1.1"
+   viewBox="0 0 432 288"
+   width="432pt"
+   id="svg121"
+   sodipodi:docname="loss_curve.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview123"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     showgrid="false"
+     inkscape:zoom="2.1119792"
+     inkscape:cx="275.33416"
+     inkscape:cy="230.11591"
+     inkscape:window-width="1920"
+     inkscape:window-height="988"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg121" />
+  <metadata
+     id="metadata2">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:date>2021-01-23T09:39:17.821380</dc:date>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Matplotlib v3.3.3, https://matplotlib.org/</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <style
+       type="text/css"
+       id="style4">*{stroke-linecap:butt;stroke-linejoin:round;}</style>
+  </defs>
+  <g
+     id="figure_1">
+    <g
+       id="patch_1">
+      <path
+         d="M 0 288  L 432 288  L 432 0  L 0 0  z "
+         style="fill:none;opacity:0;"
+         id="path8" />
+    </g>
+    <g
+       id="axes_1">
+      <g
+         id="patch_2">
+        <path
+           d="M 54 252  L 388.8 252  L 388.8 34.56  L 54 34.56  z "
+           style="fill:#eaeaf2;"
+           id="path11" />
+      </g>
+      <g
+         id="matplotlib.axis_1">
+        <g
+           id="xtick_1">
+          <g
+             id="line2d_1">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 69.218182 252  L 69.218182 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path14" />
+          </g>
+          <g
+             id="text_1">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="69.218185"
+               y="267.94202"
+               id="text17"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1008">0</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_2">
+          <g
+             id="line2d_2">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 130.212899 252  L 130.212899 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path21" />
+          </g>
+          <g
+             id="text_2">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="130.21291"
+               y="267.94202"
+               id="text24"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1010">100</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_3">
+          <g
+             id="line2d_3">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 191.207615 252  L 191.207615 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path28" />
+          </g>
+          <g
+             id="text_3">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="191.20761"
+               y="267.94202"
+               id="text31"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1012">200</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_4">
+          <g
+             id="line2d_4">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 252.202332 252  L 252.202332 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path35" />
+          </g>
+          <g
+             id="text_4">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="252.20233"
+               y="267.94202"
+               id="text38"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1014">300</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_5">
+          <g
+             id="line2d_5">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 313.197049 252  L 313.197049 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path42" />
+          </g>
+          <g
+             id="text_5">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="313.19705"
+               y="267.94202"
+               id="text45"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1016">400</tspan></text>
+          </g>
+        </g>
+        <g
+           id="xtick_6">
+          <g
+             id="line2d_6">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 374.191765 252  L 374.191765 34.56  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path49" />
+          </g>
+          <g
+             id="text_6">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+               x="374.19177"
+               y="267.94202"
+               id="text52"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1018">500</tspan></text>
+          </g>
+        </g>
+        <g
+           id="text_7">
+          <text
+             style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+             x="221.39999"
+             y="280.17282"
+             id="text56"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+               id="tspan1020">Epoch</tspan></text>
+        </g>
+      </g>
+      <g
+         id="matplotlib.axis_2">
+        <g
+           id="ytick_1">
+          <g
+             id="line2d_7">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 54 214.67228  L 388.8 214.67228  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path60" />
+          </g>
+          <g
+             id="text_8">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="217.8933"
+               id="text63"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1022">−40</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_2">
+          <g
+             id="line2d_8">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 54 175.953839  L 388.8 175.953839  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path67" />
+          </g>
+          <g
+             id="text_9">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="179.17485"
+               id="text70"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1024">−30</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_3">
+          <g
+             id="line2d_9">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 54 137.235399  L 388.8 137.235399  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path74" />
+          </g>
+          <g
+             id="text_10">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="140.45642"
+               id="text77"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1026">−20</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_4">
+          <g
+             id="line2d_10">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 54 98.516958  L 388.8 98.516958  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path81" />
+          </g>
+          <g
+             id="text_11">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="101.73798"
+               id="text84"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1028">−10</tspan></text>
+          </g>
+        </g>
+        <g
+           id="ytick_5">
+          <g
+             id="line2d_11">
+            <path
+               clip-path="url(#p5f7af897f0)"
+               d="M 54 59.798518  L 388.8 59.798518  "
+               style="fill:none;stroke:#ffffff;stroke-linecap:round;"
+               id="path88" />
+          </g>
+          <g
+             id="text_12">
+            <text
+               style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:end;fill:#262626"
+               x="44.5"
+               y="63.019535"
+               id="text91"><tspan
+                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+                 id="tspan1030">0</tspan></text>
+          </g>
+        </g>
+        <g
+           id="text_13">
+          <text
+             style="font-style:normal;font-weight:normal;font-stretch:normal;font-size:9px;font-family:Arial;text-anchor:middle;fill:#262626"
+             transform="rotate(-90,23.339531,143.28)"
+             x="23.339531"
+             y="143.28"
+             id="text95"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Heros';-inkscape-font-specification:'TeX Gyre Heros'"
+               id="tspan1032">Loss</tspan></text>
+        </g>
+      </g>
+      <g
+         id="line2d_12">
+        <path
+           clip-path="url(#p5f7af897f0)"
+           d="M 69.218182 44.443636  L 71.048023 44.731944  L 72.267918 45.160016  L 72.877865 45.530024  L 73.487812 46.089576  L 74.097759 46.864393  L 74.707706 48.172287  L 75.927601 51.894473  L 77.147495 58.135728  L 78.367389 67.301777  L 79.587284 79.753237  L 81.417125 97.522702  L 82.637019 103.992498  L 83.246967 105.40321  L 84.466861 109.049582  L 85.076808 112.810017  L 85.686755 110.680583  L 86.90665 115.613646  L 87.516597 118.828541  L 88.126544 119.59239  L 88.736491 122.243754  L 89.956385 132.104802  L 90.566333 139.096297  L 91.786227 146.718474  L 93.006121 160.036433  L 93.616069 164.751287  L 95.44591 181.0016  L 96.055857 191.604187  L 96.665804 193.705386  L 97.275752 197.520901  L 97.885699 208.678736  L 98.495646 206.776996  L 99.105593 219.399431  L 99.71554 218.896645  L 100.325487 217.588627  L 100.935435 217.06803  L 101.545382 228.383332  L 102.155329 228.350766  L 102.765276 231.100603  L 103.375223 226.725459  L 103.98517 232.83892  L 105.205065 225.896655  L 105.815012 236.022386  L 106.424959 237.128684  L 107.034906 231.622051  L 107.644853 241.530816  L 108.254801 237.247091  L 108.864748 234.556794  L 109.474695 237.279697  L 110.084642 242.116364  L 110.694589 240.409314  L 111.304536 233.223953  L 111.914484 234.523724  L 112.524431 232.352598  L 113.134378 234.222085  L 113.744325 236.968809  L 114.354272 234.877408  L 114.964219 228.328259  L 115.574167 233.576858  L 116.184114 240.518964  L 116.794061 234.175778  L 117.404008 236.793208  L 118.013955 237.139839  L 118.623902 230.974414  L 119.23385 234.104009  L 119.843797 230.34812  L 120.453744 224.400239  L 121.063691 225.969321  L 121.673638 228.938911  L 122.283585 229.50853  L 122.893533 232.522951  L 123.50348 231.123027  L 124.113427 227.027762  L 124.723374 231.882797  L 125.333321 225.051862  L 125.943268 226.14619  L 126.553216 226.461799  L 127.77311 217.000804  L 128.383057 221.201089  L 128.993004 219.208917  L 129.602951 223.451627  L 130.212899 215.798681  L 130.822846 219.140444  L 131.432793 216.047783  L 132.04274 218.134185  L 132.652687 217.952101  L 133.262634 213.417053  L 133.872582 210.307414  L 134.482529 204.764637  L 135.092476 207.79316  L 135.702423 211.488304  L 136.31237 206.118063  L 136.922317 208.886728  L 137.532265 200.380828  L 138.142212 204.300873  L 139.362106 196.727314  L 139.972053 200.80822  L 140.582 198.412555  L 141.191948 200.812264  L 141.801895 198.917178  L 142.411842 195.883095  L 143.021789 197.896323  L 143.631736 194.670367  L 144.241683 195.129016  L 144.851631 189.818262  L 145.461578 192.8028  L 146.071525 190.074942  L 146.681472 189.644979  L 147.291419 184.868731  L 147.901366 187.421004  L 148.511314 186.410602  L 149.121261 189.498535  L 149.731208 185.054054  L 150.341155 183.024126  L 150.951102 181.817454  L 151.561049 184.263318  L 152.170997 175.157602  L 152.780944 171.267939  L 153.390891 174.61992  L 154.000838 173.367795  L 154.610785 175.715589  L 155.220732 180.204121  L 155.83068 173.558225  L 156.440627 174.660277  L 157.050574 174.724317  L 157.660521 170.034598  L 158.270468 168.345389  L 159.490363 171.513787  L 160.10031 166.806062  L 160.710257 168.983055  L 161.320204 164.474632  L 161.930151 163.37863  L 162.540098 167.251607  L 163.150046 169.047984  L 163.759993 158.991096  L 164.36994 165.56073  L 164.979887 158.668186  L 165.589834 162.468846  L 166.809729 152.218875  L 167.419676 156.863511  L 168.029623 157.518736  L 168.63957 150.145401  L 169.249517 156.537929  L 169.859464 149.863168  L 170.469412 153.743626  L 171.079359 148.884785  L 172.299253 150.189284  L 172.9092 150.20656  L 173.519147 146.25681  L 174.129095 149.547606  L 174.739042 146.900177  L 175.348989 148.806365  L 175.958936 148.869126  L 177.17883 139.59299  L 177.788778 143.869879  L 178.398725 140.978202  L 179.008672 141.972919  L 180.228566 136.806763  L 180.838513 143.151186  L 181.448461 143.724371  L 182.668355 136.111705  L 183.278302 135.831496  L 183.888249 135.865867  L 184.498196 140.69702  L 185.108144 133.334801  L 185.718091 133.421216  L 186.328038 134.064008  L 186.937985 129.849257  L 187.547932 129.973596  L 188.157879 128.26897  L 188.767827 129.2775  L 189.377774 131.156763  L 189.987721 132.647329  L 190.597668 129.900613  L 191.207615 127.876941  L 191.817562 126.871041  L 192.42751 127.68396  L 193.037457 127.713741  L 193.647404 130.443727  L 194.257351 126.967361  L 194.867298 127.112112  L 196.087193 123.37075  L 196.69714 123.990352  L 197.307087 125.663275  L 197.917034 122.838931  L 199.136928 123.797728  L 199.746876 123.559839  L 200.96677 118.231479  L 201.576717 121.114761  L 202.186664 118.668309  L 202.796611 118.53408  L 203.406559 119.613758  L 204.016506 117.840471  L 204.626453 120.041032  L 205.2364 116.809745  L 205.846347 116.688723  L 207.066242 118.898653  L 207.676189 117.701714  L 208.286136 117.050891  L 208.896083 112.401746  L 209.50603 115.018812  L 210.115977 114.138292  L 210.725925 112.042295  L 211.335872 113.684743  L 211.945819 114.788721  L 212.555766 111.696181  L 213.165713 114.541416  L 213.77566 107.869244  L 214.385608 110.101778  L 214.995555 110.852903  L 215.605502 109.186052  L 216.215449 109.462763  L 216.825396 113.218269  L 217.435343 110.577911  L 218.045291 110.090552  L 218.655238 108.028196  L 219.265185 108.625671  L 219.875132 106.781589  L 220.485079 107.000936  L 221.095026 105.590138  L 221.704974 106.035309  L 222.314921 106.164051  L 222.924868 105.213572  L 223.534815 104.639931  L 224.754709 107.026178  L 225.364657 104.993714  L 225.974604 101.807556  L 226.584551 104.019868  L 227.194498 104.521079  L 227.804445 105.423418  L 228.414392 105.309942  L 229.02434 102.646855  L 229.634287 101.500493  L 230.244234 101.236088  L 230.854181 102.578785  L 231.464128 99.285374  L 232.074075 101.588334  L 232.684023 99.668976  L 233.29397 100.952716  L 233.903917 99.907038  L 234.513864 99.148437  L 235.123811 99.621488  L 235.733758 100.616633  L 236.343706 101.848851  L 236.953653 100.087964  L 237.5636 99.35827  L 238.173547 101.118248  L 238.783494 97.305827  L 239.393441 96.952866  L 240.003389 95.83537  L 240.613336 97.710332  L 241.223283 97.230607  L 241.83323 98.013009  L 242.443177 97.120727  L 243.053124 98.323363  L 243.663072 97.34064  L 244.273019 94.115186  L 244.882966 97.442412  L 245.492913 96.43811  L 246.10286 95.804306  L 246.712807 97.34146  L 247.322755 93.769238  L 247.932702 93.436336  L 248.542649 95.395361  L 249.152596 94.442322  L 250.37249 93.28565  L 250.982438 94.109371  L 251.592385 95.53384  L 252.202332 94.990677  L 252.812279 94.273706  L 253.422226 94.339272  L 254.032173 95.569438  L 254.642121 93.46679  L 255.252068 94.986724  L 255.862015 92.644118  L 256.471962 92.044263  L 257.081909 93.003387  L 257.691856 93.390586  L 258.301804 91.395165  L 258.911751 91.055703  L 259.521698 91.527121  L 260.131645 90.54952  L 260.741592 91.662479  L 261.351539 91.365196  L 261.961487 92.556351  L 262.571434 90.015567  L 263.181381 88.930046  L 263.791328 89.332968  L 264.401275 89.890248  L 265.011222 89.442267  L 265.62117 91.806829  L 266.231117 89.736806  L 266.841064 89.64959  L 267.451011 89.945652  L 268.060958 89.00003  L 268.670905 87.108972  L 269.280853 87.159585  L 269.8908 86.086504  L 270.500747 87.253647  L 271.110694 87.987821  L 271.720641 87.780947  L 272.940536 84.970367  L 273.550483 84.264403  L 274.16043 86.348487  L 274.770377 85.573015  L 275.380324 84.271824  L 275.990271 86.495588  L 276.600219 86.515145  L 277.210166 87.668692  L 277.820113 84.617328  L 278.43006 86.80438  L 279.040007 87.390326  L 279.649954 86.871409  L 280.259902 86.003599  L 280.869849 85.541905  L 281.479796 87.112021  L 282.089743 87.21332  L 282.69969 86.106847  L 283.309637 85.669272  L 283.919585 85.577741  L 285.139479 82.490626  L 285.749426 83.304231  L 286.359373 82.044003  L 286.96932 83.633493  L 287.579268 80.369624  L 288.189215 79.536451  L 288.799162 78.097137  L 289.409109 78.185926  L 290.019056 80.000798  L 290.629003 78.083354  L 291.238951 78.696949  L 291.848898 78.31921  L 292.458845 79.265185  L 293.068792 82.094596  L 293.678739 83.951218  L 294.288686 85.281912  L 294.898634 84.838476  L 295.508581 84.749042  L 296.118528 84.391082  L 296.728475 85.186534  L 297.338422 87.227025  L 297.948369 85.574255  L 299.168264 83.253315  L 299.778211 82.935505  L 300.998105 79.363569  L 301.608052 80.522927  L 302.827947 74.713206  L 303.437894 74.638314  L 304.047841 77.323985  L 304.657788 73.623732  L 305.267735 73.215612  L 305.877683 75.278619  L 306.48763 74.577565  L 307.097577 72.036476  L 307.707524 73.520621  L 308.317471 72.475949  L 308.927418 73.347537  L 309.537366 73.221575  L 310.147313 75.078713  L 310.75726 75.882955  L 311.367207 75.940643  L 311.977154 75.254564  L 312.587101 79.819746  L 313.197049 79.783822  L 314.416943 80.402426  L 315.02689 81.640503  L 315.636837 78.82968  L 316.246784 79.942175  L 316.856732 81.401835  L 317.466679 81.193285  L 318.076626 81.108964  L 318.686573 79.894687  L 319.29652 79.922602  L 319.906467 77.237224  L 321.126362 75.842218  L 322.346256 73.06527  L 322.956203 73.863375  L 324.176098 72.195844  L 324.786045 71.604915  L 325.395992 70.205154  L 326.005939 70.732651  L 326.615886 73.848061  L 327.225833 70.861161  L 327.835781 69.44893  L 328.445728 69.796977  L 329.055675 72.908845  L 329.665622 70.975248  L 330.275569 73.085553  L 330.885516 72.538679  L 331.495464 71.835245  L 332.105411 72.758103  L 332.715358 71.140933  L 333.325305 74.905163  L 333.935252 73.235081  L 334.545199 76.744504  L 335.155147 76.699482  L 335.765094 76.854243  L 336.375041 77.22149  L 336.984988 77.105033  L 337.594935 75.82221  L 338.204882 76.233473  L 338.81483 76.051619  L 339.424777 75.419819  L 340.034724 75.233494  L 340.644671 74.034369  L 341.254618 74.082934  L 342.474513 71.922222  L 343.08446 73.366454  L 343.694407 70.762596  L 344.304354 70.08031  L 344.914301 70.48641  L 345.524248 72.716877  L 346.134196 71.267092  L 346.744143 70.464933  L 347.35409 70.848127  L 347.964037 72.670728  L 348.573984 71.557353  L 349.183931 73.562526  L 349.793879 70.701931  L 350.403826 69.795386  L 351.013773 73.574992  L 352.233667 68.84065  L 352.843615 70.191874  L 353.453562 70.080993  L 354.063509 70.511769  L 354.673456 71.458181  L 355.283403 71.546413  L 355.89335 69.308426  L 356.503298 69.45314  L 357.113245 72.544564  L 357.723192 71.175732  L 358.333139 71.191843  L 358.943086 73.117519  L 359.553033 74.139316  L 360.162981 76.230505  L 360.772928 73.926755  L 361.382875 75.952124  L 361.992822 71.326596  L 362.602769 73.80265  L 363.212716 74.108897  L 363.822664 76.514229  L 364.432611 73.134025  L 365.042558 76.329137  L 365.652505 74.195707  L 366.262452 70.400079  L 366.872399 71.28047  L 367.482347 69.508679  L 368.092294 69.1079  L 368.702241 64.824251  L 369.312188 67.371918  L 369.922135 66.217345  L 370.532082 63.366955  L 371.14203 64.68288  L 371.751977 64.034945  L 372.361924 62.353175  L 372.971871 62.434241  L 373.581818 64.87064  L 373.581818 64.87064  "
+           style="fill:none;stroke:#4c72b0;stroke-linecap:round;stroke-width:1.5;"
+           id="path99" />
+      </g>
+      <g
+         id="patch_3">
+        <path
+           d="M 54 252  L 54 34.56  "
+           style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1.25;"
+           id="path102" />
+      </g>
+      <g
+         id="patch_4">
+        <path
+           d="M 388.8 252  L 388.8 34.56  "
+           style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1.25;"
+           id="path105" />
+      </g>
+      <g
+         id="patch_5">
+        <path
+           d="M 54 252  L 388.8 252  "
+           style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1.25;"
+           id="path108" />
+      </g>
+      <g
+         id="patch_6">
+        <path
+           d="M 54 34.56  L 388.8 34.56  "
+           style="fill:none;stroke:#ffffff;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1.25;"
+           id="path111" />
+      </g>
+    </g>
+  </g>
+  <defs
+     id="defs119">
+    <clipPath
+       id="p5f7af897f0">
+      <rect
+         height="217.44"
+         width="334.8"
+         x="54"
+         y="34.56"
+         id="rect116" />
+    </clipPath>
+  </defs>
+</svg>
