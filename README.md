@@ -15,8 +15,10 @@ The paper was our Bachelor's thesis at the
 [Faculty of Electronics and Information Technology](https://www.elka.pw.edu.pl/eng)
 of the
 [Warsaw University of Technology](https://www.pw.edu.pl/engpw).
-It was completed in early 2021, but was written in Polish,
-so we need to translate it to English first before we can publish it here.
+It was completed in early 2021 and was written originally in Polish.
+
+You can view the translated, shortened version of the paper
+[here](https://spietras.github.io/makeup-recommendation)
 
 ## How it works
 
@@ -97,3 +99,15 @@ Other:
 - ```third_party``` - third-party code and environment definition
 - ```config``` - project configuration
 - ```tools``` - project tools
+
+## Citation
+
+If you want to cite our work, you can use the following BibTeX entry:
+
+```bibtex
+@software{Pietras_Kapuscinski_Makeup_recommendation,
+    author = {Pietras, Sebastian and Kapuściński, Maciej Konrad},
+    title = {{Makeup recommendation using machine learning and augmented reality}},
+    url = {https://github.com/spietras/makeup-recommendation}
+}
+```
