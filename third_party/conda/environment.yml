@@ -20,8 +20,8 @@ dependencies:
   - matplotlib==3.3.3
   - seaborn==0.11.1
   - xlrd==2.0.1
+  - hdmedians==0.14.1
   - pip:
       - opencv-python-headless==4.5.1.48
       - pykeops==1.4.2
       - geomloss==0.2.3
-      - hdmedians==0.14.1
